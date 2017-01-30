@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:domainObject name="ParkAndRideCompany" xmlns:tns="http://das.fbk.eu/DomainObject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://das.fbk.eu/DomainObject ../../../schema/allow-ensembles/DomainObject.xsd ">
+  
+  <tns:domainKnowledge>
+    <tns:internalDomainProperty name="domainProperties/ParkAndRideTrip"/>
+	<tns:externalDomainProperty name="domainProperties/CarRoutePlan"/>
+	<tns:externalDomainProperty name="domainProperties/HandlePayment"/>
+	<tns:externalDomainProperty name="domainProperties/ParkingManager"/>
+  </tns:domainKnowledge>
+    
+  <tns:process name="processes/PROC_ParkAndRideCompany"/>
+  
+  <tns:fragment name="fragments/PR_userRegistration"/>
+  <tns:fragment name="fragments/PR_findParking"/>
+  <tns:fragment name="fragments/PR_parkAndPay"/>
+  
+</tns:domainObject>

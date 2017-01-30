@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ProcessEngineDemonstrator
+Bundle-SymbolicName: ProcessEngineDemonstrator
+Bundle-Version: 1.0.0.qualifier
+Export-Package: eu.allowensembles,
+ eu.allowensembles.controller,
+ eu.allowensembles.controller.events,
+ eu.allowensembles.presentation.main,
+ eu.allowensembles.presentation.main.action,
+ eu.allowensembles.presentation.main.action.listener,
+ eu.allowensembles.presentation.main.events,
+ eu.allowensembles.presentation.main.map,
+ eu.allowensembles.presentation.main.process,
+ eu.allowensembles.utils
+Import-Package: eu.allowensembles.utils

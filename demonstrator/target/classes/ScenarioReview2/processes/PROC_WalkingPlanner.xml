@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:process name="WP_Core" xmlns:tns="http://das.fbk.eu/Process"
+	xmlns:tns1="http://das.fbk.eu/Annotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
+
+	<tns:receive name="WP_PlanRequest">
+		<tns:precondition>
+			<tns1:point>
+				<tns1:domainProperty dp_name="WalkPlan">
+					<tns1:state>INITIAL</tns1:state>
+				</tns1:domainProperty>
+			</tns1:point>
+		</tns:precondition>
+	</tns:receive>
+
+	<tns:invoke name="WP_PlanResponse">
+		<tns:effect>
+			<tns1:event dpName="WalkPlan" eventName="planPath"></tns1:event>
+		</tns:effect>
+	</tns:invoke>
+
+	<tns:receive name="WP_executePlanRequest">
+		<tns:precondition>
+			<tns1:point>
+				<tns1:domainProperty dp_name="WalkPlan">
+					<tns1:state>PATH_PLANNED</tns1:state>
+				</tns1:domainProperty>
+			</tns1:point>
+		</tns:precondition>
+	</tns:receive>
+
+	<tns:invoke name="WP_executePlanResponse">
+		<tns:effect>
+			<tns1:event dpName="WalkPlan" eventName="executePath"></tns1:event>
+		</tns:effect>
+	</tns:invoke>
+</tns:process>

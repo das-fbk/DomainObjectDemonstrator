@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tns="http://das.fbk.eu/Scenario">
+	<tns:domainObject file="domainObjects/PayPal" />
+	<tns:domainObject file="domainObjects/CreditCard" />
+	<tns:domainObject file="domainObjects/PaymentManager" />
+	<tns:domainObject file="domainObjects/BikeSharingCompany" />
+	<tns:domainObject file="domainObjects/SmartMobilityCard" />
+	<tns:domainObject file="domainObjects/RouteManagement">
+		<tns:domainObjectInstance id="RouteManagement_1"
+			ensemble="RouteA" />
+		<tns:domainObjectInstance id="RouteManagement_2"
+			ensemble="RouteB" />
+	</tns:domainObject>
+	<tns:domainObject file="domainObjects/BikeRoutePlanner" />
+	<tns:domainObject file="domainObjects/CarRoutePlanner" />
+	<tns:domainObject file="domainObjects/WalkingPlanner" />
+	<tns:domainObject file="domainObjects/ParkAndRideCompany" />
+	<tns:domainObject file="domainObjects/ParkManager" />
+	<tns:domainObject file="domainObjects/RoutePassenger" />
+	<tns:domainObject file="domainObjects/FlexibusCompany" />
+	<tns:domainObject file="domainObjects/MultimodalPlanner" />
+	<tns:domainObject file="domainObjects/TripOrganization" />
+	<tns:domainObject file="domainObjects/UrbanMobilitySystem" />
+	<tns:domainObject file="domainObjects/FlexibusEmployee" />
+	<tns:domainObject file="domainObjects/FlexibusDriver" />
+	<tns:domainObject file="domainObjects/User">
+		<tns:domainObjectInstance id="User_1" lat="46.146448"
+			long="11.097186999999963" preferenceFile="preferences/User1_preference.xml"
+			hoaaVar="TRANSPORTATIONS" hoaa="parkAndRide,walk,flexibus" ensemble="RouteA"
+			correlations="RouteManagement_1" selectedRoute="2" pickupPoint="0" routes="2,31,32,33" />
+		<tns:domainObjectInstance id="User_2" lat="46.106173"
+			long="11.11597699999993" preferenceFile="preferences/User2_preference.xml"
+			hoaaVar="TRANSPORTATIONS" hoaa="walk,flexibus" onTurn="2" ensemble="RouteA"
+			correlations="RouteManagement_1" selectedRoute="3"  pickupPoint="0" routes="3,34,35,36" />
+		<tns:domainObjectInstance id="User_3"
+			lat="46.07150320430332" long="11.108670361493196" preferenceFile="preferences/User3_preference.xml"
+			hoaaVar="TRANSPORTATIONS" hoaa="bikeSharing,flexibus" onTurn="4" ensemble="RouteA"
+			correlations="RouteManagement_1" selectedRoute="6" pickupPoint="1" routes="6,37,38,39" />
+		<tns:domainObjectInstance id="User_4" lat="46.064879"
+			long="11.15671599999996" preferenceFile="preferences/User4_preference.xml"
+			hoaaVar="TRANSPORTATIONS" hoaa="walk,flexibus" onTurn="12" ensemble="RouteB"
+			correlations="RouteManagement_2" selectedRoute="11" pickupPoint="0" routes="11,40,41,42" />
+		<tns:domainObjectInstance id="User_4_bis"
+			lat="46.063946" long="11.151904999999942" preferenceFile="preferences/User4_bis_preference.xml"
+			hoaaVar="TRANSPORTATIONS" hoaa="walk,flexibus" onTurn="14" ensemble="RouteB"
+			correlations="RouteManagement_2" selectedRoute="12" pickupPoint="0" routes="12,43,44,45"/>
+		<tns:domainObjectInstance id="User_6" lat="46.083462"
+			long="11.127786000000015" preferenceFile="preferences/User6_preference.xml"
+			hoaaVar="TRANSPORTATIONS" hoaa="walk,flexibus" onTurn="16" ensemble="RouteB"
+			correlations="RouteManagement_2" selectedRoute="13" pickupPoint="1" routes="13,46,47,48"/>
+	</tns:domainObject>
+	<tns:domainObject file="domainObjects/FlexibusEmployee">
+		<tns:domainObjectInstance id="First_Employee"
+			lat="46.10729" long="11.11316" ensemble="RouteA"
+			correlations="RouteManagement_1" selectedRoute="1" />
+		<tns:domainObjectInstance id="Second_Employee"
+			lat="46.06598" long="11.15456" onTurn="10" ensemble="RouteB"
+			correlations="RouteManagement_2" selectedRoute="10" />
+	</tns:domainObject>
+</tns:scenario>

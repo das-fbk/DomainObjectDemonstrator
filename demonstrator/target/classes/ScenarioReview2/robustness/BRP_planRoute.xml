@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robustnessAnnotation>
+	<fragment name="BRP_planRoute.xml">
+		<activity name="BRP_PlanRequest" compensable="true" deterministic="false" write="true" robustness="96"/>
+	</fragment>
+	<fragment name="BRP_planRoute.xml">
+		<activity name="BRP_PlanResponse" compensable="true" deterministic="false" write="true" robustness="96"/>
+	</fragment>
+</robustnessAnnotation>

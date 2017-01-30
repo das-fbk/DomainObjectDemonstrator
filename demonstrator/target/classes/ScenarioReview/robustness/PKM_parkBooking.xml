@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robustnessAnnotation>
+	<fragment name="PKM_parkBooking.xml">
+		<activity name="PKM_ParkBookRequest" compensable="true" deterministic="false" write="true" robustness="95"/>
+	</fragment>
+	<fragment name="PKM_parkBooking.xml">
+		<activity name="PKM_ParkBookResponse" compensable="true" deterministic="false" write="true" robustness="99"/>
+	</fragment>
+</robustnessAnnotation>

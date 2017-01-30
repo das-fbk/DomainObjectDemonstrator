@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:domainObject name="Rome2Rio" xmlns:tns="http://das.fbk.eu/DomainObject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://das.fbk.eu/DomainObject ../../../schema/allow-ensembles/DomainObject.xsd ">
+  
+  <tns:domainKnowledge>
+    <tns:internalDomainProperty name="domainProperties/GlobalPlanner"/>
+  </tns:domainKnowledge>
+    
+  <tns:process name="processes/PROC_Rome2Rio"/>
+  
+  <tns:fragment name="fragments/RR_findRoutes"/>
+  
+</tns:domainObject>

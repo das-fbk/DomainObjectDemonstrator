@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:domainObject name="WalkingPlanner" xmlns:tns="http://das.fbk.eu/DomainObject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://das.fbk.eu/DomainObject ../../../schema/allow-ensembles/DomainObject.xsd ">
+  <tns:domainKnowledge>
+      <tns:internalDomainProperty name="domainProperties/WalkPlan" />
+  </tns:domainKnowledge>
+  <tns:process name="processes/PROC_WalkingPlanner"/>
+  <tns:fragment name="fragments/WP_planPath" />
+  <tns:fragment name="fragments/WP_executeVoicePlan" />
+</tns:domainObject>
