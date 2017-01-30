@@ -1,9 +1,6 @@
-# Allow Ensembles Demonstrator
+# Domain Objects Demonstrator
 
 IMPORTANT NOTE: this version have manual dependencies inside lib folder, please read with attention following notes
-
-
-Demonstrator for Allow Ensembles project, see http://www.allow-ensembles.eu/
 
 
 ## Dependencies
@@ -13,7 +10,7 @@ Project dependencies are inside lib folder, please add them to your Eclipse proj
 
 ## How to build
 
-To build Allow Ensembles Demonstrato you need to install Maven 3.2.x, Java JDK 1.8.x, Eclipse and set
+To build Domain Objects Demonstrator you need to install Maven 3.2.x, Java JDK 1.8.x, Eclipse and set
 dependencies.
 
 
