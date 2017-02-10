@@ -40,7 +40,7 @@ import eu.fbk.das.process.engine.api.jaxb.ScopeType;
 import eu.fbk.das.process.engine.impl.ProcessEngineImpl;
 
 /**
- * Allow Ensembles Demonstrator's Main controller, use it to post/subscrive
+ * Allow Ensembles Demonstrator's Main controller, use it to post/subscribe
  * events using google's EventBus
  * 
  * @see EventBus

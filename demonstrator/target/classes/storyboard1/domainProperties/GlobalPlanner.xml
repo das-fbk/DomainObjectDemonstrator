@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:domainProperty id="GlobalPlanner" xmlns:tns="http://das.fbk.eu/Process" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://das.fbk.eu/Process ../../../../../../../schema-allow-ensembles/schema/allow-ensembles/DomainProperty.xsd ">
+<tns:domainProperty id="GlobalPlanner" xmlns:tns="http://das.fbk.eu/Process" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
   
   <tns:state isInitial="true">INITIAL</tns:state>
   <tns:state>PROCESSING_REQUEST</tns:state>

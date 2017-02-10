@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:process name="PayPal_Core" xmlns:tns="http://das.fbk.eu/Process"
-	xmlns:tns1="http://das.fbk.eu/Annotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tns1="http://das.fbk.eu/Annotation" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://das.fbk.eu/Process Process.xsd ">
 
 		<tns:receive name="PP_PaymentRequest">

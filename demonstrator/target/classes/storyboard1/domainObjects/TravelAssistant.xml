@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tns:domainObject name="TravelAssistant" xmlns:tns="http://das.fbk.eu/DomainObject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://das.fbk.eu/DomainObject ../Schemata/DomainObject.xsd ">
+xsi:schemaLocation="http://das.fbk.eu/DomainObject ../schema/DomainObject.xsd ">
   <tns:domainKnowledge>
       <tns:externalDomainProperty name="domainProperties/GlobalPlanner" />
   </tns:domainKnowledge>

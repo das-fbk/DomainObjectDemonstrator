@@ -4,6 +4,11 @@
   <tns:domainKnowledge>
     <tns:internalDomainProperty name="domainProperties/GlobalPlanner"/>
   </tns:domainKnowledge>
+  
+  <tns:state>
+  	<tns:variable name="From" type="String"></tns:variable>
+  	<tns:variable name="To" type="String"></tns:variable>
+  </tns:state>
     
   <tns:process name="processes/PROC_Rome2Rio"/>
   

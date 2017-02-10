@@ -10,7 +10,7 @@ import eu.allowensembles.controller.MainController;
 import eu.allowensembles.presentation.main.MainWindow;
 
 /**
- * Main class for Allow Ensembles Demonstrator
+ * Main class for Domain Objects Demonstrator
  */
 public class Demonstrator {
 
@@ -35,7 +35,7 @@ public class Demonstrator {
 				}
 
 				try {
-					logger.info("Allow Ensembles Demonstrator start");
+					logger.info("Domain Objects Demonstrator start");
 					window = new MainWindow();
 					controller = new MainController(window);
 					window.getActivityWindow().setController(controller);

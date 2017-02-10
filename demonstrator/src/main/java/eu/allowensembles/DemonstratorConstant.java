@@ -17,7 +17,7 @@ public final class DemonstratorConstant {
 
 	// storyboard constants for storyboard 1
 	public static final String STORYBOARD1_MAIN_XML = "Storyboard1-main.xml";
-	public static final String STORYBOARD1_FOLDER = "storyboard1_OLD";
+	public static final String STORYBOARD1_FOLDER = "storyboard1";
 	public static final String SCENARIO_CELL_SPECIALIZATION = "scenario1";
 
 	// storyboard constants for collective adaptation 1

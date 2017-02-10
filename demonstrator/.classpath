@@ -28,7 +28,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/adaptation-manager"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/composer-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/composer-impl"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/schema-allow-ensembles"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/domain-object-model-schema"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/handlers"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/process-engine-impl"/>
 	<classpathentry kind="output" path="target/classes"/>
