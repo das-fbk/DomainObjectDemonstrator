@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:process name="PROC_Rome2Rio" xmlns:tns="http://das.fbk.eu/Process" 
-xmlns:tns1="http://das.fbk.eu/Annotation" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
- 
-<tns:receive name="PlanRequest">
-</tns:receive>
+<tns:process name="PROC_Rome2Rio" xmlns:tns="http://das.fbk.eu/Process"
+	xmlns:tns1="http://das.fbk.eu/Annotation" xmlns:tns2="http://das.fbk.eu/DataType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
 
-<tns:invoke name="PlanResponse">
-</tns:invoke>
+	<tns:receive name="PlanRequest">
+		<tns:actionVariable name="From" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+		<tns:actionVariable name="To" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+	</tns:receive>
+
+	<tns:invoke name="PlanResponse">
+		<tns:actionVariable name="Response" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+	</tns:invoke>
 </tns:process>

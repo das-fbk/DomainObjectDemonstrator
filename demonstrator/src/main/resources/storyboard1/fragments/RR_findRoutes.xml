@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:fragment id="RR_findRoutes" xmlns:tns="http://das.fbk.eu/Fragment"
-	xmlns:tns1="http://das.fbk.eu/Annotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tns1="http://das.fbk.eu/Annotation" xmlns:tns2="http://das.fbk.eu/DataType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://das.fbk.eu/Fragment Fragment.xsd ">
 
 	<tns:state isInitial="true" name="ST0" />
@@ -8,22 +9,24 @@
 	<tns:state name="ST2" />
 
 	<tns:action name="PlanRequest" actionType="input">
-<!-- 		<tns:precondition> -->
-<!-- 			<tns1:point> -->
-<!-- 				<tns1:domainProperty dp_name="BikeSharingTrip"> -->
-<!-- 					<tns1:state>INITIAL</tns1:state> -->
-<!-- 				</tns1:domainProperty> -->
-<!-- 			</tns1:point> -->
-<!-- 		</tns:precondition> -->
 		<tns:effect>
 			<tns1:event dpName="GlobalPlanner" eventName="receiveRequest"></tns1:event>
 		</tns:effect>
+		<tns:actionVariable name="From" type="string">
+			<tns2:content type="anyType">Trento</tns2:content>
+		</tns:actionVariable>
+		<tns:actionVariable name="To" type="string">
+			<tns2:content type="anyType">Bolzano</tns2:content>
+		</tns:actionVariable>
 	</tns:action>
 
 	<tns:action name="PlanResponse" actionType="output">
 		<tns:effect>
 			<tns1:event dpName="GlobalPlanner" eventName="findAlternatives"></tns1:event>
 		</tns:effect>
+		<tns:actionVariable name="Response" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
 	</tns:action>
 
 
@@ -38,5 +41,6 @@
 		<tns:finalState>ST2</tns:finalState>
 		<tns:action name="PlanResponse" actionType="output" />
 	</tns:transition>
-	
+
 </tns:fragment>
+

@@ -21,10 +21,13 @@ public final class DemonstratorConstant {
 	public static final String SCENARIO_CELL_SPECIALIZATION = "scenario1";
 
 	// storyboard constants for collective adaptation 1
-//	public static final String SCENARIO_COLLECTIVE_ADAPTATION_1_MAIN_XML = "Storyboard-main.xml";
-//	public static final String SCENARIO_COLLECTIVE_ADAPTATION_1_FOLDER = "storyboard1_OLD";
-//	public static final String SCENARIO_COLLECTIVE_ADAPTATION_1 = "scenario1";
-	
+	// public static final String SCENARIO_COLLECTIVE_ADAPTATION_1_MAIN_XML =
+	// "Storyboard-main.xml";
+	// public static final String SCENARIO_COLLECTIVE_ADAPTATION_1_FOLDER =
+	// "storyboard1_OLD";
+	// public static final String SCENARIO_COLLECTIVE_ADAPTATION_1 =
+	// "scenario1";
+
 	// menu name constants
 	public static final String OPEN = "open";
 	public static final String STEP = "step";
