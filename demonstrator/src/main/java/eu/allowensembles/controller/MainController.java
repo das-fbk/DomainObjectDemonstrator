@@ -24,6 +24,7 @@ import eu.allowensembles.utils.HandlerInstance;
 import eu.allowensembles.utils.PlayRunner;
 import eu.allowensembles.utils.ResourceLoader;
 import eu.allowensembles.utils.UserData;
+import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
 import eu.fbk.das.process.engine.api.DomainObjectInstance;
 import eu.fbk.das.process.engine.api.DomainObjectManagerInterface;
 import eu.fbk.das.process.engine.api.domain.DomainObjectDefinition;
@@ -129,7 +130,7 @@ public class MainController {
 			window.showMainScrollPane(true);
 
 			// register handler for executable activities
-			// registerHandlersForProcessEngine();
+			registerHandlersForProcessEngine();
 
 			addLog("Storyboard loaded: "
 					+ ResourceLoader.getScenarioFile().getAbsolutePath());
@@ -141,35 +142,31 @@ public class MainController {
 
 	/**
 	 * Register handlers for executable activity. This is a bridge with actual
-	 * implementation of a given activity, for example per for utility, when
-	 * processEngine process activity with given name, registered handler will
-	 * be called and executed
+	 * implementation of a given activity; when processEngine process an
+	 * activity with a given name, registered handler will be called and
+	 * executed
 	 */
-	// private void registerHandlersForProcessEngine() {
-	// processEngineFacade
-	// .addExecutableHandler("UMS_SecurityAndPrivacyFiltering",
-	// new PrivacyAndSecurity(this));
-	// processEngineFacade.addExecutableHandler("UMS_UtilityRanking",
-	// new RankingExecutable(this));
-	// processEngineFacade.addExecutableHandler("USER_ChooseAlternative",
-	// new UserChooseAlternativeExecutable(this));
-	// animation executable handlers
-	// processEngineFacade.addExecutableHandler("PR_animatePark",
-	// new ExecuteTripExecutable(this, window.getMapViewer(),
-	// "parkAndRide"));
+	private void registerHandlersForProcessEngine() {
 
-	// // handler for hoaa for pre-phase
-	// processEngineFacade.addExecutableHandler(
-	// "TO_HOAAorganizeTrip",
-	// new ToHoaaOrganizeTripExecutable(processEngineFacade
-	// .getProcessEngine()));
-	// // handler for hoaa for execute phase
-	// processEngineFacade
-	// .addExecutableHandler(
-	// "USER_ExecuteTrip",
-	// new UserExecuteTripHoaa(processEngineFacade
-	// .getProcessEngine()));
-	// // }
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"R2Rcall",
+				new Rome2RioCallExecutable(processEngineFacade
+						.getProcessEngine()));
+		/**************************************************************/
+
+		// handler for hoaa for pre-phase
+		// processEngineFacade.addExecutableHandler(
+		// "TO_HOAAorganizeTrip",
+		// new ToHoaaOrganizeTripExecutable(processEngineFacade
+		// .getProcessEngine()));
+		// handler for hoaa for execute phase
+		// processEngineFacade
+		// .addExecutableHandler(
+		// "USER_ExecuteTrip",
+		// new UserExecuteTripHoaa(processEngineFacade
+		// .getProcessEngine()));
+	}
 
 	@Subscribe
 	public void onDomainObjectInstanceSelection(DomainObjectInstanceSelection e) {
