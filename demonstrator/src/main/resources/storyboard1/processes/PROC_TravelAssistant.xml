@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:process name="PROC_TravelAssistant" xmlns:tns="http://das.fbk.eu/Process"
-	xmlns:tns1="http://das.fbk.eu/Annotation" 
+	xmlns:tns1="http://das.fbk.eu/Annotation" xmlns:tns2="http://das.fbk.eu/DataType"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
+
+	<tns:receive name="StartInteraction" />
 	
-<!-- 	<tns:concrete name="TA_init" /> -->
-	
-<!-- 	<tns:concrete name="TA_sendSourceRequest">  -->
-<!-- 	</tns:concrete>  -->
-	
-<!-- 	<tns:concrete name="TA_receiveSource">  -->
-<!-- 	</tns:concrete>  -->
-	
-<!-- 	<tns:concrete name="TA_sendDestinationRequest">  -->
-<!-- 	</tns:concrete>  -->
-	
-<!-- 	<tns:concrete name="TA_receiveDestination">  -->
-<!-- 	</tns:concrete>  -->
+	<tns:receive name="AssistantRequest">
+		<tns:actionVariable name="From" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+		<tns:actionVariable name="To" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+	</tns:receive>
 
 	<tns:abstract name="TA_calculate">
 		<tns:goal>
@@ -30,11 +27,10 @@
 		</tns:goal>
 	</tns:abstract>
 
-<!-- 	<tns:concrete name="TA_elaborateData" /> -->
-
-<!-- 	<tns:concrete name="TA_sendAlternatives">  -->
-<!-- 	</tns:concrete>  -->
-
-	
+	<tns:invoke name="AssistantResponse">
+		<tns:actionVariable name="Plan" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+	</tns:invoke>
 
 </tns:process>

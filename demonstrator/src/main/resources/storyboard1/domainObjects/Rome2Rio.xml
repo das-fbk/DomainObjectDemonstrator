@@ -14,7 +14,7 @@
 		<tns:stateVariable name="To" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
-		<tns:stateVariable name="Response" type="string">
+		<tns:stateVariable name="Plan" type="string">
 			<tns2:content type="anyType">Piano di viaggio</tns2:content>
 		</tns:stateVariable>
 	</tns:state>

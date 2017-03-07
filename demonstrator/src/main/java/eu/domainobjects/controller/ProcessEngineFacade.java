@@ -6,17 +6,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//import eu.allowensembles.utility.controller.Preferences;
-//import eu.allowensembles.utils.ParserUtil;
-import eu.domainobjects.presentation.main.map.Routes.Route;
-import eu.domainobjects.utils.Alternative;
 import eu.domainobjects.utils.DoiBean;
-import eu.domainobjects.utils.ResourceLoader;
 import eu.domainobjects.utils.UserData;
 import eu.fbk.das.adaptation.AdaptationManager;
 import eu.fbk.das.adaptation.api.AdaptationManagerInterface;
@@ -42,6 +36,8 @@ import eu.fbk.das.process.engine.api.util.DomainObjectInstanceWithVariable;
 import eu.fbk.das.process.engine.impl.DomainObjectManager;
 import eu.fbk.das.process.engine.impl.ProcessEngineImpl;
 import eu.fbk.das.process.engine.impl.util.ScenarioLoader;
+//import eu.allowensembles.utility.controller.Preferences;
+//import eu.allowensembles.utils.ParserUtil;
 
 /**
  * A facade for Process Engine integration
@@ -123,19 +119,19 @@ public class ProcessEngineFacade {
 					}
 
 					// load user data inside controller
-//					UserData ud = updateUserData(
-//							controller.getUserData(doi.getId()), doi.getId());
-//					if (d.getSelectedRoute() != null) {
-//						Optional<Alternative> o = ud
-//								.getAlternatives()
-//								.stream()
-//								.filter(a -> a.getId() == Integer.valueOf(d
-//										.getSelectedRoute())).findFirst();
-//						if (o.isPresent()) {
-//							ud.setSelectedAlternative(o.get());
-//						}
-//					}
-//					controller.setUserData(doi.getId(), ud);
+					// UserData ud = updateUserData(
+					// controller.getUserData(doi.getId()), doi.getId());
+					// if (d.getSelectedRoute() != null) {
+					// Optional<Alternative> o = ud
+					// .getAlternatives()
+					// .stream()
+					// .filter(a -> a.getId() == Integer.valueOf(d
+					// .getSelectedRoute())).findFirst();
+					// if (o.isPresent()) {
+					// ud.setSelectedAlternative(o.get());
+					// }
+					// }
+					// controller.setUserData(doi.getId(), ud);
 				}
 			} catch (ProcessEngineRuntimeException | NullPointerException
 					| InvalidObjectCurrentStateException
@@ -155,45 +151,45 @@ public class ProcessEngineFacade {
 	 * @param name
 	 * @return updated data
 	 */
-//	public UserData updateUserData(UserData data, String name) {
-//		try {
-//			List<Route> routes = ResourceLoader.getRoutes();
-//			ArrayList<Alternative> alts = new ArrayList<Alternative>();
-//			for (Route route : routes) {
-//				if (route.isFlexibusRoute() == null
-//						|| (route.isFlexibusRoute() != null
-//								&& route.isFlexibusRoute() && name
-//									.contains("Employee"))) {
-//
-//					Alternative alternative = ResourceLoader
-//							.convertFromRouteToAlternative(route);
-//					if (isValidRouteForUser(name, alternative.getId())) {
-//						alts.add(alternative);
-//					}
-//				}
-//			}
-//			data.setAlternatives(alts);
-//			data.setName(name);
-//			return data;
-//		} catch (Exception e) {
-//			logger.error(e.getMessage(), e);
-//		}
-//		return null;
-//	}
+	// public UserData updateUserData(UserData data, String name) {
+	// try {
+	// List<Route> routes = ResourceLoader.getRoutes();
+	// ArrayList<Alternative> alts = new ArrayList<Alternative>();
+	// for (Route route : routes) {
+	// if (route.isFlexibusRoute() == null
+	// || (route.isFlexibusRoute() != null
+	// && route.isFlexibusRoute() && name
+	// .contains("Employee"))) {
+	//
+	// Alternative alternative = ResourceLoader
+	// .convertFromRouteToAlternative(route);
+	// if (isValidRouteForUser(name, alternative.getId())) {
+	// alts.add(alternative);
+	// }
+	// }
+	// }
+	// data.setAlternatives(alts);
+	// data.setName(name);
+	// return data;
+	// } catch (Exception e) {
+	// logger.error(e.getMessage(), e);
+	// }
+	// return null;
+	// }
 
-//	private boolean isValidRouteForUser(String name, Integer alternativeId) {
-//		Optional<DomainObjectInstance> t = getProcessEngine()
-//				.getDomainObjectInstances().stream()
-//				.filter(d -> d.getId().equals(name)).findFirst();
-//		if (t.isPresent() && t.get().getRoutes() != null) {
-//			return Arrays.asList(t.get().getRoutes().split(",")).contains(
-//					String.valueOf(alternativeId));
-//		} else if (t.isPresent() && (t.get().getRoutes() == null)) {
-//			// employee or no filtering
-//			return true;
-//		}
-//		return false;
-//	}
+	// private boolean isValidRouteForUser(String name, Integer alternativeId) {
+	// Optional<DomainObjectInstance> t = getProcessEngine()
+	// .getDomainObjectInstances().stream()
+	// .filter(d -> d.getId().equals(name)).findFirst();
+	// if (t.isPresent() && t.get().getRoutes() != null) {
+	// return Arrays.asList(t.get().getRoutes().split(",")).contains(
+	// String.valueOf(alternativeId));
+	// } else if (t.isPresent() && (t.get().getRoutes() == null)) {
+	// // employee or no filtering
+	// return true;
+	// }
+	// return false;
+	// }
 
 	/**
 	 * Force {@link ProcessEngine} to make a {@link ProcessEngine#stepAll()},

@@ -13,10 +13,10 @@
 			<tns1:event dpName="GlobalPlanner" eventName="receiveRequest"></tns1:event>
 		</tns:effect>
 		<tns:actionVariable name="From" type="string">
-			<tns2:content type="anyType">Trento</tns2:content>
+			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 		<tns:actionVariable name="To" type="string">
-			<tns2:content type="anyType">Bolzano</tns2:content>
+			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 	</tns:action>
 
@@ -24,7 +24,7 @@
 		<tns:effect>
 			<tns1:event dpName="GlobalPlanner" eventName="findAlternatives"></tns1:event>
 		</tns:effect>
-		<tns:actionVariable name="Response" type="string">
+		<tns:actionVariable name="Plan" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 	</tns:action>

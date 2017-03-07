@@ -16,7 +16,7 @@
 	<tns:concrete name="R2Rcall" />
 
 	<tns:invoke name="PlanResponse">
-		<tns:actionVariable name="Response" type="string">
+		<tns:actionVariable name="Plan" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 	</tns:invoke>
