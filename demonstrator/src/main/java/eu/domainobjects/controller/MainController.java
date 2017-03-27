@@ -151,7 +151,7 @@ public class MainController {
 
 		/**************************************************************/
 		processEngineFacade.addExecutableHandler(
-				"R2R_call",
+				"R2R_ServiceCall",
 				new Rome2RioCallExecutable(processEngineFacade
 						.getProcessEngine()));
 		/**************************************************************/
