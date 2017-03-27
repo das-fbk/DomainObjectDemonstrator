@@ -4,14 +4,55 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
   
   <tns:state isInitial="true">INITIAL</tns:state>
-  <tns:state>FINAL</tns:state>
+  <tns:state>REQUIRED_INPUT_RECEIVED</tns:state>
+  <tns:state>JOURNEY_PLAN_FOUND</tns:state>
+  <tns:state>PLAN_ALTERNATIVES_SENT</tns:state>
+  <tns:state>USER_CHOICE_RECEIVED</tns:state>
+  <tns:state>PLAN_REFINED</tns:state>
+  <tns:state>JOURNEY_PLANNED</tns:state>
   
-  <tns:event>assistUser</tns:event>
+  
+  <tns:event>receiveInputData</tns:event>
+  <tns:event>findPlan</tns:event>
+  <tns:event>sendAlternatives</tns:event>
+  <tns:event>userChoice</tns:event>
+  <tns:event>refinePlan</tns:event>
+  <tns:event>journeyPlanned</tns:event>
  
   <tns:transition isControllable="true">
     <tns:from>INITIAL</tns:from>
-    <tns:to>FINAL</tns:to>
-    <tns:event>assistUser</tns:event>
+    <tns:to>REQUIRED_INPUT_RECEIVED</tns:to>
+    <tns:event>receiveInputData</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>REQUIRED_INPUT_RECEIVED</tns:from>
+    <tns:to>JOURNEY_PLAN_FOUND</tns:to>
+    <tns:event>findPlan</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>JOURNEY_PLAN_FOUND</tns:from>
+    <tns:to>PLAN_ALTERNATIVES_SENT</tns:to>
+    <tns:event>sendAlternatives</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>PLAN_ALTERNATIVES_SENT</tns:from>
+    <tns:to>USER_CHOICE_RECEIVED</tns:to>
+    <tns:event>userChoice</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>USER_CHOICE_RECEIVED</tns:from>
+    <tns:to>PLAN_REFINED</tns:to>
+    <tns:event>refinePlan</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>PLAN_REFINED</tns:from>
+    <tns:to>JOURNEY_PLANNED</tns:to>
+    <tns:event>journeyPlanned</tns:event>
   </tns:transition>
 
 </tns:domainProperty>

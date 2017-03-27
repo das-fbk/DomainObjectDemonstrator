@@ -4,12 +4,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
 
-	<tns:abstract name="USER_askAssistance">
+	<tns:abstract name="USER_planJourney">
 		<tns:goal>
 			<tns1:point>
 				<tns1:domainProperty dp_name="TravelAssistant">
 					<tns1:state>
-						FINAL
+						JOURNEY_PLANNED
 					</tns1:state>
 				</tns1:domainProperty>
 			</tns1:point>
