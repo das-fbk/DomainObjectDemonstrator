@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eu.domainobjects.utils.DoiBean;
-import eu.domainobjects.utils.UserData;
 import eu.fbk.das.adaptation.AdaptationManager;
 import eu.fbk.das.adaptation.api.AdaptationManagerInterface;
 import eu.fbk.das.composer.impl.Composer;
@@ -93,21 +92,20 @@ public class ProcessEngineFacade {
 							doi.updateKnowledge(knownledge);
 						}
 					}
-					if (d.getEnsemble() != null) {
-						doi.setEnsemble(d.getEnsemble());
-					}
+//					if (d.getEnsemble() != null) {
+//						doi.setEnsemble(d.getEnsemble());
+//					}
 					if (d.getCorrelations() != null) {
 						doi.setCorrelations(d.getCorrelations());
 					}
-					if (d.getSelectedRoute() != null) {
-						doi.setSelectedRoute(d.getSelectedRoute());
-					}
-					if (d.getRoutes() != null) {
-						doi.setRoutes(d.getRoutes());
-						UserData ud = controller.getUserData(doi.getId());
-						ud.getAlternatives();
-
-					}
+					// if (d.getSelectedRoute() != null) {
+					// doi.setSelectedRoute(d.getSelectedRoute());
+					// }
+					// if (d.getRoutes() != null) {
+					// doi.setRoutes(d.getRoutes());
+					// UserData ud = controller.getUserData(doi.getId());
+					// ud.getAlternatives();
+					// }
 					if (d.getOnTurn() != null && d.getOnTurn() > 0) {
 						DomainObjectInstanceWithVariable doiwv = new DomainObjectInstanceWithVariable();
 						doiwv.setDoi(doi);

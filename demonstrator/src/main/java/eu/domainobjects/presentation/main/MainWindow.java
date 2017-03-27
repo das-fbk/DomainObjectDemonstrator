@@ -96,7 +96,7 @@ public class MainWindow {
 	private JMenuItem mntmAbout;
 
 	// window builder
-//	private MapViewerComponentBuilder mvcb = new MapViewerComponentBuilder();
+	// private MapViewerComponentBuilder mvcb = new MapViewerComponentBuilder();
 
 	private JScrollPane modelScrollPane;
 
@@ -172,8 +172,8 @@ public class MainWindow {
 	 */
 	private void initialize() throws IOException {
 		frame = new JFrame("Domain Objects Demonstrator");
-//		LayoutManager manager = null;
-//		frame.setLayout(manager);
+		// LayoutManager manager = null;
+		// frame.setLayout(manager);
 		mainPanel = new JPanel();
 		mainPanel.setVisible(true);
 		mainPanel.setLayout(null);
@@ -183,11 +183,11 @@ public class MainWindow {
 
 		storyboardOnePanel = new JPanel();
 		storyboardOnePanel.setLayout(null);
-		//original size
-		//storyboardOnePanel.setBounds(0, 5, 1024, 800);
-		//new size
+		// original size
+		// storyboardOnePanel.setBounds(0, 5, 1024, 800);
+		// new size
 		storyboardOnePanel.setBounds(0, 8, 1050, 800);
-//		storyboardOnePanel.setBorder(new LineBorder(Color.red, 2));
+		// storyboardOnePanel.setBorder(new LineBorder(Color.red, 2));
 		mainPanel.add(storyboardOnePanel, -1);
 
 		// load play/pause icon
@@ -258,7 +258,7 @@ public class MainWindow {
 		providedFragmentsList = new JList<String>();
 		providedFragmentsList.setBounds(843, 47, 170, 200);
 		storyboardOnePanel.add(providedFragmentsList);
-		
+
 		// combo for entities selection
 		lblComboEntities = new JLabel("Domain Objects models");
 		lblComboEntities.setBounds(550, 0, 200, 23);
@@ -334,8 +334,8 @@ public class MainWindow {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// change here for final frame size
-//		frame.setSize(1024, 768);
-		//mine
+		// frame.setSize(1024, 768);
+		// mine
 		frame.setSize(1100, 768);
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null); // *** this will center your app
@@ -371,12 +371,12 @@ public class MainWindow {
 		scenario1.addActionListener(new OpenScenarioListener());
 		mnScenario.add(scenario1);
 
-//		JMenuItem scenario2 = new JMenuItem(
-//				"Open collective adaptation 1 scenario");
-//		scenario2
-//				.setActionCommand(DemonstratorConstant.SCENARIO_COLLECTIVE_ADAPTATION_1);
-//		scenario2.addActionListener(new OpenScenarioListener());
-//		mnScenario.add(scenario2);
+		// JMenuItem scenario2 = new JMenuItem(
+		// "Open collective adaptation 1 scenario");
+		// scenario2
+		// .setActionCommand(DemonstratorConstant.SCENARIO_COLLECTIVE_ADAPTATION_1);
+		// scenario2.addActionListener(new OpenScenarioListener());
+		// mnScenario.add(scenario2);
 
 		mnScenario.add(new JSeparator());
 		mnScenario.add(mnExit);

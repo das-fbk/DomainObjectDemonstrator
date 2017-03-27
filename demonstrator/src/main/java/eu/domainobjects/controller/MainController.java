@@ -25,6 +25,7 @@ import eu.domainobjects.utils.PlayRunner;
 import eu.domainobjects.utils.ResourceLoader;
 import eu.domainobjects.utils.UserData;
 import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
+//import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
 import eu.fbk.das.process.engine.api.DomainObjectInstance;
 import eu.fbk.das.process.engine.api.DomainObjectManagerInterface;
 import eu.fbk.das.process.engine.api.domain.DomainObjectDefinition;
@@ -150,7 +151,7 @@ public class MainController {
 
 		/**************************************************************/
 		processEngineFacade.addExecutableHandler(
-				"R2Rcall",
+				"R2R_call",
 				new Rome2RioCallExecutable(processEngineFacade
 						.getProcessEngine()));
 		/**************************************************************/

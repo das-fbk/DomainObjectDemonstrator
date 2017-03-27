@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -19,12 +18,10 @@ import javax.xml.bind.JAXBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import eu.domainobjects.DemonstratorConstant;
 import eu.domainobjects.controller.MainController;
 import eu.domainobjects.presentation.main.events.StoryboardLoadedEvent;
 import eu.domainobjects.presentation.main.map.MapInfo;
 import eu.domainobjects.presentation.main.map.MapInfoLoader;
-import eu.domainobjects.presentation.main.map.Routes;
 import eu.domainobjects.presentation.main.map.Routes.Route;
 import eu.domainobjects.presentation.main.map.Routes.Route.Leg;
 
@@ -39,7 +36,7 @@ public class ResourceLoader {
 
 	private static File storyboardFile;
 
-	private static File routeFile;
+	// private static File routeFile;
 
 	private static File scenarioFile;
 
@@ -82,18 +79,18 @@ public class ResourceLoader {
 			storyboard = (Storyboard) context.createUnmarshaller().unmarshal(f);
 			storyboardFile = f;
 			// read routeFile
-			routeFile = new File(storyboardFile.getParent() + FILE_SEPARATOR
-					+ storyboard.getRoutes());
-			if (!routeFile.exists()) {
-				logger.warn("File " + routeFile.getAbsolutePath()
-						+ " does not exist");
-				return;
-			}
+			// routeFile = new File(storyboardFile.getParent() + FILE_SEPARATOR
+			// + storyboard.getRoutes());
+			// if (!routeFile.exists()) {
+			// logger.warn("File " + routeFile.getAbsolutePath()
+			// + " does not exist");
+			// return;
+			// }
 			// read scenarioFile
 			scenarioFile = new File(storyboardFile.getParent() + FILE_SEPARATOR
 					+ storyboard.getScenario());
 			if (!scenarioFile.exists()) {
-				logger.warn("File " + routeFile.getAbsolutePath()
+				logger.warn("File " + scenarioFile.getAbsolutePath()
 						+ " does not exist");
 				return;
 			}
@@ -116,23 +113,23 @@ public class ResourceLoader {
 		return storyboardFile;
 	}
 
-	public static File getRouteFile() {
-		return routeFile;
-	}
+	// public static File getRouteFile() {
+	// return routeFile;
+	// }
 
-	public static List<Route> getRoutes() {
-		if (routes != null) {
-			return routes;
-		}
-		try {
-			JAXBContext context = JAXBContext.newInstance(Routes.class);
-			routes = ((Routes) context.createUnmarshaller().unmarshal(
-					getRouteFile())).getRoute();
-			return routes;
-		} catch (Exception e) {
-			return new ArrayList<Routes.Route>();
-		}
-	}
+	// public static List<Route> getRoutes() {
+	// if (routes != null) {
+	// return routes;
+	// }
+	// try {
+	// JAXBContext context = JAXBContext.newInstance(Routes.class);
+	// routes = ((Routes) context.createUnmarshaller().unmarshal(
+	// getRouteFile())).getRoute();
+	// return routes;
+	// } catch (Exception e) {
+	// return new ArrayList<Routes.Route>();
+	// }
+	// }
 
 	public static File getScenarioFile() {
 		return scenarioFile;
