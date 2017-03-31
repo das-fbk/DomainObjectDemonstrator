@@ -8,6 +8,9 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.telegram.telegrambots.TelegramApiException;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.updatesreceivers.BotSession;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -24,7 +27,17 @@ import eu.domainobjects.utils.HandlerInstance;
 import eu.domainobjects.utils.PlayRunner;
 import eu.domainobjects.utils.ResourceLoader;
 import eu.domainobjects.utils.UserData;
+import eu.fbk.das.domainobject.executable.AskToUseCurrentLocationExecutable;
+import eu.fbk.das.domainobject.executable.ChooseAlternativeExecutable;
+import eu.fbk.das.domainobject.executable.InsertDestinationExecutable;
+import eu.fbk.das.domainobject.executable.InsertOptionalDataExecutable;
 import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
+import eu.fbk.das.domainobject.executable.SelectPlanningModeExecutable;
+import eu.fbk.das.domainobject.executable.ShowResultsExecutable;
+import eu.fbk.das.domainobject.executable.StartChatbotExecutable;
+import eu.fbk.das.domainobject.executable.UserInsertSourceLocationExecutable;
+import eu.fbk.das.domainobject.executable.utils.TripAlternative;
+import eu.fbk.das.domainobject.executable.utils.BotTelegram.TravelAssistantBot;
 //import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
 import eu.fbk.das.process.engine.api.DomainObjectInstance;
 import eu.fbk.das.process.engine.api.DomainObjectManagerInterface;
@@ -149,11 +162,81 @@ public class MainController {
 	 */
 	private void registerHandlersForProcessEngine() {
 
+		// Bot Creation
+
+		TelegramBotsApi api = new TelegramBotsApi();
+		TravelAssistantBot bot = null;
+		try {
+			bot = new TravelAssistantBot("MoveAssistantBot",
+					"323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
+					false, false, false);
+
+			BotSession session = api.registerBot(bot);
+		} catch (TelegramApiException e) {
+			e.printStackTrace();
+		}
+
+		Long ChatId = bot.getCurrentID();
+
+		ArrayList<TripAlternative> alternatives = new ArrayList<TripAlternative>();
 		/**************************************************************/
 		processEngineFacade.addExecutableHandler(
 				"R2R_ServiceCall",
 				new Rome2RioCallExecutable(processEngineFacade
-						.getProcessEngine()));
+						.getProcessEngine(), alternatives, bot));
+		/**************************************************************/
+
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"TA_StartChatbot",
+				new StartChatbotExecutable(processEngineFacade
+						.getProcessEngine(), bot, ChatId));
+		/**************************************************************/
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"TA_UseCurrentLocation",
+				new AskToUseCurrentLocationExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		/**************************************************************/
+
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"TA_InsertSource",
+				new UserInsertSourceLocationExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		/**************************************************************/
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"TA_InsertDestination",
+				new InsertDestinationExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		/**************************************************************/
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"TA_InsertOptionalData",
+				new InsertOptionalDataExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		/**************************************************************/
+
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"TA_SelectPlanningMode",
+				new SelectPlanningModeExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		/**************************************************************/
+
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"TA_ShowResults",
+				new ShowResultsExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		/**************************************************************/
+
+		/**************************************************************/
+		processEngineFacade.addExecutableHandler(
+				"TA_ChooseAlternative",
+				new ChooseAlternativeExecutable(processEngineFacade
+						.getProcessEngine(), bot));
 		/**************************************************************/
 
 		// handler for hoaa for pre-phase
