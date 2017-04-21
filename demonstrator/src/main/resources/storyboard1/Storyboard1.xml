@@ -8,4 +8,7 @@
 	<tns:domainObject file="domainObjects/TelegramTravelAssistant" />
 	<tns:domainObject file="domainObjects/Rome2Rio" />
 	<tns:domainObject file="domainObjects/ViaggiaTrento" />
+	<tns:domainObject file="domainObjects/DataViewerManager" />
+	<tns:domainObject file="domainObjects/GoogleTransit" />
+	<tns:domainObject file="domainObjects/BlaBlaCar" />
 </tns:scenario>

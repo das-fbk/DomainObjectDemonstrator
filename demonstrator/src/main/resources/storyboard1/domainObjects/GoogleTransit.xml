@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:domainObject name="Rome2Rio" xmlns:tns="http://das.fbk.eu/DomainObject"
+<tns:domainObject name="GoogleTransit" xmlns:tns="http://das.fbk.eu/DomainObject"
 	xmlns:tns2="http://das.fbk.eu/DataType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://das.fbk.eu/DomainObject ../../../schema/allow-ensembles/DomainObject.xsd ">
 
 	<tns:domainKnowledge>
-		<tns:internalDomainProperty name="domainProperties/GlobalPlanner" />
+		<tns:internalDomainProperty name="domainProperties/LocalPlanner" />
 	</tns:domainKnowledge>
 
 	<tns:state>
@@ -19,8 +19,8 @@
 		</tns:stateVariable>
 	</tns:state>
 
-	<tns:process name="processes/PROC_Rome2Rio" />
+	<tns:process name="processes/PROC_GoogleTransit" />
 
-	<tns:fragment name="fragments/R2R_findRoutes" />
+	<tns:fragment name="fragments/GT_findRoutes" />
 
 </tns:domainObject>

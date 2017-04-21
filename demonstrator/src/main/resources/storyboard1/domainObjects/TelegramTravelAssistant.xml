@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- singleton="true"  -->
 <tns:domainObject name="TelegramTravelAssistant" xmlns:tns="http://das.fbk.eu/DomainObject"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns2="http://das.fbk.eu/DataType"
 	xsi:schemaLocation="http://das.fbk.eu/DomainObject ../schema/DomainObject.xsd ">
@@ -6,6 +7,7 @@
 		<tns:internalDomainProperty name="domainProperties/TravelAssistant" />
 		<tns:externalDomainProperty name="domainProperties/GlobalPlanner" />
 		<tns:externalDomainProperty name="domainProperties/LocalPlanner" />
+		<tns:externalDomainProperty name="domainProperties/DataViewer" />
 	</tns:domainKnowledge>
 	<tns:state>
 		<tns:stateVariable name="From" type="string">
@@ -38,5 +40,6 @@
 	</tns:state>
 	<tns:process name="processes/PROC_TelegramTravelAssistant" />
 	<tns:fragment name="fragments/TA_planAssistant" />
+	<tns:fragment name="fragments/TA_refineLeg" />
 </tns:domainObject>
 

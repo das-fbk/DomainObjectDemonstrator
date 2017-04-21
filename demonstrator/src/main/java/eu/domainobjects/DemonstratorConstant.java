@@ -3,7 +3,7 @@ package eu.domainobjects;
 import java.awt.Color;
 
 /**
- * Allow Ensembles Demonstrator constants
+ * Domain Objects Demonstrator constants
  */
 public final class DemonstratorConstant {
 
@@ -19,6 +19,10 @@ public final class DemonstratorConstant {
 	public static final String STORYBOARD1_MAIN_XML = "Storyboard1-main.xml";
 	public static final String STORYBOARD1_FOLDER = "storyboard1";
 	public static final String SCENARIO_CELL_SPECIALIZATION = "scenario1";
+
+	// public static final String STORYBOARD1_MAIN_XML = "Storyboard-main.xml";
+	// public static final String STORYBOARD1_FOLDER = "ScenarioReview2";
+	// public static final String SCENARIO_CELL_SPECIALIZATION = "scenario";
 
 	// storyboard constants for collective adaptation 1
 	// public static final String SCENARIO_COLLECTIVE_ADAPTATION_1_MAIN_XML =

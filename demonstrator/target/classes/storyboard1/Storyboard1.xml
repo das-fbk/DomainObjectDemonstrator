@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tns:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tns="http://das.fbk.eu/Scenario">
-	<tns:domainObject file="domainObjects/TravelAssistant">
-		<tns:domainObjectInstance id="TravelAssistant_1" lat="46.146448"
-			long="11.097186999999963"/>
-<!-- 			<tns:domainObjectInstance id="TravelAssistant_2" lat="46.146999" -->
-<!-- 			long="11.0971869999"/> -->
+	<tns:domainObject file="domainObjects/User">
+		<tns:domainObjectInstance id="User_1" lat="46.146448"
+			long="11.097186999999963" />
 	</tns:domainObject>
-	<tns:domainObject file="domainObjects/Rome2Rio">
-	</tns:domainObject>
+	<tns:domainObject file="domainObjects/TelegramTravelAssistant" />
+	<tns:domainObject file="domainObjects/Rome2Rio" />
+	<tns:domainObject file="domainObjects/ViaggiaTrento" />
+	<tns:domainObject file="domainObjects/DataViewerManager" />
+	<tns:domainObject file="domainObjects/GoogleTransit" />
+	<tns:domainObject file="domainObjects/BlaBlaCar" />
 </tns:scenario>

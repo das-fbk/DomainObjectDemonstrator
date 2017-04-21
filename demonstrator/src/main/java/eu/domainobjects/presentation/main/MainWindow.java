@@ -1,6 +1,5 @@
 package eu.domainobjects.presentation.main;
 
-import java.awt.LayoutManager; 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -526,7 +525,8 @@ public class MainWindow {
 		// mainPanel.add(tabbedPane);
 
 		entitiesScrollPane = new JScrollPane(generalTable);
-		tabbedPane.addTab("Domain Object instances", null, entitiesScrollPane, null);
+		tabbedPane.addTab("Domain Object instances", null, entitiesScrollPane,
+				null);
 		tabbedPane.setEnabledAt(0, true);
 
 		refreshWindow();
@@ -795,7 +795,6 @@ public class MainWindow {
 			}
 		}
 	}
-
 
 	public void resetProcessDisplay() {
 		processExecutionPanel = null;

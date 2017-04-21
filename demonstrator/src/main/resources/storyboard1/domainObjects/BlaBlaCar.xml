@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tns:domainObject name="Rome2Rio" xmlns:tns="http://das.fbk.eu/DomainObject"
+<tns:domainObject name="BlaBlaCar" xmlns:tns="http://das.fbk.eu/DomainObject"
 	xmlns:tns2="http://das.fbk.eu/DataType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://das.fbk.eu/DomainObject ../../../schema/allow-ensembles/DomainObject.xsd ">
 
 	<tns:domainKnowledge>
-		<tns:internalDomainProperty name="domainProperties/GlobalPlanner" />
+		<tns:internalDomainProperty name="domainProperties/RideSharing" />
 	</tns:domainKnowledge>
 
 	<tns:state>
-		<tns:stateVariable name="From" type="string">
+		<tns:stateVariable name="Source" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
-		<tns:stateVariable name="To" type="string">
+		<tns:stateVariable name="Destination" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
-		<tns:stateVariable name="PlanList" type="string">
-			<tns2:content type="anyType"/>
+		<tns:stateVariable name="ResultList" type="string">
+			<tns2:content type="anyType">Lista di passaggi in macchina</tns2:content>
 		</tns:stateVariable>
 	</tns:state>
 
-	<tns:process name="processes/PROC_Rome2Rio" />
+	<tns:process name="processes/PROC_BlaBlaCar" />
 
-	<tns:fragment name="fragments/R2R_findRoutes" />
+	<tns:fragment name="fragments/BBC_findPassages" />
 
 </tns:domainObject>

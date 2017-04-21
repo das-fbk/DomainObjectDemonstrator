@@ -18,6 +18,7 @@
 	<tns:state name="ST11" />
 	<tns:state name="ST12" />
 	<tns:state name="ST13" />
+<!-- 	<tns:state name="ST14" /> -->
 
 	<tns:action name="TA_StartInteraction" actionType="input">
 		<tns:precondition>
@@ -33,11 +34,8 @@
 	<tns:action name="TA_InsertSource" actionType="concrete" />
 	<tns:action name="TA_InsertDestination" actionType="concrete" />
 	<tns:action name="TA_InsertOptionalData" actionType="concrete" />
-
+	
 	<tns:action name="TA_PlanRequest" actionType="input">
-		<tns:effect>
-			<tns1:event dpName="TravelAssistant" eventName="receiveInputData"></tns1:event>
-		</tns:effect>
 		<tns:actionVariable name="From" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
@@ -56,15 +54,18 @@
 		<tns:actionVariable name="RouteType" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
+		<tns:effect>
+			<tns1:event dpName="TravelAssistant" eventName="receiveInputData"></tns1:event>
+		</tns:effect>
 	</tns:action>
 
 	<tns:action name="TA_PlanResponse" actionType="output">
-		<tns:effect>
-			<tns1:event dpName="TravelAssistant" eventName="findPlan"></tns1:event>
-		</tns:effect>
 		<tns:actionVariable name="PlanList" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
+		<tns:effect>
+			<tns1:event dpName="TravelAssistant" eventName="findPlan"></tns1:event>
+		</tns:effect>
 	</tns:action>
 
 	<tns:action name="TA_ShowResults" actionType="concrete">
@@ -74,38 +75,48 @@
 	</tns:action>
 
 	<tns:action name="TA_ChooseAlternative" actionType="concrete">
+		<tns:effect>
+			<tns1:event dpName="TravelAssistant" eventName="userChoice"></tns1:event>
+		</tns:effect>
 	</tns:action>
 
 	<tns:action name="TA_ProvideChoice" actionType="input">
 		<tns:effect>
-			<tns1:event dpName="TravelAssistant" eventName="userChoice"></tns1:event>
+			<tns1:event dpName="TravelAssistant" eventName="refinePlan"></tns1:event>
 		</tns:effect>
 		<tns:actionVariable name="ChosenPlan" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
-	</tns:action>
-
-	<tns:action name="TA_ProvideInstructions" actionType="output">
-		<tns:effect>
-			<tns1:event dpName="TravelAssistant" eventName="refinePlan"></tns1:event>
-		</tns:effect>
 		<tns:actionVariable name="HOAAPlanGoal" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 	</tns:action>
 
-	<tns:action name="TA_PlanHOAA" actionType="concrete">
+<!-- 	<tns:action name="TA_ProvideInstructions" actionType="output"> -->
+<!-- 		<tns:effect> -->
+<!-- 			<tns1:event dpName="TravelAssistant" eventName="journeyPlanned"></tns1:event> -->
+<!-- 		</tns:effect> -->
+<!-- 	</tns:action> -->
+
+	<tns:action name="TA_DefineJourneyLegs" actionType="abstract" type="HOAA" 
+		receiveVar="TRANSPORTATIONS">
 		<tns:effect>
 			<tns1:event dpName="TravelAssistant" eventName="journeyPlanned"></tns1:event>
 		</tns:effect>
 	</tns:action>
 
-	<!-- <tns:action name="TA_PlanHOAA" actionType="abstract" type="HOAA" -->
-	<!-- receiveVar="TRANSPORTATIONS"> -->
-	<!-- <tns:effect> -->
-	<!-- <tns1:event dpName="TravelAssistant" eventName="journeyPlanned"></tns1:event> -->
-	<!-- </tns:effect> -->
-	<!-- </tns:action> -->
+	<tns:action name="TA_AssistantPlanningComplete" actionType="concrete">
+<!-- 		<tns:precondition> -->
+<!-- 			<tns1:point> -->
+<!-- 				<tns1:domainProperty dp_name="TravelAssistant"> -->
+<!-- 					<tns1:state>JOURNEY_PLANNED</tns1:state> -->
+<!-- 				</tns1:domainProperty> -->
+<!-- 			</tns1:point> -->
+<!-- 		</tns:precondition> -->
+		<tns:effect>
+			<tns1:event dpName="TravelAssistant" eventName="completeAssistance"></tns1:event>
+		</tns:effect>
+	</tns:action>
 
 	<tns:transition>
 		<tns:initialState>ST0</tns:initialState>
@@ -173,16 +184,22 @@
 		<tns:action name="TA_ProvideChoice" actionType="input" />
 	</tns:transition>
 
+<!-- 	<tns:transition> -->
+<!-- 		<tns:initialState>ST11</tns:initialState> -->
+<!-- 		<tns:finalState>ST12</tns:finalState> -->
+<!-- 		<tns:action name="TA_ProvideInstructions" actionType="output" /> -->
+<!-- 	</tns:transition> -->
+
 	<tns:transition>
 		<tns:initialState>ST11</tns:initialState>
 		<tns:finalState>ST12</tns:finalState>
-		<tns:action name="TA_ProvideInstructions" actionType="output" />
+		<tns:action name="TA_DefineJourneyLegs" actionType="abstract" />
 	</tns:transition>
 
 	<tns:transition>
 		<tns:initialState>ST12</tns:initialState>
 		<tns:finalState>ST13</tns:finalState>
-		<tns:action name="TA_PlanHOAA" actionType="concrete" />
+		<tns:action name="TA_AssistantPlanningComplete" actionType="concrete" />
 	</tns:transition>
 
 </tns:fragment>

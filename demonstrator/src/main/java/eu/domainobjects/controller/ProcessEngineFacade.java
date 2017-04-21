@@ -92,9 +92,9 @@ public class ProcessEngineFacade {
 							doi.updateKnowledge(knownledge);
 						}
 					}
-//					if (d.getEnsemble() != null) {
-//						doi.setEnsemble(d.getEnsemble());
-//					}
+					// if (d.getEnsemble() != null) {
+					// doi.setEnsemble(d.getEnsemble());
+					// }
 					if (d.getCorrelations() != null) {
 						doi.setCorrelations(d.getCorrelations());
 					}
@@ -356,7 +356,6 @@ public class ProcessEngineFacade {
 			doiNameToProcessModel.put(doi.getId(), model);
 			pd = model;
 		}
-
 		return pd;
 	}
 
@@ -604,6 +603,19 @@ public class ProcessEngineFacade {
 	public DomainObjectInstance getDomainObjectByName(String name) {
 		return processEngine.getDomainObjectInstances().stream()
 				.filter(d -> d.getId().equals(name)).findFirst().get();
+	}
+
+	public Map<String, ProcessDiagram> getDoiNameToProcessModel() {
+		return doiNameToProcessModel;
+	}
+
+	public void setDoiNameToProcessModel(
+			Map<String, ProcessDiagram> doiNameToProcessModel) {
+		this.doiNameToProcessModel = doiNameToProcessModel;
+	}
+
+	public DomainObjectManagerInterface getManager() {
+		return manager;
 	}
 
 }

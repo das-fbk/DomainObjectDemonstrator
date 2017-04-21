@@ -9,11 +9,13 @@
 			<tns1:point>
 				<tns1:domainProperty dp_name="TravelAssistant">
 					<tns1:state>
-						JOURNEY_PLANNED
+						ASSISTANCE_COMPLETE
 					</tns1:state>
 				</tns1:domainProperty>
 			</tns1:point>
 		</tns:goal>
 	</tns:abstract>
+	
+<!-- 	<tns:concrete name="USER_journeyPlanned"/> -->
 
 </tns:process>

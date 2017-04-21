@@ -1,5 +1,7 @@
 package eu.domainobjects.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +10,10 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.generics.BotSession;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -16,6 +22,7 @@ import eu.domainobjects.controller.events.DomainObjectInstanceSelection;
 import eu.domainobjects.controller.events.StepEvent;
 import eu.domainobjects.presentation.main.MainWindow;
 import eu.domainobjects.presentation.main.action.listener.DomainObjectDefinitionSelectionByName;
+import eu.domainobjects.presentation.main.action.listener.StepButtonActionListener;
 import eu.domainobjects.presentation.main.events.DomainObjectInstanceSelectionByName;
 import eu.domainobjects.presentation.main.events.StoryboardLoadedEvent;
 import eu.domainobjects.utils.DoiBean;
@@ -24,10 +31,24 @@ import eu.domainobjects.utils.HandlerInstance;
 import eu.domainobjects.utils.PlayRunner;
 import eu.domainobjects.utils.ResourceLoader;
 import eu.domainobjects.utils.UserData;
+import eu.fbk.das.domainobject.executable.AskToUseCurrentLocationExecutable;
+import eu.fbk.das.domainobject.executable.ChooseAlternativeExecutable;
+import eu.fbk.das.domainobject.executable.InsertDestinationExecutable;
+import eu.fbk.das.domainobject.executable.InsertOptionalDataExecutable;
 import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
+import eu.fbk.das.domainobject.executable.SelectPlanningModeExecutable;
+import eu.fbk.das.domainobject.executable.ShowResultsExecutable;
+import eu.fbk.das.domainobject.executable.StartChatbotExecutable;
+import eu.fbk.das.domainobject.executable.TAcheckLegSetExecutable;
+import eu.fbk.das.domainobject.executable.TAdefineJourneyLegsExecutable;
+import eu.fbk.das.domainobject.executable.TAidentifyLegExecutable;
+import eu.fbk.das.domainobject.executable.UserInsertSourceLocationExecutable;
+import eu.fbk.das.domainobject.executable.utils.TripAlternative;
+import eu.fbk.das.domainobject.executable.utils.BotTelegram.TravelAssistantBot;
 //import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
 import eu.fbk.das.process.engine.api.DomainObjectInstance;
 import eu.fbk.das.process.engine.api.DomainObjectManagerInterface;
+import eu.fbk.das.process.engine.api.ProcessEngine;
 import eu.fbk.das.process.engine.api.domain.DomainObjectDefinition;
 import eu.fbk.das.process.engine.api.domain.ObjectDiagram;
 import eu.fbk.das.process.engine.api.domain.OnMessageActivity;
@@ -149,12 +170,90 @@ public class MainController {
 	 */
 	private void registerHandlersForProcessEngine() {
 
-		/**************************************************************/
+		ActionListener aListner = new StepButtonActionListener();
+		ActionEvent event = new ActionEvent(
+				processEngineFacade.getProcessEngine(),
+				ActionEvent.ACTION_PERFORMED, "step");
+		ProcessEngine pe = processEngineFacade.getProcessEngine();
+
+		// Bot Creation
+		ApiContextInitializer.init();
+
+		TelegramBotsApi api = new TelegramBotsApi();
+		TravelAssistantBot bot = null;
+		try {
+			bot = new TravelAssistantBot("MoveAssistantBot",
+					"323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
+					false, false, false, aListner, event);
+
+			BotSession session = api.registerBot(bot);
+		} catch (TelegramApiException e) {
+			e.printStackTrace();
+		}
+
+		Long ChatId = bot.getCurrentID();
+
+		ArrayList<TripAlternative> alternatives = new ArrayList<TripAlternative>();
+
 		processEngineFacade.addExecutableHandler(
 				"R2R_ServiceCall",
 				new Rome2RioCallExecutable(processEngineFacade
+						.getProcessEngine(), alternatives, bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_StartChatbot",
+				new StartChatbotExecutable(processEngineFacade
+						.getProcessEngine(), bot, ChatId));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_UseCurrentLocation",
+				new AskToUseCurrentLocationExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_InsertSource",
+				new UserInsertSourceLocationExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_InsertDestination",
+				new InsertDestinationExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_InsertOptionalData",
+				new InsertOptionalDataExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_SelectPlanningMode",
+				new SelectPlanningModeExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_ShowResults",
+				new ShowResultsExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_ChooseAlternative",
+				new ChooseAlternativeExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_DefineJourneyLegs",
+				new TAdefineJourneyLegsExecutable(processEngineFacade
 						.getProcessEngine()));
-		/**************************************************************/
+
+		processEngineFacade.addExecutableHandler(
+				"TA_IdentifyLeg",
+				new TAidentifyLegExecutable(processEngineFacade
+						.getProcessEngine()));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_CheckLegSet",
+				new TAcheckLegSetExecutable(processEngineFacade
+						.getProcessEngine()));
 
 		// handler for hoaa for pre-phase
 		// processEngineFacade.addExecutableHandler(
@@ -262,6 +361,11 @@ public class MainController {
 	 */
 	public void updateInterface(DoiBean db) {
 		try {
+			DomainObjectInstance doi = processEngineFacade.getManager()
+					.findInstanceById(db.getName());
+			if (doi == null) {
+				return;
+			}
 			displayProcessExecution(db);
 			displayProcessModel(db);
 			updateSelectedEntityDetails(db);
@@ -464,6 +568,8 @@ public class MainController {
 		}
 		logger.debug("Display process execution model for db: " + db.getName());
 		ProcessDiagram pd = processEngineFacade.getProcessDiagram(db);
+		// window.resetProcessExecution();
+		// window.refreshWindow();
 		window.displayProcess(pd, false, true);
 	}
 
