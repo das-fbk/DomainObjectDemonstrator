@@ -2,6 +2,7 @@ package eu.domainobjects.presentation.main;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
@@ -27,6 +28,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -94,26 +96,26 @@ public class ActivityWindow extends JPanel {
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLocation(0, 0);
-		mainPanel.setSize(863, 800);
+		mainPanel.setSize(1000, 800);
 		mainPanel.setLayout(null);
 		add(mainPanel);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		// an example how to get current process
 		tabbedPane.addChangeListener(new ChangeListener() {
-
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
 			}
 
 		});
-		tabbedPane.setBounds(0, 0, 841, 510);
+		tabbedPane.setBounds(0, 0, 950, 510);
 
 		mainPanel.add(tabbedPane);
 
 		activityPanel = new JPanel();
-		tabbedPane.addTab("Cell Activity", null, activityPanel, null);
+		tabbedPane.addTab("Process/Fragment Activity", null, activityPanel,
+				null);
 
 		// create panel to show the activity to refine or adapt
 
@@ -125,7 +127,7 @@ public class ActivityWindow extends JPanel {
 		problemPanel.setAutoscrolls(true);
 		scrollFrame.setPreferredSize(new Dimension(600, 200));
 
-		tabbedPane.addTab("Cell Specialization Problem", null, scrollFrame,
+		tabbedPane.addTab("Activity Specialization Problem", null, scrollFrame,
 				null);
 
 		domainPanel = new JPanel();
@@ -139,7 +141,8 @@ public class ActivityWindow extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(processPanel);
 		scrollPane
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		tabbedPane.addTab("Cell Specialization Result", null, scrollPane, null);
+		tabbedPane.addTab("Activity Specialization Result", null, scrollPane,
+				null);
 
 		Button cancelButton = new Button("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
@@ -150,7 +153,7 @@ public class ActivityWindow extends JPanel {
 
 		JLabel lblLog = new JLabel("Execution Log");
 		lblLog.setBounds(10, 505, 223, 22);
-		lblLog.setFont(new Font("Serif", Font.BOLD, 14));
+		lblLog.setFont(new Font("Serif", Font.BOLD, 17));
 		mainPanel.add(lblLog);
 
 		// log inside a scrollpane
@@ -158,7 +161,7 @@ public class ActivityWindow extends JPanel {
 		// logTextArea.setBounds(10, 530, 820, 100);
 		logTextArea.setEditable(false);
 		JScrollPane scrollPaneLog = new JScrollPane(logTextArea);
-		scrollPaneLog.setBounds(10, 530, 820, 100);
+		scrollPaneLog.setBounds(10, 530, 940, 100);
 		mainPanel.add(scrollPaneLog);
 
 	}
@@ -180,13 +183,13 @@ public class ActivityWindow extends JPanel {
 
 		// ACTIVITY PANEL
 		activityPanel.setLayout(null);
-		activityLabel = new Label("Goal");
+		activityLabel = new Label("Abstract Activity Goal");
 		activityLabel.setBounds(24, 24, 550, 22);
 		activityPanel.add(activityLabel);
 
-		goalLabel = new JLabel("Goal");
+		goalLabel = new JLabel("Abstract Activity Goal");
 		goalLabel.setBounds(24, 45, 500, 50);
-		goalLabel.setFont(new Font("Serif", Font.PLAIN, 12));
+		goalLabel.setFont(new Font("Serif", Font.PLAIN, 17));
 		activityPanel.add(goalLabel);
 
 		graphActivityPanel = new ProcessModelPanel(
@@ -195,19 +198,19 @@ public class ActivityWindow extends JPanel {
 
 		// PROBLEM PANEL
 
-		goalProblemLabel = new Label("Goal");
+		goalProblemLabel = new Label("Abstract Activity Goal");
 		goalProblemLabel.setBounds(24, 45, 500, 22);
-		goalProblemLabel.setFont(new Font("Serif", Font.PLAIN, 12));
+		goalProblemLabel.setFont(new Font("Serif", Font.PLAIN, 17));
 
 		// PLANNING PANEL
 		smvLabel = new Label("SMV File");
 		smvLabel.setBounds(24, 65, 50, 50);
-		smvLabel.setFont(new Font("Serif", Font.BOLD, 15));
+		smvLabel.setFont(new Font("Serif", Font.BOLD, 17));
 
 		// PLANNING RESULT PANEL
 		dotLabel = new Label("DOT File");
 		dotLabel.setBounds(24, 65, 50, 50);
-		dotLabel.setFont(new Font("Serif", Font.BOLD, 15));
+		dotLabel.setFont(new Font("Serif", Font.BOLD, 17));
 
 		// panel to show the adaptation (process) result in the ResultView
 		graphProcessPanel = new ProcessModelPanel(
@@ -486,6 +489,10 @@ public class ActivityWindow extends JPanel {
 		JTable tableFragments = new JTable(
 				toTableModelFragments(fragmentsOfCells));
 
+		// marty
+		MatteBorder border = new MatteBorder(1, 1, 1, 1, Color.BLACK);
+		tableFragments.setBorder(border);
+
 		JPanel FragmentListPanel = new JPanel();
 		FragmentListPanel.setBounds(24, 155, 750, 500);
 
@@ -496,9 +503,13 @@ public class ActivityWindow extends JPanel {
 
 		tableFragments.getColumnModel().getColumn(0).setPreferredWidth(50);
 		tableFragments.getColumnModel().getColumn(1).setPreferredWidth(400);
+		// tableFragments.setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		JTable tableContext = new JTable(
 				toTableModelProperties(propertiesOfCells));
+
+		// marty
+		tableContext.setBorder(border);
 
 		JPanel ContextListPanel = new JPanel();
 		ContextListPanel.setBounds(24, 400, 500, 200);
@@ -538,7 +549,7 @@ public class ActivityWindow extends JPanel {
 			DomainObjectInstance doi) {
 
 		problemPanel.removeAll();
-		Label goalLabel = new Label("Goal");
+		Label goalLabel = new Label("Abstact Activity Goal");
 		goalLabel.setBounds(24, 24, 550, 22);
 		problemPanel.add(goalLabel);
 
@@ -546,7 +557,7 @@ public class ActivityWindow extends JPanel {
 		fragmentsLabel.setBounds(24, 125, 550, 22);
 		problemPanel.add(fragmentsLabel);
 
-		Label contextLabel = new Label("Context Properties");
+		Label contextLabel = new Label("External Knowledge");
 		contextLabel.setBounds(24, 370, 1000, 22);
 		problemPanel.add(contextLabel);
 
@@ -690,13 +701,14 @@ public class ActivityWindow extends JPanel {
 		JTextArea codeArea = new JTextArea(50, 150);
 
 		codeArea.setText(output);
+		// codeArea.setWrapStyleWord(true);
 		codeArea.setEditable(false);
 		codeArea.setFont(Font.getFont(Font.SANS_SERIF));
 
 		JScrollPane sp = new JScrollPane(codeArea);
 		sp.setPreferredSize(new Dimension(600, 400));
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		domainPanel.add(sp);
 		domainPanel.add(smvLabel);
 
@@ -758,7 +770,7 @@ public class ActivityWindow extends JPanel {
 		JScrollPane sp = new JScrollPane(codeArea);
 		sp.setPreferredSize(new Dimension(600, 400));
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		resultPanel.add(sp);
 		resultPanel.add(dotLabel);
 
@@ -854,8 +866,8 @@ public class ActivityWindow extends JPanel {
 	}
 
 	public TableModel toTableModelFragments(Map map) {
-		DefaultTableModel model = new DefaultTableModel(new Object[] { "Cells",
-				"Fragments" }, 0);
+		DefaultTableModel model = new DefaultTableModel(new Object[] {
+				"Domain Objects", "Fragments" }, 0);
 		for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
 			Map.Entry entry = (Map.Entry) it.next();
 			model.addRow(new Object[] { entry.getKey(), entry.getValue() });
@@ -865,7 +877,7 @@ public class ActivityWindow extends JPanel {
 
 	public TableModel toTableModelProperties(Map map) {
 		DefaultTableModel model = new DefaultTableModel(new Object[] {
-				"Context Property", "Current Status" }, 0);
+				"Domain Property", "Current Status" }, 0);
 		for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
 			Map.Entry entry = (Map.Entry) it.next();
 			model.addRow(new Object[] { entry.getKey(), entry.getValue() });

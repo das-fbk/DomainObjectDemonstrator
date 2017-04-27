@@ -28,6 +28,7 @@ import eu.fbk.das.process.engine.api.domain.AbstractActivity;
 import eu.fbk.das.process.engine.api.domain.ProcessActivity;
 import eu.fbk.das.process.engine.api.domain.ProcessDiagram;
 import eu.fbk.das.process.engine.api.domain.ScopeActivity;
+import eu.fbk.das.process.engine.api.domain.SwitchActivity;
 import eu.fbk.das.process.engine.api.domain.WhileActivity;
 
 /**
@@ -40,17 +41,20 @@ public class ProcessModelPanel extends JPanel {
 	private static final Logger logger = LogManager
 			.getLogger(ProcessModelPanel.class);
 
-	// graph styles
-	private static final String STYLE_ABSTRACT = "verticalAlign=top;dashed=true;dashPattern=5;rounded=true;fillColor=FFFFFF";
-	private static final String STYLE_RUNNING = "verticalAlign=top;fillColor=FF0000";
-	private static final String STYLE_ABSTRACT_EXECUTED = "verticalAlign=top;dashed=true;dashPattern=5;rounded=true;fillColor=90EE90";
-	private static final String STYLE_ABSTRACT_RUNNING = "verticalAlign=top;dashed=true;dashPattern=5;rounded=true;fillColor=90EE90";
-	private static final String STYLE_EXECUTED = "verticalAlign=top;fillColor=90EE90";
-	private static final String STYLE_DEFAULT = "verticalAlign=top;fillColor=FFFFFF;margin=20px";
-	private static final String STYLE_WHILE = "verticalAlign=top;fillColor=FFFFFF";
-	private static final String STYLE_SCOPE = "verticalAlign=center;strokeWidth=2;dashed=true;dashed=1;shadow=1;dashPattern=1;rounded=true;fillColor=FFFFFF";
-	private static final String STYLE_WHILE_EXECUTED = "verticalAlign=top;dashed=true;rounded=true;fillColor=90EE90";
-	private static final String STYLE_WHILE_RUNNING = "verticalAlign=top;dashed=true;rounded=true;fillColor=FFA500";
+	// graph styles whiteSpace=wrap; verticalAlign=middle;
+	private static final String STYLE_ABSTRACT = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;horizontalAlign=center;verticalAlign=top;dashed=true;dashPattern=8;fillColor=FFFFFF";
+	private static final String STYLE_RUNNING = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FF0000";
+	private static final String STYLE_ABSTRACT_EXECUTED = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;dashed=true;dashPattern=8;fillColor=90EE90";
+	private static final String STYLE_ABSTRACT_RUNNING = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;dashed=true;dashPattern=8;fillColor=90EE90";
+	private static final String STYLE_SWITCH = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FFFFFF";
+	private static final String STYLE_SWITCH_EXECUTED = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=90EE90";
+	private static final String STYLE_SWITCH_RUNNING = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=90EE90";
+	private static final String STYLE_EXECUTED = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=90EE90";
+	private static final String STYLE_DEFAULT = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FFFFFF;margin=20px";
+	private static final String STYLE_WHILE = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=FFFFFF";
+	private static final String STYLE_SCOPE = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=center;strokeWidth=2;dashed=true;dashed=1;shadow=1;dashPattern=1;rounded=true;fillColor=FFFFFF";
+	private static final String STYLE_WHILE_EXECUTED = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=90EE90";
+	private static final String STYLE_WHILE_RUNNING = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=FFA500";
 
 	// private variables
 	private mxGraphComponent graphComponent;
@@ -76,7 +80,7 @@ public class ProcessModelPanel extends JPanel {
 		// add graphComponent to panel
 		graphComponent.setBorder(null);
 		graphComponent.setEnabled(false);
-		add(graphComponent);
+		this.add(graphComponent);
 
 		// test for scroll by dragging
 		setAutoscrolls(true);
@@ -185,6 +189,9 @@ public class ProcessModelPanel extends JPanel {
 				return getGraphForScopeActivity(pd, current, (ScopeActivity) pa);
 			} else if (pa.isWhile()) {
 				return getGraphForWhileActivity(pd, current, (WhileActivity) pa);
+			} else if (pa.isSwitch()) {
+				return getGraphForSwitchActivity(pd, current,
+						(SwitchActivity) pa);
 			}
 		}
 		return current;
@@ -237,6 +244,29 @@ public class ProcessModelPanel extends JPanel {
 		return current;
 	}
 
+	private mxGraph getGraphForSwitchActivity(ProcessDiagram pd,
+			mxGraph current, SwitchActivity pa) {
+		if ((pef.hasRefinements(pd) && pd.getCurrentActivity().getName()
+				.equals(pa.getName()))) {
+			logger.debug(pa.getName());
+			ProcessDiagram subProcess = pef.getRefinement(pd);
+			OrderedGraph ref = new OrderedGraph();
+			ref = getGraphFromProcessDiagram(subProcess, ref.getGraph());
+			ref.setActivityName(pa.getName());
+			refinements.put(pd.getpid() + "_" + pa.getName(), ref);
+			current = insertIn(current, ref, pa, getStyle(pa));
+		} else if (!pa.isRunning() && pa.isExecuted()) {
+			OrderedGraph gra = refinements
+					.get(pd.getpid() + "_" + pa.getName());
+			current = insertIn(current, gra, pa, STYLE_EXECUTED);
+		} else if (!pa.isRunning() || pa.isExecuted()) {
+			OrderedGraph gra = refinements
+					.get(pd.getpid() + "_" + pa.getName());
+			current = insertIn(current, gra, pa, STYLE_EXECUTED);
+		}
+		return current;
+	}
+
 	private String getStyle(ProcessActivity pa) {
 		if (pa.isAbstract() && pa.isExecuted()) {
 			return STYLE_ABSTRACT_EXECUTED;
@@ -246,6 +276,15 @@ public class ProcessModelPanel extends JPanel {
 		}
 		if (pa.isAbstract()) {
 			return STYLE_ABSTRACT;
+		}
+		if (pa.isSwitch() && pa.isExecuted()) {
+			return STYLE_SWITCH_EXECUTED;
+		}
+		if (pa.isSwitch() && pa.isRunning()) {
+			return STYLE_SWITCH_RUNNING;
+		}
+		if (pa.isSwitch()) {
+			return STYLE_SWITCH;
 		}
 		if (pa.isWhile() && pa.isExecuted()) {
 			return STYLE_WHILE_EXECUTED;
@@ -340,7 +379,7 @@ public class ProcessModelPanel extends JPanel {
 			x = 0;
 		} else {
 			if (isParentAbstract(lastCell) || isParentScope(lastCell)
-					|| isParentWhile(lastCell)) {
+					|| isParentWhile(lastCell) || isParentSwitch(lastCell)) {
 				// last cell was inside refinement, we need to find father of
 				// this refinement and use his coordinate to calculate
 				// coordinate for placement
@@ -388,6 +427,16 @@ public class ProcessModelPanel extends JPanel {
 		return parent.getStyle().equalsIgnoreCase(STYLE_ABSTRACT)
 				|| parent.getStyle().equalsIgnoreCase(STYLE_ABSTRACT_RUNNING)
 				|| parent.getStyle().equalsIgnoreCase(STYLE_ABSTRACT_EXECUTED);
+	}
+
+	private boolean isParentSwitch(mxCell cell) {
+		mxICell parent = getRoot(cell.getParent());
+		if (parent == null || parent.getStyle() == null) {
+			return false;
+		}
+		return parent.getStyle().equalsIgnoreCase(STYLE_SWITCH)
+				|| parent.getStyle().equalsIgnoreCase(STYLE_SWITCH_RUNNING)
+				|| parent.getStyle().equalsIgnoreCase(STYLE_SWITCH_EXECUTED);
 	}
 
 	private mxICell getRoot(mxICell cell) {

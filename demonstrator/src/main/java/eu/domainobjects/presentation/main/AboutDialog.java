@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -39,18 +40,20 @@ public class AboutDialog extends JDialog {
 	public AboutDialog() {
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setTitle("Allow Ensembles Demonstrator");
-		setBounds(100, 100, 680, 320);
+		setTitle("Domain Objects Demonstrator");
+		setBounds(400, 200, 750, 270);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
+		BoxLayout aboutDialogLayout = new BoxLayout(contentPanel,
+				BoxLayout.Y_AXIS);
+		contentPanel.setLayout(aboutDialogLayout);
 		try {
-			URL resource = getClass().getResource("/images/aboutImage.png");
+			URL resource = getClass().getResource("/images/DAS_logo.png");
 			BufferedImage image = ImageIO.read(resource);
 			JLabel picLabel = new JLabel(new ImageIcon(image));
 			picLabel.setBorder(null);
-			picLabel.setBounds(10, 11, 644, 226);
+			// picLabel.setBounds(10, 11, 644, 226);
 			contentPanel.add(picLabel);
 			contentPanel.repaint();
 		} catch (Exception e) {
@@ -60,7 +63,7 @@ public class AboutDialog extends JDialog {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		JLabel lblNewLabel = new JLabel("http://www.allow-ensembles.eu/");
+		JLabel lblNewLabel = new JLabel("https://das.fbk.eu/");
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

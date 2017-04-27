@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -28,7 +29,7 @@ import org.apache.logging.log4j.Logger;
 import eu.domainobjects.DemonstratorConstant;
 
 /**
- * A dialog for user preferences for Allow Ensembles Demonstrator
+ * A dialog for user preferences for Domain Objects Demonstrator
  */
 
 public class PreferencesDialog extends JDialog {
@@ -53,25 +54,21 @@ public class PreferencesDialog extends JDialog {
 		});
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setTitle("Allow Ensembles Demonstrator");
-		setBounds(100, 100, 307, 205);
+		setTitle("Domain Objects Demonstrator");
+		setBounds(400, 200, 350, 250);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
+		BoxLayout prefDialogLayout = new BoxLayout(contentPanel,
+				BoxLayout.Y_AXIS);
+		contentPanel.setLayout(prefDialogLayout);
 
-		JLabel lblSettings = new JLabel("Settings");
-		lblSettings.setBounds(10, 11, 46, 14);
-		contentPanel.add(lblSettings);
-
-		JLabel lblStepTime = new JLabel("Step time (ms)");
-		lblStepTime.setBounds(21, 53, 100, 14);
+		JLabel lblStepTime = new JLabel("Settings Step Time (ms)");
 		contentPanel.add(lblStepTime);
 
 		textField = new JTextField();
 		textField
-				.setToolTipText("specify step duration for demonstrator in play mode");
-		textField.setBounds(173, 50, 86, 20);
+				.setToolTipText("Specify step duration for demonstrator in play mode");
 
 		contentPanel.add(textField);
 		textField.setColumns(10);
@@ -79,7 +76,6 @@ public class PreferencesDialog extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		panel.setBounds(10, 36, 281, 96);
-		contentPanel.add(panel);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -110,7 +106,7 @@ public class PreferencesDialog extends JDialog {
 
 				private void displayValidationError(JPanel panel) {
 					JOptionPane.showMessageDialog(panel,
-							"Step time must be a number more than 0 and less than "
+							"Step time must be a number greather than 0 and less than "
 									+ DemonstratorConstant.STEP_TIME_MAX,
 							"Error", JOptionPane.ERROR_MESSAGE);
 					DemonstratorConstant

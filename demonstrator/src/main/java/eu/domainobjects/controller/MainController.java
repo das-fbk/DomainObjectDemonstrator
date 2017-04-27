@@ -14,6 +14,7 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.generics.BotSession;
+import org.w3c.dom.Element;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -60,6 +61,7 @@ import eu.fbk.das.process.engine.api.domain.WhileActivity;
 import eu.fbk.das.process.engine.api.jaxb.ActivityType;
 import eu.fbk.das.process.engine.api.jaxb.EventHandlerType;
 import eu.fbk.das.process.engine.api.jaxb.ScopeType;
+import eu.fbk.das.process.engine.api.jaxb.VariableType;
 import eu.fbk.das.process.engine.impl.ProcessEngineImpl;
 
 /**
@@ -143,8 +145,6 @@ public class MainController {
 			window.loadDomainObjectInstancesTable(processEngineFacade
 					.getDomainObjectInstances());
 
-			// load user information
-
 			// update comboboxModels
 			updateComboboxEntities();
 
@@ -154,8 +154,8 @@ public class MainController {
 			// register handler for executable activities
 			registerHandlersForProcessEngine();
 
-			addLog("Storyboard loaded: "
-					+ ResourceLoader.getScenarioFile().getAbsolutePath());
+			// addLog("Storyboard loaded: "
+			// + ResourceLoader.getScenarioFile().getAbsolutePath());
 		} catch (Exception e) {
 			logger.debug("Problem on loading storyboard");
 			logger.error(e.getMessage(), e);
@@ -335,7 +335,7 @@ public class MainController {
 				window.updateSelectedEntityProvidedFragments(f);
 				// update monitors
 				List<String> monitors = getMonitor(p);
-				window.updateMonitors(monitors, -1);
+				// window.updateMonitors(monitors, -1);
 			}
 		}
 	}
@@ -368,7 +368,7 @@ public class MainController {
 			}
 			displayProcessExecution(db);
 			displayProcessModel(db);
-			updateSelectedEntityDetails(db);
+			updateSelectedEntityState(db);
 			updateSelectedEntityCorrelations(db);
 			updateSelectedEntityProvidedFragments(db);
 			updateCellInstances(db);
@@ -390,10 +390,10 @@ public class MainController {
 			ProcessDiagram process = doi.getProcess();
 			List<String> monitors = getMonitor(process);
 			if (monitorSelectedMap.containsKey(doi.getId())) {
-				window.updateMonitors(monitors,
-						monitorSelectedMap.get(doi.getId()));
+				// window.updateMonitors(monitors,
+				// monitorSelectedMap.get(doi.getId()));
 			} else {
-				window.updateMonitors(monitors, -1);
+				// window.updateMonitors(monitors, -1);
 			}
 		}
 	}
@@ -514,14 +514,13 @@ public class MainController {
 		List<DoiBean> result = new ArrayList<DoiBean>();
 		for (DoiBean db : instances) {
 			ProcessDiagram p = processEngineFacade.getProcessDiagram(db);
-			if (db.getName().startsWith(type) && p != null && !p.isEnded()) {
+			if (db.getName().startsWith(type) && p != null) { // && !p.isEnded()
 				result.add(db);
 			}
 		}
 		for (DoiBean db : result) {
 			toDisplay.add(db.getName());
 		}
-
 		window.updateCellInstances(toDisplay);
 	}
 
@@ -578,7 +577,7 @@ public class MainController {
 		try {
 			// one step for process engine
 			processEngineFacade.step();
-			addLog("ProcessEngine step completed");
+			// addLog("ProcessEngine step completed");
 			// update domainObjectInstances list
 			window.updateDomainObjectInstancesTable(processEngineFacade
 					.getDomainObjectInstances());
@@ -612,18 +611,29 @@ public class MainController {
 		window.updateSelectedEntityProvidedFragments(response);
 	}
 
-	private void updateSelectedEntityDetails(DoiBean db) {
+	private void updateSelectedEntityState(DoiBean db) {
 		if (db == null) {
 			return;
 		}
 		List<String> toDisplay = new ArrayList<String>();
-		ProcessDiagram process = processEngineFacade.getModel(db.getName());
-		if (process != null) {
-			String doiName = processEngineFacade.fromProcessModelToDoi(process);
-			toDisplay.add("Name :" + doiName);
-			toDisplay.add("Process name: " + process.getName());
-
-			window.updateSelectedEntityDetails(toDisplay);
+		DomainObjectInstance doi = processEngineFacade
+				.getDomainObjectInstanceForProcess(processEngineFacade
+						.getProcessDiagram(db));
+		if (doi != null) {
+			if (doi.getState() != null) {
+				List<VariableType> state = new ArrayList<VariableType>();
+				state = doi.getState().getStateVariable();
+				for (VariableType var : state) {
+					Element e = (Element) (var.getContent());
+					if (e.getFirstChild() != null) {
+						String value = e.getFirstChild().getNodeValue();
+						toDisplay.add(var.getName() + " = " + value);
+					} else {
+						toDisplay.add(var.getName() + " = " + "");
+					}
+				}
+			}
+			window.updateSelectedEntityState(toDisplay);
 		}
 	}
 
