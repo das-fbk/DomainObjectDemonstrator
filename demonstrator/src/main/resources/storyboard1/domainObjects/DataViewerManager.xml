@@ -5,6 +5,22 @@
 	<tns:domainKnowledge>
 		<tns:internalDomainProperty name="domainProperties/DataViewer" />
 	</tns:domainKnowledge>
+
+	<tns:state>
+		<tns:stateVariable name="Planner_Output" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:stateVariable>
+		<!-- <tns:stateVariable name="ServiceOutput" type="string"> -->
+		<!-- <tns2:content type="anyType"></tns2:content> -->
+		<!-- </tns:stateVariable> -->
+		<tns:stateVariable name="DataPattern" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:stateVariable>
+		<tns:stateVariable name="PlanList" type="string">
+			<tns2:content type="anyType" />
+		</tns:stateVariable>
+	</tns:state>
+
 	<tns:process name="processes/PROC_DataViewerManager" />
 	<tns:fragment name="fragments/DVM_displayData" />
 </tns:domainObject>

@@ -18,7 +18,7 @@
 	<tns:state name="ST11" />
 	<tns:state name="ST12" />
 	<tns:state name="ST13" />
-<!-- 	<tns:state name="ST14" /> -->
+	<tns:state name="ST14" />
 
 	<tns:action name="TA_StartInteraction" actionType="input">
 		<tns:precondition>
@@ -60,12 +60,27 @@
 	</tns:action>
 
 	<tns:action name="TA_PlanResponse" actionType="output">
-		<tns:actionVariable name="PlanList" type="string">
+<!-- 		<tns:actionVariable name="PlanList" type="string"> -->
+<!-- 			<tns2:content type="anyType"></tns2:content> -->
+<!-- 		</tns:actionVariable> -->
+		<tns:actionVariable name="PlannerOutput" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 		<tns:effect>
 			<tns1:event dpName="TravelAssistant" eventName="findPlan"></tns1:event>
 		</tns:effect>
+	</tns:action>
+	
+	<tns:action name="TA_DefineDataViewerPattern" actionType="abstract">
+		<tns:goal>
+			<tns1:point>
+				<tns1:domainProperty dp_name="DataViewer">
+					<tns1:state>
+						VIEWER_PATTERN_DEFINED
+					</tns1:state>
+				</tns1:domainProperty>
+			</tns1:point>
+		</tns:goal>
 	</tns:action>
 
 	<tns:action name="TA_ShowResults" actionType="concrete">
@@ -165,22 +180,28 @@
 		<tns:finalState>ST8</tns:finalState>
 		<tns:action name="TA_PlanResponse" actionType="output" />
 	</tns:transition>
-
+	
 	<tns:transition>
 		<tns:initialState>ST8</tns:initialState>
 		<tns:finalState>ST9</tns:finalState>
-		<tns:action name="TA_ShowResults" actionType="concrete" />
+		<tns:action name="TA_DefineDataViewerPattern" actionType="abstract" />
 	</tns:transition>
 
 	<tns:transition>
 		<tns:initialState>ST9</tns:initialState>
 		<tns:finalState>ST10</tns:finalState>
-		<tns:action name="TA_ChooseAlternative" actionType="concrete" />
+		<tns:action name="TA_ShowResults" actionType="concrete" />
 	</tns:transition>
 
 	<tns:transition>
 		<tns:initialState>ST10</tns:initialState>
 		<tns:finalState>ST11</tns:finalState>
+		<tns:action name="TA_ChooseAlternative" actionType="concrete" />
+	</tns:transition>
+
+	<tns:transition>
+		<tns:initialState>ST11</tns:initialState>
+		<tns:finalState>ST12</tns:finalState>
 		<tns:action name="TA_ProvideChoice" actionType="input" />
 	</tns:transition>
 
@@ -191,14 +212,14 @@
 <!-- 	</tns:transition> -->
 
 	<tns:transition>
-		<tns:initialState>ST11</tns:initialState>
-		<tns:finalState>ST12</tns:finalState>
+		<tns:initialState>ST12</tns:initialState>
+		<tns:finalState>ST13</tns:finalState>
 		<tns:action name="TA_DefineJourneyLegs" actionType="abstract" />
 	</tns:transition>
 
 	<tns:transition>
-		<tns:initialState>ST12</tns:initialState>
-		<tns:finalState>ST13</tns:finalState>
+		<tns:initialState>ST13</tns:initialState>
+		<tns:finalState>ST14</tns:finalState>
 		<tns:action name="TA_AssistantPlanningComplete" actionType="concrete" />
 	</tns:transition>
 

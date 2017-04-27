@@ -15,7 +15,7 @@
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
 		<tns:stateVariable name="ResultList" type="string">
-			<tns2:content type="anyType">Lista di passaggi in macchina</tns2:content>
+			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
 	</tns:state>
 

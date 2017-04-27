@@ -19,12 +19,9 @@
 		<tns:effect>
 			<tns1:event dpName="DataViewer" eventName="receiveData"></tns1:event>
 		</tns:effect>
-<!-- 		<tns:actionVariable name="From" type="string"> -->
-<!-- 			<tns2:content type="anyType"></tns2:content> -->
-<!-- 		</tns:actionVariable> -->
-<!-- 		<tns:actionVariable name="To" type="string"> -->
-<!-- 			<tns2:content type="anyType"></tns2:content> -->
-<!-- 		</tns:actionVariable> -->
+		<tns:actionVariable name="PlannerOutput" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
 	</tns:action>
 
 	<tns:action name="DVM_DataPatternResponse" actionType="output">
@@ -38,9 +35,12 @@
 		<tns:effect>
 			<tns1:event dpName="DataViewer" eventName="sendPattern"></tns1:event>
 		</tns:effect>
-<!-- 		<tns:actionVariable name="PlanList" type="string"> -->
-<!-- 			<tns2:content type="anyType"></tns2:content> -->
-<!-- 		</tns:actionVariable> -->
+		<tns:actionVariable name="DataPattern" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+		<tns:actionVariable name="PlanList" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
 	</tns:action>
 
 

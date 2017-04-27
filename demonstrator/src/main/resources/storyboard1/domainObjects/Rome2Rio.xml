@@ -14,9 +14,12 @@
 		<tns:stateVariable name="To" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
-		<tns:stateVariable name="PlanList" type="string">
-			<tns2:content type="anyType"/>
+		<tns:stateVariable name="PlannerOutput" type="string">
+			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
+<!-- 		<tns:stateVariable name="PlanList" type="string"> -->
+<!-- 			<tns2:content type="anyType"/> -->
+<!-- 		</tns:stateVariable> -->
 	</tns:state>
 
 	<tns:process name="processes/PROC_Rome2Rio" />

@@ -38,7 +38,10 @@
 		<tns:effect>
 			<tns1:event dpName="GlobalPlanner" eventName="sendAlternatives"></tns1:event>
 		</tns:effect>
-		<tns:actionVariable name="PlanList" type="string">
+<!-- 		<tns:actionVariable name="PlanList" type="string"> -->
+<!-- 			<tns2:content type="anyType"></tns2:content> -->
+<!-- 		</tns:actionVariable> -->
+		<tns:actionVariable name="PlannerOutput" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 	</tns:action>
