@@ -9,7 +9,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Label;
 import java.awt.Window.Type;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -84,17 +83,17 @@ public class MainWindow {
 	private JTable generalTable;
 	private JScrollPane entitiesScrollPane;
 	private Container mainPanel;
-	private Label lblDomainObjectsDetails;
-	private Label lblProvidedFragments;
+	private JLabel lblDomainObjectsDetails;
+	private JLabel lblProvidedFragments;
 	private JList<String> providedFragmentsList;
 	private JScrollPane mainScrollPane;
-	private Label lblCellInstances;
+	private JLabel lblCellInstances;
 	private JList<String> cellInstancesList;
 	private ProcessModelPanel processModelPanel;
 	private JLabel lblProcessModel;
 	private JLabel lblProcessExecution;
 	private ProcessModelPanel processExecutionPanel;
-	private Label lblCorrelatedEntities;
+	private JLabel lblCorrelatedEntities;
 	private JList<String> correlatedEntitiesList;
 	private JMenu mnHelp;
 	private JMenuItem mntmAbout;
@@ -153,6 +152,7 @@ public class MainWindow {
 	 * @throws IOException
 	 */
 	private void initialize() throws IOException {
+		Font lblFont = new Font("Verdana", Font.PLAIN, 17);
 		frame = new JFrame("Domain Objects Demonstrator");
 		mainPanel = new JPanel();
 		mainPanel.setVisible(true);
@@ -169,12 +169,12 @@ public class MainWindow {
 		mainScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		mainScrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		frame.getContentPane().add(mainScrollPane);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// change here for final frame size
-		// frame.setSize(1024, 768);
-		frame.setSize(1200, 800);
+		frame.setSize(1024, 768);
+		// frame.setSize(1200, 800);
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null); // *** this will center your app
 		frame.setIconImage(ImageIO.read(getClass().getResource(
@@ -198,7 +198,7 @@ public class MainWindow {
 
 		// label and comboBox for the domain objects models selection
 		JLabel lblComboEntities = new JLabel("Domain Objects Models");
-		lblComboEntities.setFont(new Font("Courier", Font.BOLD, 17));
+		lblComboEntities.setFont(lblFont);
 		topPanel.add(lblComboEntities);
 
 		comboEntities = new JComboBox<String>();
@@ -231,7 +231,8 @@ public class MainWindow {
 		middlePanel.setLayout(middlePanelLayout);
 
 		// domain objects instances
-		lblCellInstances = new Label("Domain Object Instances");
+		lblCellInstances = new JLabel("Domain Object Instances");
+		lblCellInstances.setFont(lblFont);
 
 		cellInstancesList = new JList<String>();
 		cellInstancesList.setPreferredSize(new Dimension(250, 200));
@@ -245,7 +246,8 @@ public class MainWindow {
 				lblCellInstances, cellInstancesList, 300, 200);
 
 		// provided fragments
-		lblProvidedFragments = new Label("Provided Fragments");
+		lblProvidedFragments = new JLabel("Provided Fragments");
+		lblProvidedFragments.setFont(lblFont);
 
 		providedFragmentsList = new JList<String>();
 		providedFragmentsList.setPreferredSize(new Dimension(250, 200));
@@ -257,7 +259,8 @@ public class MainWindow {
 
 		// process model
 		lblProcessModel = new JLabel("Process Model");
-		lblProcessModel.setPreferredSize(new Dimension(1020, 27));
+		lblProcessModel.setFont(lblFont);
+		lblProcessModel.setPreferredSize(new Dimension(1020, 24));
 		lblProcessModel.setHorizontalAlignment(JLabel.CENTER);
 
 		procModel = new JPanel();
@@ -294,7 +297,8 @@ public class MainWindow {
 		bottomPanel.setLayout(bottomPanelLayout);
 
 		// correlated DOs
-		lblCorrelatedEntities = new Label("Correlated Domain Objects");
+		lblCorrelatedEntities = new JLabel("Correlated Domain Objects");
+		lblCorrelatedEntities.setFont(lblFont);
 
 		correlatedEntitiesList = new JList<String>();
 		correlatedEntitiesList.setMaximumSize(new Dimension(250, 180));
@@ -307,7 +311,8 @@ public class MainWindow {
 				lblCorrelatedEntities, correlatedEntitiesList, 300, 180);
 
 		// Domain Objects Details
-		lblDomainObjectsDetails = new Label("Domain Object details");
+		lblDomainObjectsDetails = new JLabel("Domain Object details");
+		lblDomainObjectsDetails.setFont(lblFont);
 
 		tabEntity = new JTabbedPane(JTabbedPane.TOP);
 		tabEntity.setPreferredSize(new Dimension(300, 220));
@@ -347,9 +352,12 @@ public class MainWindow {
 
 		entityKnowledgeScrollPane = createScrollPaneForTab(entityKnowledgeList);
 		tabEntity.addTab("External Knowledge", null, entityKnowledgeScrollPane);
+		// tabEntity.setTitleAt(0, "");
 
 		entityStateScrollPane = createScrollPaneForTab(stateVariablesList);
 		tabEntity.addTab("State Variables", null, entityStateScrollPane);
+
+		tabEntity.setFont(lblFont);
 
 		// monitorList = new JList<String>();
 		// monitorList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -360,8 +368,9 @@ public class MainWindow {
 
 		// process execution panel
 		lblProcessExecution = new JLabel("Process Execution");
+		lblProcessExecution.setFont(lblFont);
 		lblProcessExecution.setHorizontalAlignment(JLabel.CENTER);
-		lblProcessExecution.setPreferredSize(new Dimension(1400, 26));
+		lblProcessExecution.setPreferredSize(new Dimension(1400, 24));
 
 		procExec = new JPanel();
 		procExec.setLayout(new BorderLayout());
@@ -562,7 +571,7 @@ public class MainWindow {
 		return scrollPane;
 	}
 
-	private JPanel createBorderLayoutWithJList(Label listName,
+	private JPanel createBorderLayoutWithJList(JLabel listName,
 			JList<String> listElements, int width, int height) {
 		JPanel result = new JPanel();
 		result.setLayout(new BorderLayout());

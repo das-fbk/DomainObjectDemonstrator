@@ -1,5 +1,6 @@
 package eu.domainobjects.presentation.main.process;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +81,8 @@ public class ProcessModelPanel extends JPanel {
 		// add graphComponent to panel
 		graphComponent.setBorder(null);
 		graphComponent.setEnabled(false);
+		graphComponent.getViewport().setBackground(new Color(0, 0, 1, 0f)); // transparent
+		// this.setBackground(Color.RED);
 		this.add(graphComponent);
 
 		// test for scroll by dragging

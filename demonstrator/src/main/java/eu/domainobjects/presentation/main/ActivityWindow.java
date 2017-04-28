@@ -2,7 +2,6 @@ package eu.domainobjects.presentation.main;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
@@ -28,7 +27,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.MatteBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -122,7 +120,7 @@ public class ActivityWindow extends JPanel {
 		problemPanel = new JPanel();
 		problemPanel.setLayout(null);
 
-		problemPanel.setPreferredSize(new Dimension(800, 800));
+		problemPanel.setPreferredSize(new Dimension(400, 600));
 		JScrollPane scrollFrame = new JScrollPane(problemPanel);
 		problemPanel.setAutoscrolls(true);
 		scrollFrame.setPreferredSize(new Dimension(600, 200));
@@ -490,29 +488,29 @@ public class ActivityWindow extends JPanel {
 				toTableModelFragments(fragmentsOfCells));
 
 		// marty
-		MatteBorder border = new MatteBorder(1, 1, 1, 1, Color.BLACK);
-		tableFragments.setBorder(border);
+		// MatteBorder border = new MatteBorder(1, 1, 1, 1, Color.BLACK);
+		// tableFragments.setBorder(border);
 
 		JPanel FragmentListPanel = new JPanel();
-		FragmentListPanel.setBounds(24, 155, 750, 500);
+		FragmentListPanel.setBounds(24, 155, 500, 180);
 
 		FragmentListPanel.setLayout(new BorderLayout());
 		FragmentListPanel.add(tableFragments.getTableHeader(),
 				BorderLayout.PAGE_START);
 		FragmentListPanel.add(tableFragments, BorderLayout.CENTER);
 
-		tableFragments.getColumnModel().getColumn(0).setPreferredWidth(50);
-		tableFragments.getColumnModel().getColumn(1).setPreferredWidth(400);
+		tableFragments.getColumnModel().getColumn(0).setPreferredWidth(80);
+		tableFragments.getColumnModel().getColumn(1).setPreferredWidth(80);
 		// tableFragments.setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		JTable tableContext = new JTable(
 				toTableModelProperties(propertiesOfCells));
 
 		// marty
-		tableContext.setBorder(border);
+		// tableContext.setBorder(border);
 
 		JPanel ContextListPanel = new JPanel();
-		ContextListPanel.setBounds(24, 400, 500, 200);
+		ContextListPanel.setBounds(24, 400, 500, 180);
 
 		ContextListPanel.setLayout(new BorderLayout());
 		ContextListPanel.add(tableContext.getTableHeader(),
