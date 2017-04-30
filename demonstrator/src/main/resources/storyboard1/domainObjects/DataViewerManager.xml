@@ -7,7 +7,7 @@
 	</tns:domainKnowledge>
 
 	<tns:state>
-		<tns:stateVariable name="Planner_Output" type="string">
+		<tns:stateVariable name="PlannerOutput" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
 		<!-- <tns:stateVariable name="ServiceOutput" type="string"> -->
