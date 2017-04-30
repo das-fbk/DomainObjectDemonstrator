@@ -33,13 +33,16 @@ import eu.domainobjects.utils.PlayRunner;
 import eu.domainobjects.utils.ResourceLoader;
 import eu.domainobjects.utils.UserData;
 import eu.fbk.das.domainobject.executable.AskToUseCurrentLocationExecutable;
+import eu.fbk.das.domainobject.executable.BBCServiceCallExecutable;
 import eu.fbk.das.domainobject.executable.ChooseAlternativeExecutable;
+import eu.fbk.das.domainobject.executable.DVMDefineDataPatternExecutable;
 import eu.fbk.das.domainobject.executable.InsertDestinationExecutable;
 import eu.fbk.das.domainobject.executable.InsertOptionalDataExecutable;
 import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
 import eu.fbk.das.domainobject.executable.SelectPlanningModeExecutable;
 import eu.fbk.das.domainobject.executable.ShowResultsExecutable;
 import eu.fbk.das.domainobject.executable.StartChatbotExecutable;
+import eu.fbk.das.domainobject.executable.TAShowLegResultsExecutable;
 import eu.fbk.das.domainobject.executable.TAcheckLegSetExecutable;
 import eu.fbk.das.domainobject.executable.TAdefineJourneyLegsExecutable;
 import eu.fbk.das.domainobject.executable.TAidentifyLegExecutable;
@@ -255,6 +258,21 @@ public class MainController {
 				new TAcheckLegSetExecutable(processEngineFacade
 						.getProcessEngine()));
 
+		processEngineFacade.addExecutableHandler(
+				"DVM_DefineDataPattern",
+				new DVMDefineDataPatternExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"BBC_ServiceCall",
+				new BBCServiceCallExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		
+		processEngineFacade.addExecutableHandler(
+				"TA_ShowLegResults",
+				new TAShowLegResultsExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
 		// handler for hoaa for pre-phase
 		// processEngineFacade.addExecutableHandler(
 		// "TO_HOAAorganizeTrip",
@@ -380,6 +398,44 @@ public class MainController {
 			logger.error("Error in interface update", e);
 		}
 	}
+
+	// public void updateProcessModelWithSelectedFragment(DoiBean db,
+	// String fragmentName) {
+	// try {
+	// DomainObjectInstance doi = processEngineFacade.getManager()
+	// .findInstanceById(db.getName());
+	// if (doi == null) {
+	// return;
+	// }
+	// // displayProcessExecution(db);
+	// displayFragmentInProcessModel(db, fragmentName);
+	// // updateSelectedEntityState(db);
+	// // updateSelectedEntityCorrelations(db);
+	// updateSelectedEntityProvidedFragments(db);
+	// // updateCellInstances(db);
+	// // updateSelectedEntityKnowledge(db);
+	// // updateComboboxEntities();
+	// // updateMonitor(db);
+	// window.refreshWindow();
+	// } catch (Exception e) {
+	// logger.error("Error in interface update", e);
+	// }
+	// }
+	//
+	// private void displayFragmentInProcessModel(DoiBean db, String
+	// fragmentName) {
+	// if (db == null) {
+	// return;
+	// }
+	// // ///////////////////////////////////////////////////////////
+	// // parser.convertToServiceDiagram(ed.getFragments())
+	// // PROCESS MODEL VUOLE UN PROCESS DIAGRAM E NON UN SERVICE DIAGRAM
+	// // ////////////////////////////////////////////////////////////
+	//
+	// ProcessDiagram fragmentModel = processEngineFacade.getModel(db
+	// .getName());
+	// window.displayProcess(fragmentModel, true, false);
+	// }
 
 	private void updateMonitor(DoiBean db) {
 		// update monitor list using current db
