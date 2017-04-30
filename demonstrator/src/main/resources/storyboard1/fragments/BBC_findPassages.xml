@@ -43,7 +43,6 @@
 		</tns:actionVariable>
 	</tns:action>
 
-
 	<tns:transition>
 		<tns:initialState>ST0</tns:initialState>
 		<tns:finalState>ST1</tns:finalState>

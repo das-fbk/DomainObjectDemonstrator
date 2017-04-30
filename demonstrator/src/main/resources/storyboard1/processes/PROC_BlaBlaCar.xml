@@ -25,6 +25,7 @@
 			<tns1:event dpName="RideSharing" eventName="processRequest"></tns1:event>
 		</tns:effect>
 	</tns:concrete>
+	
 
 	<tns:invoke name="BBC_PassageResponse">
 		<tns:precondition>
