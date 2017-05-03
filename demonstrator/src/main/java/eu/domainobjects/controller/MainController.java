@@ -267,7 +267,7 @@ public class MainController {
 				"BBC_ServiceCall",
 				new BBCServiceCallExecutable(processEngineFacade
 						.getProcessEngine(), bot));
-		
+
 		processEngineFacade.addExecutableHandler(
 				"TA_ShowLegResults",
 				new TAShowLegResultsExecutable(processEngineFacade
@@ -398,44 +398,6 @@ public class MainController {
 			logger.error("Error in interface update", e);
 		}
 	}
-
-	// public void updateProcessModelWithSelectedFragment(DoiBean db,
-	// String fragmentName) {
-	// try {
-	// DomainObjectInstance doi = processEngineFacade.getManager()
-	// .findInstanceById(db.getName());
-	// if (doi == null) {
-	// return;
-	// }
-	// // displayProcessExecution(db);
-	// displayFragmentInProcessModel(db, fragmentName);
-	// // updateSelectedEntityState(db);
-	// // updateSelectedEntityCorrelations(db);
-	// updateSelectedEntityProvidedFragments(db);
-	// // updateCellInstances(db);
-	// // updateSelectedEntityKnowledge(db);
-	// // updateComboboxEntities();
-	// // updateMonitor(db);
-	// window.refreshWindow();
-	// } catch (Exception e) {
-	// logger.error("Error in interface update", e);
-	// }
-	// }
-	//
-	// private void displayFragmentInProcessModel(DoiBean db, String
-	// fragmentName) {
-	// if (db == null) {
-	// return;
-	// }
-	// // ///////////////////////////////////////////////////////////
-	// // parser.convertToServiceDiagram(ed.getFragments())
-	// // PROCESS MODEL VUOLE UN PROCESS DIAGRAM E NON UN SERVICE DIAGRAM
-	// // ////////////////////////////////////////////////////////////
-	//
-	// ProcessDiagram fragmentModel = processEngineFacade.getModel(db
-	// .getName());
-	// window.displayProcess(fragmentModel, true, false);
-	// }
 
 	private void updateMonitor(DoiBean db) {
 		// update monitor list using current db

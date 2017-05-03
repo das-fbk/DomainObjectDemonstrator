@@ -60,6 +60,7 @@ import eu.domainobjects.presentation.main.action.listener.EntityDetailActionList
 import eu.domainobjects.presentation.main.action.listener.EntityTableSelectionListener;
 import eu.domainobjects.presentation.main.action.listener.MenuExitListener;
 import eu.domainobjects.presentation.main.action.listener.OpenScenarioListener;
+import eu.domainobjects.presentation.main.action.listener.SelectFragmentListener;
 import eu.domainobjects.presentation.main.action.listener.SelectInstanceListener;
 import eu.domainobjects.presentation.main.action.listener.SelectedComboEntityListener;
 import eu.domainobjects.presentation.main.action.listener.StepButtonActionListener;
@@ -72,6 +73,9 @@ public class MainWindow {
 
 	private static final Logger logger = LogManager.getLogger(MainWindow.class);
 
+	// interface colors
+	private static final String BACKGROUD_COLOR = "#E0E0E0";
+	private static final String BORDER_COLOR = "#9E9E9E";
 	// main frame
 	public JFrame frame;
 
@@ -158,7 +162,7 @@ public class MainWindow {
 		mainPanel.setVisible(true);
 		// the mainPanel has a GridBagLayout organized in one column and 3 rows
 		mainPanel.setLayout(new GridBagLayout());
-		mainPanel.setBackground(Color.LIGHT_GRAY);
+		mainPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 		// by setting preferredSize for the main panel, the vertical scrollbar
 		// will appear if needed
 		mainPanel.setPreferredSize(new Dimension(1024, 900));
@@ -195,6 +199,7 @@ public class MainWindow {
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout());
 		topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		topPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		// label and comboBox for the domain objects models selection
 		JLabel lblComboEntities = new JLabel("Domain Objects Models");
@@ -204,6 +209,7 @@ public class MainWindow {
 		comboEntities = new JComboBox<String>();
 		comboEntities.setVisible(true);
 		comboEntities.setLightWeightPopupEnabled(false);
+		comboEntities.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
 		comboEntities.addActionListener(new SelectedComboEntityListener(this));
 		topPanel.add(comboEntities);
 
@@ -229,6 +235,7 @@ public class MainWindow {
 		BoxLayout middlePanelLayout = new BoxLayout(middlePanel,
 				BoxLayout.LINE_AXIS);
 		middlePanel.setLayout(middlePanelLayout);
+		middlePanel.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		// domain objects instances
 		lblCellInstances = new JLabel("Domain Object Instances");
@@ -244,6 +251,7 @@ public class MainWindow {
 
 		JPanel domainObjectsInstances = createBorderLayoutWithJList(
 				lblCellInstances, cellInstancesList, 300, 200);
+		domainObjectsInstances.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		// provided fragments
 		lblProvidedFragments = new JLabel("Provided Fragments");
@@ -253,9 +261,14 @@ public class MainWindow {
 		providedFragmentsList.setPreferredSize(new Dimension(250, 200));
 		providedFragmentsList.setMaximumSize(new Dimension(250, 200));
 		providedFragmentsList.setMinimumSize(new Dimension(250, 200));
+		providedFragmentsList
+				.addListSelectionListener(new SelectFragmentListener(this));
+		providedFragmentsList
+				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JPanel providedFragments = createBorderLayoutWithJList(
 				lblProvidedFragments, providedFragmentsList, 300, 200);
+		providedFragments.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		// process model
 		lblProcessModel = new JLabel("Process Model");
@@ -266,6 +279,7 @@ public class MainWindow {
 		procModel = new JPanel();
 		procModel.setLayout(new BorderLayout());
 		procModel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		procModel.setBackground(Color.decode(BACKGROUD_COLOR));
 		procModel.add(lblProcessModel, BorderLayout.PAGE_START);
 
 		// adding components on the middle panel
@@ -295,6 +309,7 @@ public class MainWindow {
 		BoxLayout bottomPanelLayout = new BoxLayout(bottomPanel,
 				BoxLayout.LINE_AXIS);
 		bottomPanel.setLayout(bottomPanelLayout);
+		bottomPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		// correlated DOs
 		lblCorrelatedEntities = new JLabel("Correlated Domain Objects");
@@ -309,6 +324,7 @@ public class MainWindow {
 
 		JPanel correlatedDomainObjects = createBorderLayoutWithJList(
 				lblCorrelatedEntities, correlatedEntitiesList, 300, 180);
+		correlatedDomainObjects.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		// Domain Objects Details
 		lblDomainObjectsDetails = new JLabel("Domain Object details");
@@ -316,6 +332,7 @@ public class MainWindow {
 
 		tabEntity = new JTabbedPane(JTabbedPane.TOP);
 		tabEntity.setPreferredSize(new Dimension(300, 220));
+		tabEntity.setBackground(Color.decode(BACKGROUD_COLOR));
 		// tabEntity.setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		// defining the panel for the tabbedPane
@@ -325,11 +342,13 @@ public class MainWindow {
 				BorderLayout.PAGE_START);
 		domainObjectsDetails.add(tabEntity, BorderLayout.CENTER);
 		domainObjectsDetails.setBorder(new EmptyBorder(10, 10, 10, 10));
+		domainObjectsDetails.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		// creating the bottom left panel
 		JPanel bottomLeftPanel = new JPanel();
 		BoxLayout layoutLeft = new BoxLayout(bottomLeftPanel, BoxLayout.Y_AXIS);
 		bottomLeftPanel.setLayout(layoutLeft);
+		bottomLeftPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		// adding components on the bottom left panel
 		bottomLeftPanel.add(correlatedDomainObjects);
@@ -351,7 +370,7 @@ public class MainWindow {
 		// entityKnowledgeList.setPreferredSize(new Dimension(450, 220));
 
 		entityKnowledgeScrollPane = createScrollPaneForTab(entityKnowledgeList);
-		tabEntity.addTab("External Knowledge", null, entityKnowledgeScrollPane);
+		tabEntity.addTab("Domain Knowledge", null, entityKnowledgeScrollPane);
 		// tabEntity.setTitleAt(0, "");
 
 		entityStateScrollPane = createScrollPaneForTab(stateVariablesList);
@@ -375,6 +394,7 @@ public class MainWindow {
 		procExec = new JPanel();
 		procExec.setLayout(new BorderLayout());
 		procExec.setBorder(new EmptyBorder(10, 10, 14, 10));
+		procExec.setBackground(Color.decode(BACKGROUD_COLOR));
 		procExec.add(lblProcessExecution, BorderLayout.PAGE_START);
 
 		// adding components on the bottom panel
@@ -412,6 +432,7 @@ public class MainWindow {
 
 		/************************* MAIN WINDOW MENU BAR *****************************************/
 		JMenuBar menuBar = new JMenuBar();
+		// menuBar.setBackground(Color.decode("#" + "9E9E9E"));
 		frame.setJMenuBar(menuBar);
 
 		JMenu mnScenario = new JMenu("File");
@@ -476,9 +497,9 @@ public class MainWindow {
 
 		// load play/pause icon
 		playIcon = new ImageIcon(
-				MainWindow.class.getResource("/images/knob_play_green.png"));
+				MainWindow.class.getResource("/images/play_verde.png"));
 		pauseIcon = new ImageIcon(
-				MainWindow.class.getResource("/images/knob_pause_green.png"));
+				MainWindow.class.getResource("/images/pause_verde.png"));
 
 		// init column names for general table
 		columnNames = new Vector<String>();
@@ -490,7 +511,7 @@ public class MainWindow {
 		btnStep.setActionCommand(DemonstratorConstant.STEP);
 		btnStep.addActionListener(new StepButtonActionListener());
 		btnStep.setIcon(new ImageIcon(MainWindow.class
-				.getResource("/images/knob_walk.png")));
+				.getResource("/images/step_verde.png")));
 
 		btnPlaypause = new JButton("Play");
 		btnPlaypause.setIcon(playIcon);
@@ -567,7 +588,8 @@ public class MainWindow {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		// scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
 		return scrollPane;
 	}
 
@@ -581,7 +603,8 @@ public class MainWindow {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		// scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
 		scrollPane.setPreferredSize(new Dimension(width, height));
 
 		result.add(listName, BorderLayout.PAGE_START);
@@ -637,7 +660,8 @@ public class MainWindow {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		// scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
 		scrollPane.setPreferredSize(new Dimension(width, height));
 		return scrollPane;
 	}

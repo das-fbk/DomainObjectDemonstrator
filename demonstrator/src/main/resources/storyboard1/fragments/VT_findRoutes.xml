@@ -38,7 +38,7 @@
 		<tns:effect>
 			<tns1:event dpName="LocalPlanner" eventName="sendAlternatives"></tns1:event>
 		</tns:effect>
-		<tns:actionVariable name="PlanList" type="string">
+		<tns:actionVariable name="PlannerOutput" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 	</tns:action>

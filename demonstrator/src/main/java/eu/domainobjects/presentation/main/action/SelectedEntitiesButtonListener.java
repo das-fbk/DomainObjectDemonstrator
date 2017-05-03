@@ -19,10 +19,10 @@ public class SelectedEntitiesButtonListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case PREVIOUS:
-			window.getController().selectPreviousEntity();
+			// window.getController().selectPreviousEntity();
 			break;
 		case NEXT:
-			window.getController().selectNextEntity();
+			// window.getController().selectNextEntity();
 			break;
 		}
 

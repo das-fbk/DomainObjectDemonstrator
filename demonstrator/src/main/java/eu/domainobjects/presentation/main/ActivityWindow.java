@@ -1,12 +1,11 @@
 package eu.domainobjects.presentation.main;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,6 +18,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,8 +27,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.xml.bind.JAXBException;
@@ -82,6 +85,8 @@ public class ActivityWindow extends JPanel {
 	private Label dotLabel;
 	private JTextArea logTextArea;
 
+	private static final String BACKGROUD_COLOR = "#E0E0E0";
+
 	/**
 	 * Launch the application.
 	 */
@@ -96,6 +101,7 @@ public class ActivityWindow extends JPanel {
 		mainPanel.setLocation(0, 0);
 		mainPanel.setSize(1000, 800);
 		mainPanel.setLayout(null);
+		mainPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 		add(mainPanel);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -103,15 +109,17 @@ public class ActivityWindow extends JPanel {
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-
+				// ChangeEvent consumed. Do nothing.
 			}
 
 		});
 		tabbedPane.setBounds(0, 0, 950, 510);
+		tabbedPane.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		mainPanel.add(tabbedPane);
 
 		activityPanel = new JPanel();
+		activityPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 		tabbedPane.addTab("Process/Fragment Activity", null, activityPanel,
 				null);
 
@@ -119,35 +127,33 @@ public class ActivityWindow extends JPanel {
 
 		problemPanel = new JPanel();
 		problemPanel.setLayout(null);
+		problemPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		problemPanel.setPreferredSize(new Dimension(400, 600));
 		JScrollPane scrollFrame = new JScrollPane(problemPanel);
 		problemPanel.setAutoscrolls(true);
 		scrollFrame.setPreferredSize(new Dimension(600, 200));
+		scrollFrame.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		tabbedPane.addTab("Activity Specialization Problem", null, scrollFrame,
 				null);
 
 		domainPanel = new JPanel();
+		domainPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 		tabbedPane.addTab("Planning Domain", null, domainPanel, null);
 
 		resultPanel = new JPanel();
+		resultPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 		tabbedPane.addTab("Planning Result", null, resultPanel, null);
 
 		processPanel = new JPanel();
-		// processPanel.setLayout(null);
+		processPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 		JScrollPane scrollPane = new JScrollPane(processPanel);
 		scrollPane
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBackground(Color.decode(BACKGROUD_COLOR));
 		tabbedPane.addTab("Activity Specialization Result", null, scrollPane,
 				null);
-
-		Button cancelButton = new Button("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 
 		JLabel lblLog = new JLabel("Execution Log");
 		lblLog.setBounds(10, 505, 223, 22);
@@ -156,7 +162,6 @@ public class ActivityWindow extends JPanel {
 
 		// log inside a scrollpane
 		logTextArea = new JTextArea("");
-		// logTextArea.setBounds(10, 530, 820, 100);
 		logTextArea.setEditable(false);
 		JScrollPane scrollPaneLog = new JScrollPane(logTextArea);
 		scrollPaneLog.setBounds(10, 530, 940, 100);
@@ -414,7 +419,6 @@ public class ActivityWindow extends JPanel {
 
 		HashMap<String, ArrayList<String>> fragmentsOfCells = new HashMap<String, ArrayList<String>>();
 		HashMap<String, ArrayList<String>> propertiesOfCells = new HashMap<String, ArrayList<String>>();
-		// HashMap statesOfProperties = new HashMap<String, String>();
 
 		Map<String, List<String>> fragments = problem.getRelevantServices();
 
@@ -457,70 +461,70 @@ public class ActivityWindow extends JPanel {
 
 		}
 
-		// add domain properties
-		// Map<String, List<ObjectDiagram>> domainProperties = problem
-		// .getRelevantProperties();
-		// for (int j = 0; j < problem.getDomainObjectInstances().size(); j++) {
-		// DomainObjectInstance currentDoi = problem
-		// .getDomainObjectInstances().get(j);
-		//
-		// Iterator<Entry<String, List<ObjectDiagram>>> itp = domainProperties
-		// .entrySet().iterator();
-		// while (itp.hasNext()) {
-		// List<ObjectDiagram> properties = itp.next().getValue();
-		// for (int k = 0; k < properties.size(); k++) {
-		// ObjectDiagram currentObject = properties.get(k);
-		// if (currentDoi.getExternalKnowledge() != null) {
-		// for (ObjectDiagram ek : currentDoi
-		// .getExternalKnowledge()) {
-		// if (ek.getOid().equals(currentObject.getOid())
-		// && isCorrelated(currentDoi, process)) {
-		// propertiesOfCells.put(currentObject.getOid(),
-		// currentObject.getCurrentState());
-		// }
-		// }
-		// }
-		// }
-		//
-		// }
-		// }
 		JTable tableFragments = new JTable(
 				toTableModelFragments(fragmentsOfCells));
 
-		// marty
-		// MatteBorder border = new MatteBorder(1, 1, 1, 1, Color.BLACK);
-		// tableFragments.setBorder(border);
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
 
-		JPanel FragmentListPanel = new JPanel();
-		FragmentListPanel.setBounds(24, 155, 500, 180);
+			Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
 
-		FragmentListPanel.setLayout(new BorderLayout());
-		FragmentListPanel.add(tableFragments.getTableHeader(),
+			@Override
+			public Component getTableCellRendererComponent(JTable table,
+					Object value, boolean isSelected, boolean hasFocus,
+					int row, int column) {
+				super.getTableCellRendererComponent(table, value, isSelected,
+						hasFocus, row, column);
+				setBorder(BorderFactory.createCompoundBorder(getBorder(),
+						padding));
+				return this;
+			}
+		};
+		tableFragments.setDefaultRenderer(Object.class, renderer);
+
+		JPanel fragmentListPanel = new JPanel();
+		fragmentListPanel.setBounds(24, 155, 500, 180);
+
+		fragmentListPanel.setLayout(new BorderLayout());
+		tableFragments.getTableHeader().setBorder(
+				new LineBorder(new Color(0, 0, 0)));
+		tableFragments.getTableHeader().setFont(
+				new Font(tableFragments.getTableHeader().getFont().getName(),
+						Font.BOLD, tableFragments.getTableHeader().getFont()
+								.getSize()));
+		fragmentListPanel.add(tableFragments.getTableHeader(),
 				BorderLayout.PAGE_START);
-		FragmentListPanel.add(tableFragments, BorderLayout.CENTER);
+		tableFragments.setRowHeight(30);
+		fragmentListPanel.add(tableFragments, BorderLayout.CENTER);
 
 		tableFragments.getColumnModel().getColumn(0).setPreferredWidth(80);
-		tableFragments.getColumnModel().getColumn(1).setPreferredWidth(80);
-		// tableFragments.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tableFragments.getColumnModel().getColumn(1).setPreferredWidth(130);
+		tableFragments.setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		JTable tableContext = new JTable(
 				toTableModelProperties(propertiesOfCells));
+		tableContext.setDefaultRenderer(Object.class, renderer);
+		tableContext.setRowHeight(30);
 
-		// marty
-		// tableContext.setBorder(border);
+		tableContext.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tableContext.getTableHeader().setBorder(
+				new LineBorder(new Color(0, 0, 0)));
+		tableContext.getTableHeader().setFont(
+				new Font(tableFragments.getTableHeader().getFont().getName(),
+						Font.BOLD, tableFragments.getTableHeader().getFont()
+								.getSize()));
 
-		JPanel ContextListPanel = new JPanel();
-		ContextListPanel.setBounds(24, 400, 500, 180);
+		JPanel contextListPanel = new JPanel();
+		contextListPanel.setBounds(24, 400, 500, 180);
 
-		ContextListPanel.setLayout(new BorderLayout());
-		ContextListPanel.add(tableContext.getTableHeader(),
+		contextListPanel.setLayout(new BorderLayout());
+		contextListPanel.add(tableContext.getTableHeader(),
 				BorderLayout.PAGE_START);
-		ContextListPanel.add(tableContext, BorderLayout.CENTER);
+		contextListPanel.add(tableContext, BorderLayout.CENTER);
 
 		tableContext.getColumnModel().getColumn(0).setPreferredWidth(80);
-		tableContext.getColumnModel().getColumn(1).setPreferredWidth(80);
-		problemPanel.add(ContextListPanel);
-		problemPanel.add(FragmentListPanel);
+		tableContext.getColumnModel().getColumn(1).setPreferredWidth(130);
+		problemPanel.add(contextListPanel);
+		problemPanel.add(fragmentListPanel);
 
 	}
 
@@ -699,7 +703,6 @@ public class ActivityWindow extends JPanel {
 		JTextArea codeArea = new JTextArea(50, 150);
 
 		codeArea.setText(output);
-		// codeArea.setWrapStyleWord(true);
 		codeArea.setEditable(false);
 		codeArea.setFont(Font.getFont(Font.SANS_SERIF));
 
@@ -762,7 +765,6 @@ public class ActivityWindow extends JPanel {
 		JTextArea codeArea = new JTextArea(50, 150);
 		codeArea.setText(output);
 		codeArea.setEditable(false);
-		// codeArea.setWrapStyleWord(true);
 		codeArea.setFont(Font.getFont(Font.SANS_SERIF));
 
 		JScrollPane sp = new JScrollPane(codeArea);
@@ -863,7 +865,7 @@ public class ActivityWindow extends JPanel {
 		return orig.replaceAll("\n", "<br/>");
 	}
 
-	public TableModel toTableModelFragments(Map map) {
+	private static TableModel toTableModelFragments(Map map) {
 		DefaultTableModel model = new DefaultTableModel(new Object[] {
 				"Domain Objects", "Fragments" }, 0);
 		for (Iterator it = map.entrySet().iterator(); it.hasNext();) {

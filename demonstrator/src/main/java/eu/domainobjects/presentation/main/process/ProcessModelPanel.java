@@ -42,20 +42,24 @@ public class ProcessModelPanel extends JPanel {
 	private static final Logger logger = LogManager
 			.getLogger(ProcessModelPanel.class);
 
-	// graph styles whiteSpace=wrap; verticalAlign=middle;
-	private static final String STYLE_ABSTRACT = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;horizontalAlign=center;verticalAlign=top;dashed=true;dashPattern=8;fillColor=FFFFFF";
-	private static final String STYLE_RUNNING = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FF0000";
-	private static final String STYLE_ABSTRACT_EXECUTED = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;dashed=true;dashPattern=8;fillColor=90EE90";
-	private static final String STYLE_ABSTRACT_RUNNING = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;dashed=true;dashPattern=8;fillColor=90EE90";
-	private static final String STYLE_SWITCH = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FFFFFF";
-	private static final String STYLE_SWITCH_EXECUTED = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=90EE90";
-	private static final String STYLE_SWITCH_RUNNING = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=90EE90";
-	private static final String STYLE_EXECUTED = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=90EE90";
-	private static final String STYLE_DEFAULT = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FFFFFF;margin=20px";
-	private static final String STYLE_WHILE = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=FFFFFF";
-	private static final String STYLE_SCOPE = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=center;strokeWidth=2;dashed=true;dashed=1;shadow=1;dashPattern=1;rounded=true;fillColor=FFFFFF";
-	private static final String STYLE_WHILE_EXECUTED = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=90EE90";
-	private static final String STYLE_WHILE_RUNNING = "spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;rounded=true;fillColor=FFA500";
+	// graph styles whiteSpace=wrap; verticalAlign=middle; strokeColor=000000;
+	private static final String STYLE_ABSTRACT = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;horizontalAlign=center;verticalAlign=top;dashed=true;dashPattern=5;fillColor=FFFFFF";
+	private static final String STYLE_RUNNING = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FF0000";
+	private static final String STYLE_ABSTRACT_EXECUTED = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;dashed=true;dashPattern=5;fillColor=6ECE74";
+	private static final String STYLE_ABSTRACT_RUNNING = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;dashed=true;dashPattern=5;fillColor=6ECE74";
+	private static final String STYLE_SWITCH = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FFFFFF";
+	private static final String STYLE_SWITCH_EXECUTED = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=6ECE74";
+	private static final String STYLE_SWITCH_RUNNING = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=6ECE74";
+	private static final String STYLE_EXECUTED = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=6ECE74";
+	private static final String STYLE_DEFAULT = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FFFFFF;margin=20px";
+	private static final String STYLE_WHILE = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FFFFFF";
+	private static final String STYLE_SCOPE = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=center;strokeWidth=2;dashed=true;dashed=1;shadow=1;dashPattern=1;rounded=true;fillColor=FFFFFF";
+	private static final String STYLE_WHILE_EXECUTED = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=6ECE74";
+	private static final String STYLE_WHILE_RUNNING = "strokeColor=666666;strokeWidth=2;fontColor=000000;spacingLeft=10;spacingRight=10;spacingTop=10;spacingBottom=10;fontSize=15;verticalAlign=top;fillColor=FFA500";
+	private static final String STYLE_EDGE = "strokeColor=666666;strokeWidth=2";
+
+	// colors
+	private static final String BACKGROUD_PROCESS_COLOR = "#E0E0E0";
 
 	// private variables
 	private mxGraphComponent graphComponent;
@@ -81,8 +85,11 @@ public class ProcessModelPanel extends JPanel {
 		// add graphComponent to panel
 		graphComponent.setBorder(null);
 		graphComponent.setEnabled(false);
-		graphComponent.getViewport().setBackground(new Color(0, 0, 1, 0f)); // transparent
-		// this.setBackground(Color.RED);
+		graphComponent.getViewport().setBackground(new Color(1, 1, 1, 0f)); // transparent
+																			// hack
+																			// (for
+																			// MAC)
+		this.setBackground(Color.decode(BACKGROUD_PROCESS_COLOR));
 		this.add(graphComponent);
 
 		// test for scroll by dragging
@@ -163,7 +170,8 @@ public class ProcessModelPanel extends JPanel {
 				} else {
 					Object v = insertVertex(current, parent, pa.getName(),
 							getStyle(pa));
-					current.insertEdge(parent, null, "", lastInserted, v);
+					current.insertEdge(parent, null, "", lastInserted, v,
+							STYLE_EDGE);
 					order.add(pa.getName());
 					lastInserted = v;
 					// handle abstract activity case
@@ -360,7 +368,7 @@ public class ProcessModelPanel extends JPanel {
 						cell.getGeometry().setX(dx);
 						dx += xOffset + cell.getGeometry().getWidth();
 						graph.insertEdge(parent, String.valueOf(++idgenerator),
-								"", lastInserted, t1);
+								"", lastInserted, t1, STYLE_EDGE);
 						lastInserted = t1;
 					}
 					tempw += cell.getGeometry().getWidth() + xOffset;
