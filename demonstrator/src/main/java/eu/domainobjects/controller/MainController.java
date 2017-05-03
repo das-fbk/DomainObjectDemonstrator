@@ -28,7 +28,6 @@ import eu.domainobjects.presentation.main.events.DomainObjectInstanceSelectionBy
 import eu.domainobjects.presentation.main.events.StoryboardLoadedEvent;
 import eu.domainobjects.utils.DoiBean;
 import eu.domainobjects.utils.ExternalEvent;
-import eu.domainobjects.utils.HandlerInstance;
 import eu.domainobjects.utils.PlayRunner;
 import eu.domainobjects.utils.ResourceLoader;
 import eu.domainobjects.utils.UserData;
@@ -52,18 +51,10 @@ import eu.fbk.das.domainobject.executable.utils.BotTelegram.TravelAssistantBot;
 //import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
 import eu.fbk.das.process.engine.api.DomainObjectInstance;
 import eu.fbk.das.process.engine.api.DomainObjectManagerInterface;
-import eu.fbk.das.process.engine.api.ProcessEngine;
 import eu.fbk.das.process.engine.api.domain.DomainObjectDefinition;
 import eu.fbk.das.process.engine.api.domain.ObjectDiagram;
-import eu.fbk.das.process.engine.api.domain.OnMessageActivity;
-import eu.fbk.das.process.engine.api.domain.PickActivity;
 import eu.fbk.das.process.engine.api.domain.ProcessActivity;
 import eu.fbk.das.process.engine.api.domain.ProcessDiagram;
-import eu.fbk.das.process.engine.api.domain.ScopeActivity;
-import eu.fbk.das.process.engine.api.domain.WhileActivity;
-import eu.fbk.das.process.engine.api.jaxb.ActivityType;
-import eu.fbk.das.process.engine.api.jaxb.EventHandlerType;
-import eu.fbk.das.process.engine.api.jaxb.ScopeType;
 import eu.fbk.das.process.engine.api.jaxb.VariableType;
 import eu.fbk.das.process.engine.impl.ProcessEngineImpl;
 
@@ -160,7 +151,7 @@ public class MainController {
 			// addLog("Storyboard loaded: "
 			// + ResourceLoader.getScenarioFile().getAbsolutePath());
 		} catch (Exception e) {
-			logger.debug("Problem on loading storyboard");
+			logger.debug("Problem on loading the storyboard!");
 			logger.error(e.getMessage(), e);
 		}
 	}
@@ -177,7 +168,6 @@ public class MainController {
 		ActionEvent event = new ActionEvent(
 				processEngineFacade.getProcessEngine(),
 				ActionEvent.ACTION_PERFORMED, "step");
-		ProcessEngine pe = processEngineFacade.getProcessEngine();
 
 		// Bot Creation
 		ApiContextInitializer.init();
@@ -351,9 +341,6 @@ public class MainController {
 				// update fragments list
 				List<String> f = processEngineFacade.getFragmentNames(e.name);
 				window.updateSelectedEntityProvidedFragments(f);
-				// update monitors
-				List<String> monitors = getMonitor(p);
-				// window.updateMonitors(monitors, -1);
 			}
 		}
 	}
@@ -392,79 +379,10 @@ public class MainController {
 			updateCellInstances(db);
 			updateSelectedEntityKnowledge(db);
 			updateComboboxEntities();
-			updateMonitor(db);
 			window.refreshWindow();
 		} catch (Exception e) {
 			logger.error("Error in interface update", e);
 		}
-	}
-
-	private void updateMonitor(DoiBean db) {
-		// update monitor list using current db
-		DomainObjectInstance doi = processEngineFacade
-				.getDomainObjectInstanceForProcess(processEngineFacade
-						.getProcessDiagram(db));
-		if (doi != null) {
-			ProcessDiagram process = doi.getProcess();
-			List<String> monitors = getMonitor(process);
-			if (monitorSelectedMap.containsKey(doi.getId())) {
-				// window.updateMonitors(monitors,
-				// monitorSelectedMap.get(doi.getId()));
-			} else {
-				// window.updateMonitors(monitors, -1);
-			}
-		}
-	}
-
-	private List<String> getMonitor(ProcessDiagram process) {
-		List<String> result = new ArrayList<String>();
-		if (process == null) {
-			return result;
-		}
-		for (ProcessActivity act : process.getActivities()) {
-			if (act.isWhile()) {
-				result.addAll(getMonitor(((WhileActivity) act)
-						.getDefaultBranch()));
-			} else if (act.isScope()) {
-				ScopeActivity scope = (ScopeActivity) act;
-				for (EventHandlerType eh : scope.getEventHandler()) {
-					result.add(getEventHandlerAsString(eh));
-				}
-				result.addAll(getMonitor(((ScopeActivity) act).getBranch()));
-			} else if (act.isPick()) {
-				PickActivity pick = (PickActivity) act;
-				for (OnMessageActivity msg : pick.getOnMessages()) {
-					result.addAll(getMonitor(msg.getBranch()));
-				}
-			}
-		}
-		return result;
-	}
-
-	private String getEventHandlerAsString(EventHandlerType eh) {
-		StringBuilder sb = new StringBuilder();
-		// conditions
-		sb.append("on(");
-		if (eh.getOnDPchange() != null) {
-			sb.append(eh.getDpChange().getDpName()).append(" on ")
-					.append(eh.getDpChange().getEventName());
-		}
-		if (eh.getOnExternalEvent() != null) {
-			sb.append(eh.getOnExternalEvent().getOnEventName());
-		}
-		sb.append(") => ");
-		// actions
-
-		// if (eh.getDpChange() != null) {
-		// for (DomainProperty dp : eh.getOnDPchange().getDomainProperty()) {//
-		// sb.append(dp.getDpName() + " = " + dp.getState().toString());
-		// }
-		// }
-		if (eh.getTriggerEvent() != null) {
-			sb.append(eh.getTriggerEvent().getName());
-		}
-
-		return sb.toString();
 	}
 
 	private void updateComboboxEntities() {
@@ -672,7 +590,8 @@ public class MainController {
 		ProcessDiagram process = processEngineFacade.getProcessDiagram(db);
 		if (process != null) {
 			// using correlated process, get origin of this correlation. So for
-			// example if User -> refinement1 -> UMS, origin for UMS is User
+			// example if User -> refinement1 -> Telegram, origin for Telegram
+			// is User
 			DomainObjectInstance doi = processEngineFacade
 					.getDomainObjectInstanceForProcess(process);
 			List<DomainObjectInstance> corrs = processEngineFacade
@@ -687,7 +606,7 @@ public class MainController {
 			}
 			// using current process, using refinements information, get in
 			// correlation processes, so for example if User-> refinement 1 ->
-			// Ums, result is Ums for user, in recursive way
+			// Telegram, result is Telegram for user, in recursive way
 			window.updateSelectedEntityCorrelations(response);
 		}
 	}
@@ -846,59 +765,6 @@ public class MainController {
 		}
 	}
 
-	public void selectPreviousEntity() {
-		if (current == null) {
-			window.selectFirstEntityInTable();
-			current = getCurrentDoiBean();
-			return;
-		}
-		// search current then select previous
-		DoiBean previous = null;
-		for (DoiBean d : processEngineFacade.getDomainObjectInstances()) {
-			if (d.getId().equals(current.getId())) {
-				break;
-			}
-			previous = d;
-		}
-		if (previous == null) {
-			window.selectFirstEntityInTable();
-			current = getCurrentDoiBean();
-			return;
-		}
-		current = previous;
-		window.selectEntityOnTable(previous.getId());
-		updateInterface(current);
-	}
-
-	public void selectNextEntity() {
-		if (current == null) {
-			window.selectFirstEntityInTable();
-			current = getCurrentDoiBean();
-			return;
-		}
-		// search current then select next
-		DoiBean next = null;
-		for (int i = 0; i < processEngineFacade.getDomainObjectInstances()
-				.size(); i++) {
-			DoiBean d = processEngineFacade.getDomainObjectInstances().get(i);
-			if (d.getId().equals(current.getId())) {
-				if (i + 1 < processEngineFacade.getDomainObjectInstances()
-						.size()) {
-					next = processEngineFacade.getDomainObjectInstances().get(
-							i + 1);
-					break;
-				}
-			}
-
-		}
-		if (next != null) {
-			current = next;
-			updateInterface(current);
-			window.selectEntityOnTable(next.getId());
-		}
-
-	}
-
 	/**
 	 * Return current user name. <br>
 	 * From current displayed process, search into {@link DomainObjectInstance}
@@ -981,43 +847,6 @@ public class MainController {
 
 	public void addExternalEvent(ExternalEvent event) {
 		this.externalEvents.add(event);
-	}
-
-	/**
-	 * Find right handler for external events and call collective adaptation
-	 */
-	/*
-	 * public void processExternalEvents() { Iterator<ExternalEvent> iter =
-	 * externalEvents.iterator(); while (iter.hasNext()) { ExternalEvent event =
-	 * iter.next(); HandlerInstance handler = findHandler(event.getEvent()); if
-	 * (handler != null) { TriggerEventType trigger = handler.getHandler()
-	 * .getTriggerEvent(); sendCollectiveAdaptationProblem(trigger.getName(),
-	 * event.getEnsemble()); iter.remove(); } } }
-	 */
-	private HandlerInstance findHandler(String event) {
-		for (DomainObjectDefinition def : processEngineFacade
-				.getDomainObjectDefinitions()) {
-			if (def.getProcess() != null) {
-				for (ActivityType act : def.getProcess().getActivity()) {
-					if (act != null && act instanceof ScopeType) {
-						ScopeType scope = (ScopeType) act;
-						if (scope.getEventHandler() != null) {
-							for (EventHandlerType handler : scope
-									.getEventHandler()) {
-								if (handler != null
-										&& handler.getOnExternalEvent() != null) {
-									if (handler.getOnExternalEvent()
-											.getOnEventName().equals(event)) {
-										return new HandlerInstance(handler);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return null;
 	}
 
 	public void selectMonitorTab(String name, Integer index) {
