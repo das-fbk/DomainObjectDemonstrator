@@ -50,7 +50,9 @@
 			<tns:branch name="branch_local">
 				<tns:concrete name="TA_LocalPlanningSelected" />
 				<tns:concrete name="TA_RefineSourcePoint" />
+				<tns:concrete name="TA_ProvideSelectedSource" />
 				<tns:concrete name="TA_RefineDestinationPoint" />
+				<tns:concrete name="TA_ProvideSelectedDestination" />
 				<tns:abstract name="TA_LocalPlanning">
 					<tns:goal>
 						<tns1:point>
