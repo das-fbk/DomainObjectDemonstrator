@@ -18,6 +18,18 @@
 		<tns:actionVariable name="To" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
+		<tns:actionVariable name="Date" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+		<tns:actionVariable name="DepartureTime" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+		<tns:actionVariable name="TransportType" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
+		<tns:actionVariable name="RouteType" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
 	</tns:receive>
 
 	<tns:concrete name="VT_ServiceCall">

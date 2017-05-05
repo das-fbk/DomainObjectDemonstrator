@@ -14,6 +14,18 @@
 		<tns:stateVariable name="To" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
+		<tns:stateVariable name="Date" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:stateVariable>
+		<tns:stateVariable name="DepartureTime" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:stateVariable>
+		<tns:stateVariable name="TransportType" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:stateVariable>
+		<tns:stateVariable name="RouteType" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:stateVariable>
 		<tns:stateVariable name="PlannerOutput" type="string">
 			<tns2:content type="anyType"/>
 		</tns:stateVariable>

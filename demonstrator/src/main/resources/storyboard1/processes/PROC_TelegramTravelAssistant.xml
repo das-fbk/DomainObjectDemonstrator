@@ -41,7 +41,7 @@
 	<tns:concrete name="TA_SelectPlanningMode">
 	</tns:concrete>
 
-	<tns:switch name="switch">
+	<tns:switch name="switch_planning_type">
 		<tns:if>
 			<tns:varCondition>
 				<tns:name>planner</tns:name>
@@ -49,6 +49,8 @@
 			</tns:varCondition>
 			<tns:branch name="branch_local">
 				<tns:concrete name="TA_LocalPlanningSelected" />
+				<tns:concrete name="TA_RefineSourcePoint" />
+				<tns:concrete name="TA_RefineDestinationPoint" />
 				<tns:abstract name="TA_LocalPlanning">
 					<tns:goal>
 						<tns1:point>
