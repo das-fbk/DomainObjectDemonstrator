@@ -21,6 +21,7 @@ import com.google.common.eventbus.Subscribe;
 
 import eu.domainobjects.controller.events.DomainObjectInstanceSelection;
 import eu.domainobjects.controller.events.StepEvent;
+import eu.domainobjects.presentation.main.DomainObjectsModelsPanel;
 import eu.domainobjects.presentation.main.MainWindow;
 import eu.domainobjects.presentation.main.action.listener.DomainObjectDefinitionSelectionByName;
 import eu.domainobjects.presentation.main.action.listener.StepButtonActionListener;
@@ -41,13 +42,19 @@ import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
 import eu.fbk.das.domainobject.executable.SelectPlanningModeExecutable;
 import eu.fbk.das.domainobject.executable.ShowResultsExecutable;
 import eu.fbk.das.domainobject.executable.StartChatbotExecutable;
+import eu.fbk.das.domainobject.executable.TAHandleLegResultsExecutable;
+import eu.fbk.das.domainobject.executable.TAProvideSelectedDestinationExecutable;
+import eu.fbk.das.domainobject.executable.TAProvideSelectedSourceExecutable;
+import eu.fbk.das.domainobject.executable.TARefineDestinationPointExecutable;
+import eu.fbk.das.domainobject.executable.TARefineSourcePointExecutable;
 import eu.fbk.das.domainobject.executable.TAShowLegResultsExecutable;
 import eu.fbk.das.domainobject.executable.TAcheckLegSetExecutable;
 import eu.fbk.das.domainobject.executable.TAdefineJourneyLegsExecutable;
 import eu.fbk.das.domainobject.executable.TAidentifyLegExecutable;
 import eu.fbk.das.domainobject.executable.UserInsertSourceLocationExecutable;
-import eu.fbk.das.domainobject.executable.utils.TripAlternative;
 import eu.fbk.das.domainobject.executable.utils.BotTelegram.TravelAssistantBot;
+import eu.fbk.das.domainobject.executable.utils.BotTelegram.updateshandlers.messagging.Keyboards;
+import eu.fbk.das.domainobject.executable.utils.Rome2Rio.TripAlternativeRome2Rio;
 //import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
 import eu.fbk.das.process.engine.api.DomainObjectInstance;
 import eu.fbk.das.process.engine.api.DomainObjectManagerInterface;
@@ -140,7 +147,8 @@ public class MainController {
 					.getDomainObjectInstances());
 
 			// update comboboxModels
-			updateComboboxEntities();
+			// updateComboboxEntities();
+			updateListDomainObjectsEntities();
 
 			// show main window
 			window.showMainScrollPane(true);
@@ -171,6 +179,7 @@ public class MainController {
 
 		// Bot Creation
 		ApiContextInitializer.init();
+		Keyboards keyboards = new Keyboards();
 
 		TelegramBotsApi api = new TelegramBotsApi();
 		TravelAssistantBot bot = null;
@@ -186,7 +195,7 @@ public class MainController {
 
 		Long ChatId = bot.getCurrentID();
 
-		ArrayList<TripAlternative> alternatives = new ArrayList<TripAlternative>();
+		ArrayList<TripAlternativeRome2Rio> alternatives = new ArrayList<TripAlternativeRome2Rio>();
 
 		processEngineFacade.addExecutableHandler(
 				"R2R_ServiceCall",
@@ -261,6 +270,31 @@ public class MainController {
 		processEngineFacade.addExecutableHandler(
 				"TA_ShowLegResults",
 				new TAShowLegResultsExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_HandleLegResults",
+				new TAHandleLegResultsExecutable(processEngineFacade
+						.getProcessEngine()));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_RefineSourcePoint",
+				new TARefineSourcePointExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_RefineDestinationPoint",
+				new TARefineDestinationPointExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_ProvideSelectedSource",
+				new TAProvideSelectedSourceExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+
+		processEngineFacade.addExecutableHandler(
+				"TA_ProvideSelectedDestination",
+				new TAProvideSelectedDestinationExecutable(processEngineFacade
 						.getProcessEngine(), bot));
 
 		// handler for hoaa for pre-phase
@@ -378,14 +412,66 @@ public class MainController {
 			updateSelectedEntityProvidedFragments(db);
 			updateCellInstances(db);
 			updateSelectedEntityKnowledge(db);
-			updateComboboxEntities();
+			// updateComboboxEntities();
 			window.refreshWindow();
 		} catch (Exception e) {
 			logger.error("Error in interface update", e);
 		}
 	}
 
-	private void updateComboboxEntities() {
+	private static final String PROCESSES_DIR = "/storyboard1/processes/";
+	private static final String DOMAIN_OBJECTS_DIR = "/storyboard1/domainObjects/";
+
+	/**
+	 * Update domain objects models tab and refresh it
+	 */
+	public void updateInterfaceModelsTab(String modelName) {
+		try {
+			// displayProcessExecution(db);
+			// displayProcessModel(db);
+			// updateSelectedEntityState(db);
+			// updateSelectedEntityCorrelations(db);
+			// updateSelectedEntityProvidedFragments(db);
+			// updateCellInstances(db);
+			// updateSelectedEntityKnowledge(db);
+			updateCoreProcessModel(modelName);
+			updateDefinitionModel(modelName);
+			window.refreshWindow();
+		} catch (Exception e) {
+			logger.error("Error in interface update", e);
+		}
+	}
+
+	private void updateCoreProcessModel(String modelName) {
+		String filePath = PROCESSES_DIR.concat("PROC_").concat(modelName)
+				.concat(".xml");
+		// process model diagram
+		ProcessDiagram process = processEngineFacade.getModelByType(modelName);
+
+		((DomainObjectsModelsPanel) window.getModelPanel())
+				.updateCoreProcessPanel(filePath, process);
+	}
+
+	private void updateDefinitionModel(String modelName) {
+		String filePath = DOMAIN_OBJECTS_DIR.concat(modelName).concat(".xml");
+
+		((DomainObjectsModelsPanel) window.getModelPanel())
+				.updateDefinitionPanel(filePath);
+	}
+
+	// private void updateComboboxEntities() {
+	// List<String> response = new ArrayList<String>();
+	// for (DomainObjectDefinition dod : processEngineFacade
+	// .getDomainObjectDefinitions()) {
+	// if (!response.contains(dod.getDomainObject().getName())) {
+	// response.add(dod.getDomainObject().getName());
+	// }
+	// }
+	// window.updateComboxEntities(response);
+	//
+	// }
+
+	private void updateListDomainObjectsEntities() {
 		List<String> response = new ArrayList<String>();
 		for (DomainObjectDefinition dod : processEngineFacade
 				.getDomainObjectDefinitions()) {
@@ -393,7 +479,8 @@ public class MainController {
 				response.add(dod.getDomainObject().getName());
 			}
 		}
-		window.updateComboxEntities(response);
+		((DomainObjectsModelsPanel) window.getModelPanel())
+				.updateListDomainObjectsEntities(response);
 
 	}
 
