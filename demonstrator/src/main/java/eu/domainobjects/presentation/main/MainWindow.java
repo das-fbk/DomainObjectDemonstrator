@@ -2,7 +2,6 @@ package eu.domainobjects.presentation.main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,13 +13,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -48,10 +45,6 @@ import javax.xml.bind.JAXBException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//import eu.allowensembles.presentation.main.map.viewer.MapViewerComponentBuilder;
-//import eu.allowensembles.privacyandsecurity.presentation.PSView;
-//import eu.allowensembles.robustness.controller.RobustnessController;
-//import eu.allowensembles.utility.presentation.UtilityView;
 import eu.domainobjects.DemonstratorConstant;
 import eu.domainobjects.controller.MainController;
 import eu.domainobjects.presentation.main.action.SelectedEntitiesButtonListener;
@@ -60,9 +53,7 @@ import eu.domainobjects.presentation.main.action.listener.EntityDetailActionList
 import eu.domainobjects.presentation.main.action.listener.EntityTableSelectionListener;
 import eu.domainobjects.presentation.main.action.listener.MenuExitListener;
 import eu.domainobjects.presentation.main.action.listener.OpenScenarioListener;
-import eu.domainobjects.presentation.main.action.listener.SelectFragmentListener;
-import eu.domainobjects.presentation.main.action.listener.SelectInstanceListener;
-import eu.domainobjects.presentation.main.action.listener.SelectedComboEntityListener;
+import eu.domainobjects.presentation.main.action.listener.SelectModelListener;
 import eu.domainobjects.presentation.main.action.listener.StepButtonActionListener;
 import eu.domainobjects.presentation.main.process.ProcessModelPanel;
 import eu.domainobjects.utils.DoiBean;
@@ -112,6 +103,7 @@ public class MainWindow {
 	private JButton btnPreviousEntity;
 	private JButton btnStep;
 	private JButton btnPlaypause;
+	private JButton btnAdd;
 	private JList<String> stateVariablesList;
 	private ActivityWindow refinementView;
 	private JFrame refinementFrame;
@@ -129,6 +121,7 @@ public class MainWindow {
 	private JList<String> monitorList;
 	private Icon playIcon;
 	private ImageIcon pauseIcon;
+	private ImageIcon addIcon;
 	private Vector<String> columnNames;
 	private JTabbedPane tabEntity;
 	private JPanel middlePanel;
@@ -138,6 +131,8 @@ public class MainWindow {
 	private GridBagConstraints cMiddle;
 	private JScrollPane processModelScrollPane;
 	private JScrollPane processExecutionScrollPane;
+	private Font lblFont;
+	private JPanel modelPanel;
 
 	/**
 	 * Create the application.
@@ -156,8 +151,27 @@ public class MainWindow {
 	 * @throws IOException
 	 */
 	private void initialize() throws IOException {
-		Font lblFont = new Font("Verdana", Font.PLAIN, 17);
+		lblFont = new Font("Verdana", Font.PLAIN, 17);
+		Font tabFont = new Font("Verdana", Font.PLAIN, 18);
 		frame = new JFrame("Domain Objects Demonstrator");
+
+		// Panel for the main TabbedPane
+		JPanel framePanel = new JPanel();
+		framePanel.setVisible(true);
+		framePanel.setLayout(new GridBagLayout());
+		framePanel.setBackground(Color.decode(BACKGROUD_COLOR));
+
+		// Constraints for the frameTabbedPane on the main window
+		GridBagConstraints cFrameTabbed = getGridBagConstraints(
+				GridBagConstraints.CENTER, GridBagConstraints.BOTH, 1, 1, 0, 0,
+				5, 5, 5, 5);
+
+		// main tabbedPane
+		JTabbedPane frameTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+
+		framePanel.add(frameTabbedPane, cFrameTabbed);
+
+		// Panel for the Runtime Execution Tab
 		mainPanel = new JPanel();
 		mainPanel.setVisible(true);
 		// the mainPanel has a GridBagLayout organized in one column and 3 rows
@@ -165,10 +179,23 @@ public class MainWindow {
 		mainPanel.setBackground(Color.decode(BACKGROUD_COLOR));
 		// by setting preferredSize for the main panel, the vertical scrollbar
 		// will appear if needed
-		mainPanel.setPreferredSize(new Dimension(1024, 900));
+		// mainPanel.setPreferredSize(new Dimension(1024, 900));
+
+		// Panel for the Domain Objects Models Tab
+		modelPanel = new DomainObjectsModelsPanel(this);
+
+		frameTabbedPane.setFont(tabFont);
+		frameTabbedPane.addTab("Domain Objects Models", null, modelPanel, null);
+		frameTabbedPane.addTab("Runtime Execution", null, mainPanel, null);
+		frameTabbedPane.setBackground(Color.decode(BACKGROUD_COLOR));
+		// frameTabbedPane.setBorder(new
+		// LineBorder(Color.decode(BORDER_COLOR)));
+
+		frameTabbedPane.setUI(new SpacedTabbedPaneUI());
+
+		mainScrollPane = new JScrollPane(framePanel);
 
 		// adding the mainPanel on a scrollPane
-		mainScrollPane = new JScrollPane(mainPanel);
 		mainScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		mainScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -184,52 +211,44 @@ public class MainWindow {
 		frame.setIconImage(ImageIO.read(getClass().getResource(
 				"/images/1435065408_gear.png")));
 
-		/***************************************** TOP PANEL **************************************/
+		/****************** Runtime Execution Tab - TOP PANEL **************************************/
 		// Constraints for the top panel on the first row of the mainPanel
-		GridBagConstraints cTop = new GridBagConstraints();
-		cTop.anchor = GridBagConstraints.LINE_END;
-		cTop.weightx = 0;
-		cTop.weighty = 0;
-		cTop.gridx = 0; // column 0
-		cTop.gridy = 0; // row 0
-		cTop.insets.top = 15; // external 'top' padding
-		cTop.insets.bottom = 15;
-		cTop.insets.right = 30;
+		// GridBagConstraints cTop = new GridBagConstraints();
+		// cTop.anchor = GridBagConstraints.LINE_END;
+		// cTop.weightx = 0;
+		// cTop.weighty = 0;
+		// cTop.gridx = 0; // column 0
+		// cTop.gridy = 0; // row 0
+		// cTop.insets.top = 15; // external 'top' padding
+		// cTop.insets.bottom = 15;
+		// cTop.insets.right = 30;
+		//
+		// JPanel topPanel = new JPanel();
+		// topPanel.setLayout(new FlowLayout());
+		// topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		// topPanel.setBackground(Color.decode(BACKGROUD_COLOR));
+		//
+		// // label and comboBox for the domain objects models selection
+		// JLabel lblComboEntities = new JLabel("Domain Objects Models");
+		// lblComboEntities.setFont(lblFont);
+		// topPanel.add(lblComboEntities);
+		//
+		// comboEntities = new JComboBox<String>();
+		// comboEntities.setVisible(true);
+		// comboEntities.setLightWeightPopupEnabled(false);
+		// comboEntities.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
+		// comboEntities.addActionListener(new
+		// SelectedComboEntityListener(this));
+		// topPanel.add(comboEntities);
+		//
+		// // adding the topPanel on the mainPanel
+		// mainPanel.add(topPanel, cTop);
 
-		JPanel topPanel = new JPanel();
-		topPanel.setLayout(new FlowLayout());
-		topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		topPanel.setBackground(Color.decode(BACKGROUD_COLOR));
-
-		// label and comboBox for the domain objects models selection
-		JLabel lblComboEntities = new JLabel("Domain Objects Models");
-		lblComboEntities.setFont(lblFont);
-		topPanel.add(lblComboEntities);
-
-		comboEntities = new JComboBox<String>();
-		comboEntities.setVisible(true);
-		comboEntities.setLightWeightPopupEnabled(false);
-		comboEntities.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
-		comboEntities.addActionListener(new SelectedComboEntityListener(this));
-		topPanel.add(comboEntities);
-
-		// adding the topPanel on the mainPanel
-		mainPanel.add(topPanel, cTop);
-
-		/***************************************** MIDDLE PANEL ***********************************/
+		/***************************************** Runtime Execution Tab - MIDDLE PANEL ***********************************/
 		// Constraints for the middle panel on the second row of the mainPanel
 		// GridBagLayout
-		cMiddle = new GridBagConstraints();
-		cMiddle.fill = GridBagConstraints.BOTH;
-		cMiddle.anchor = GridBagConstraints.CENTER;
-		cMiddle.weightx = 0.3;
-		cMiddle.weighty = 0.3;
-		cMiddle.insets.top = 15;
-		cMiddle.insets.bottom = 15;
-		cMiddle.insets.left = 30;
-		cMiddle.insets.right = 30;
-		cMiddle.gridx = 0;
-		cMiddle.gridy = 2;
+		cMiddle = getGridBagConstraints(GridBagConstraints.CENTER,
+				GridBagConstraints.BOTH, 0.3, 0.3, 0, 2, 15, 15, 30, 30);
 
 		middlePanel = new JPanel();
 		BoxLayout middlePanelLayout = new BoxLayout(middlePanel,
@@ -245,8 +264,8 @@ public class MainWindow {
 		cellInstancesList.setPreferredSize(new Dimension(250, 200));
 		cellInstancesList.setMaximumSize(new Dimension(250, 200));
 		cellInstancesList.setMinimumSize(new Dimension(250, 200));
-		cellInstancesList.addListSelectionListener(new SelectInstanceListener(
-				this));
+		cellInstancesList
+				.addListSelectionListener(new SelectModelListener(this));
 		cellInstancesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JPanel domainObjectsInstances = createBorderLayoutWithJList(
@@ -261,8 +280,8 @@ public class MainWindow {
 		providedFragmentsList.setPreferredSize(new Dimension(250, 200));
 		providedFragmentsList.setMaximumSize(new Dimension(250, 200));
 		providedFragmentsList.setMinimumSize(new Dimension(250, 200));
-		providedFragmentsList
-				.addListSelectionListener(new SelectFragmentListener(this));
+		// providedFragmentsList
+		// .addListSelectionListener(new SelectFragmentListener(this));
 		providedFragmentsList
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -290,20 +309,12 @@ public class MainWindow {
 		// adding the middle panel on the main panel
 		mainPanel.add(middlePanel, cMiddle);
 
-		/***************************************** BOTTOM PANEL ***********************************/
+		/***************************************** Runtime Execution Tab - BOTTOM PANEL ***********************************/
 		// Constraints for the bottom panel on the third row of the mainPanel
 		// GridBagLayout
-		GridBagConstraints cBottom = new GridBagConstraints();
-		cBottom.fill = GridBagConstraints.BOTH;
-		cBottom.anchor = GridBagConstraints.PAGE_END;
-		cBottom.weightx = 0.5;
-		cBottom.weighty = 0.5;
-		cBottom.insets.top = 15;
-		cBottom.insets.bottom = 15;
-		cBottom.insets.left = 30;
-		cBottom.insets.right = 30;
-		cBottom.gridx = 0;
-		cBottom.gridy = 4;
+		GridBagConstraints cBottom = getGridBagConstraints(
+				GridBagConstraints.PAGE_END, GridBagConstraints.BOTH, 0.5, 0.5,
+				0, 4, 15, 15, 30, 30);
 
 		bottomPanel = new JPanel();
 		BoxLayout bottomPanelLayout = new BoxLayout(bottomPanel,
@@ -358,32 +369,18 @@ public class MainWindow {
 		stateVariablesList = new JList<String>();
 		stateVariablesList
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// stateVariablesList.setMaximumSize(new Dimension(450, 220));
-		// stateVariablesList.setMinimumSize(new Dimension(450, 220));
-		// stateVariablesList.setPreferredSize(new Dimension(450, 220));
 
 		entityKnowledgeList = new JList<String>();
 		entityKnowledgeList
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// entityKnowledgeList.setMaximumSize(new Dimension(450, 220));
-		// entityKnowledgeList.setMinimumSize(new Dimension(450, 220));
-		// entityKnowledgeList.setPreferredSize(new Dimension(450, 220));
 
 		entityKnowledgeScrollPane = createScrollPaneForTab(entityKnowledgeList);
 		tabEntity.addTab("Domain Knowledge", null, entityKnowledgeScrollPane);
-		// tabEntity.setTitleAt(0, "");
 
 		entityStateScrollPane = createScrollPaneForTab(stateVariablesList);
 		tabEntity.addTab("State Variables", null, entityStateScrollPane);
 
 		tabEntity.setFont(lblFont);
-
-		// monitorList = new JList<String>();
-		// monitorList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// DefaultListModel<String> testModelMonitorList = new
-		// DefaultListModel<String>();
-		// monitorList.setModel(testModelMonitorList);
-		// monitorList.setCellRenderer(new MonitorCellListRenderer(this));
 
 		// process execution panel
 		lblProcessExecution = new JLabel("Process Execution");
@@ -500,6 +497,8 @@ public class MainWindow {
 				MainWindow.class.getResource("/images/play_verde.png"));
 		pauseIcon = new ImageIcon(
 				MainWindow.class.getResource("/images/pause_verde.png"));
+		addIcon = new ImageIcon(
+				MainWindow.class.getResource("/images/plus_green.png"));
 
 		// init column names for general table
 		columnNames = new Vector<String>();
@@ -524,8 +523,12 @@ public class MainWindow {
 
 		});
 
+		btnAdd = new JButton("Add Domain Object");
+		btnAdd.setIcon(addIcon);
+
 		toolbar.add(btnPlaypause);
 		toolbar.add(btnStep);
+		toolbar.add(btnAdd);
 
 		// create move next/previous entities
 		btnPreviousEntity = new JButton("Previous");
@@ -582,6 +585,26 @@ public class MainWindow {
 		showToolbar(false);
 	}
 
+	/**
+	 * @return
+	 */
+	private GridBagConstraints getGridBagConstraints(int anchor, int fill,
+			double weightx, double weighty, int gridx, int gridy,
+			int insetsTop, int insetsBottom, int insetsRight, int insetsLeft) {
+		GridBagConstraints gbConstraints = new GridBagConstraints();
+		gbConstraints.anchor = anchor;
+		gbConstraints.fill = fill;
+		gbConstraints.weightx = weightx;
+		gbConstraints.weighty = weighty;
+		gbConstraints.gridx = gridx; // column 0
+		gbConstraints.gridy = gridy; // row 0
+		gbConstraints.insets.top = insetsTop; // external 'top' padding
+		gbConstraints.insets.bottom = insetsBottom;
+		gbConstraints.insets.right = insetsRight;
+		gbConstraints.insets.left = insetsLeft;
+		return gbConstraints;
+	}
+
 	private JScrollPane createScrollPaneForTab(JList<String> listElements) {
 		JScrollPane scrollPane = new JScrollPane(listElements);
 		scrollPane
@@ -610,6 +633,7 @@ public class MainWindow {
 		result.add(listName, BorderLayout.PAGE_START);
 		result.add(scrollPane, BorderLayout.CENTER);
 		result.setBorder(new EmptyBorder(10, 10, 10, 10));
+		result.setBackground(Color.decode(BACKGROUD_COLOR));
 
 		return result;
 	}
@@ -653,7 +677,7 @@ public class MainWindow {
 		refreshWindow();
 	}
 
-	private JScrollPane createProcessPanelScrollPane(
+	public JScrollPane createProcessPanelScrollPane(
 			ProcessModelPanel processModelPanel, int width, int height) {
 		JScrollPane scrollPane = new JScrollPane(processModelPanel);
 		scrollPane
@@ -683,11 +707,11 @@ public class MainWindow {
 		toolbar.setVisible(visible);
 		btnPlaypause.setVisible(visible);
 		btnStep.setVisible(visible);
+		btnAdd.setVisible(visible);
 		btnPreviousEntity.setVisible(visible);
 		btnNextEntity.setVisible(visible);
 	}
 
-	// not used in the Domain Objects Demonstrator
 	public void loadDomainObjectInstancesTable(
 			List<DoiBean> domainObjectInstances) {
 		Vector<Vector<String>> data = convertAndFilterForJtable(domainObjectInstances);
@@ -856,14 +880,22 @@ public class MainWindow {
 		return refinementView;
 	}
 
-	public void updateComboxEntities(List<String> input) {
-		comboEntities.removeAllItems();
-		Collections.sort(input);
-		input.add(0, "");
-		for (String s : input) {
-			comboEntities.addItem(s);
-		}
-	}
+	// public void updateComboxEntities(List<String> input) {
+	// comboEntities.removeAllItems();
+	// Collections.sort(input);
+	// input.add(0, "");
+	// for (String s : input) {
+	// comboEntities.addItem(s);
+	// }
+	// }
+
+	// public void updateListDomainObjectsEntities(List<String> input) {
+	// String[] array = new String[input.size()];
+	// modelList.removeAll();
+	// Collections.sort(input);
+	// input.add(0, "");
+	// modelList.setListData(input.toArray(array));
+	// }
 
 	public void resetCellInstances() {
 		String[] temp = { "" };
@@ -933,38 +965,9 @@ public class MainWindow {
 		return correlatedEntitiesList.getModel().getElementAt(sr);
 	}
 
-	public void selectEntityOnTable(String id) {
-		for (int i = 0; i < generalTable.getModel().getRowCount(); i++) {
-			if (generalTable.getModel().getValueAt(i, 0) != null
-					&& generalTable.getModel().getValueAt(i, 0).equals(id)) {
-				generalTable.setRowSelectionInterval(i, i);
-			}
-		}
-	}
-
 	public void resetProcessDisplay() {
 		processExecutionPanel = null;
 		processModelPanel = null;
-	}
-
-	// this method here comes from the Allow Ensembles Project! Here we do not
-	// use monitors
-	public void updateMonitors(List<String> values, Integer index) {
-		monitorList.setModel(new DefaultListModel<String>());
-		if (values != null && !values.isEmpty()) {
-			DefaultListModel<String> model = (DefaultListModel<String>) monitorList
-					.getModel();
-			for (String v : values) {
-				model.addElement(v);
-			}
-			MonitorCellListRenderer renderer = (MonitorCellListRenderer) monitorList
-					.getCellRenderer();
-			if (index != null && index >= 0) {
-				renderer.setStyle(index);
-			} else {
-				renderer.resetStyle();
-			}
-		}
 	}
 
 	public void setPauseButton() {
@@ -981,4 +984,9 @@ public class MainWindow {
 		btnStep.setEnabled(b);
 		btnPlaypause.setEnabled(b);
 	}
+
+	public JPanel getModelPanel() {
+		return modelPanel;
+	}
+
 }

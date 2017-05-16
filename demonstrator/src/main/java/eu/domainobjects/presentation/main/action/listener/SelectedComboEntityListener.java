@@ -16,9 +16,6 @@ public class SelectedComboEntityListener implements ActionListener {
 		this.window = mainWindow;
 	}
 
-	// public SelectedComboEntityListener() {
-	// }
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() != null && e.getSource() instanceof JComboBox<?>) {

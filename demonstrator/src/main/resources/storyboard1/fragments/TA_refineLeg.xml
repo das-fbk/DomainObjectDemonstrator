@@ -10,6 +10,7 @@
 	<tns:state name="ST3" />
 	<tns:state name="ST4" />
 	<tns:state name="ST5" />
+	<tns:state name="ST6" />
 
 	<tns:action name="TA_StartLegHandling" actionType="input">
 		<tns:precondition>
@@ -23,6 +24,9 @@
 
 	<tns:action name="TA_IdentifyLeg" actionType="abstract"
 		type="HOAA" receiveVar="MEAN">
+	</tns:action>
+	
+	<tns:action name="TA_HandleLegResults" actionType="concrete">
 	</tns:action>
 
 	<tns:action name="TA_OrganizeData" actionType="abstract">
@@ -57,22 +61,28 @@
 		<tns:finalState>ST2</tns:finalState>
 		<tns:action name="TA_IdentifyLeg" actionType="abstract" />
 	</tns:transition>
-
+	
 	<tns:transition>
 		<tns:initialState>ST2</tns:initialState>
 		<tns:finalState>ST3</tns:finalState>
-		<tns:action name="TA_OrganizeData" actionType="abstract" />
+		<tns:action name="TA_HandleLegResults" actionType="concrete" />
 	</tns:transition>
 
 	<tns:transition>
 		<tns:initialState>ST3</tns:initialState>
 		<tns:finalState>ST4</tns:finalState>
-		<tns:action name="TA_ShowLegResults" actionType="concrete" />
+		<tns:action name="TA_OrganizeData" actionType="abstract" />
 	</tns:transition>
 
 	<tns:transition>
 		<tns:initialState>ST4</tns:initialState>
 		<tns:finalState>ST5</tns:finalState>
+		<tns:action name="TA_ShowLegResults" actionType="concrete" />
+	</tns:transition>
+
+	<tns:transition>
+		<tns:initialState>ST5</tns:initialState>
+		<tns:finalState>ST6</tns:finalState>
 		<tns:action name="TA_EndLegHandling" actionType="input" />
 	</tns:transition>
 
