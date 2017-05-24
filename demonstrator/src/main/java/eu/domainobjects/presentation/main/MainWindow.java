@@ -53,7 +53,7 @@ import eu.domainobjects.presentation.main.action.listener.EntityDetailActionList
 import eu.domainobjects.presentation.main.action.listener.EntityTableSelectionListener;
 import eu.domainobjects.presentation.main.action.listener.MenuExitListener;
 import eu.domainobjects.presentation.main.action.listener.OpenScenarioListener;
-import eu.domainobjects.presentation.main.action.listener.SelectModelListener;
+import eu.domainobjects.presentation.main.action.listener.SelectInstanceListener;
 import eu.domainobjects.presentation.main.action.listener.StepButtonActionListener;
 import eu.domainobjects.presentation.main.process.ProcessModelPanel;
 import eu.domainobjects.utils.DoiBean;
@@ -264,8 +264,8 @@ public class MainWindow {
 		cellInstancesList.setPreferredSize(new Dimension(250, 200));
 		cellInstancesList.setMaximumSize(new Dimension(250, 200));
 		cellInstancesList.setMinimumSize(new Dimension(250, 200));
-		cellInstancesList
-				.addListSelectionListener(new SelectModelListener(this));
+		cellInstancesList.addListSelectionListener(new SelectInstanceListener(
+				this));
 		cellInstancesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JPanel domainObjectsInstances = createBorderLayoutWithJList(

@@ -9,6 +9,7 @@ xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Pr
   
   <tns:event>receiveData</tns:event>
   <tns:event>sendPattern</tns:event>
+  <tns:event>goBackToInit</tns:event>
  
   <tns:transition isControllable="true">
     <tns:from>INITIAL</tns:from>
@@ -20,6 +21,12 @@ xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Pr
     <tns:from>DATA_RECEIVED</tns:from>
     <tns:to>VIEWER_PATTERN_DEFINED</tns:to>
     <tns:event>sendPattern</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>VIEWER_PATTERN_DEFINED</tns:from>
+    <tns:to>INITIAL</tns:to>
+    <tns:event>goBackToInit</tns:event>
   </tns:transition>
 
 </tns:domainProperty>

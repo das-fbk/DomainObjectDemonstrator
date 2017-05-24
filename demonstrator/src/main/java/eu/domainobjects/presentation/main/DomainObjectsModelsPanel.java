@@ -60,6 +60,8 @@ public class DomainObjectsModelsPanel extends JPanel {
 	private static final Font TAB_FONT = new Font("Verdana", Font.PLAIN, 18);
 
 	private MainWindow window;
+	private JList<String> propertiesList;
+	private JList<String> fragmentsList;
 
 	private JList<String> modelList;
 
@@ -194,8 +196,50 @@ public class DomainObjectsModelsPanel extends JPanel {
 	}
 
 	private Component modelFragmentsPanel() {
-		JPanel fragmentsModelPanel = new JPanel();
-		return fragmentsModelPanel;
+		// main panel
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.decode(BACKGROUD_COLOR));
+		panel.setBorder(new EmptyBorder(0, 10, 10, 10));
+		panel.setAlignmentY(Component.TOP_ALIGNMENT);
+
+		BoxLayout compLayout = new BoxLayout(panel, BoxLayout.LINE_AXIS);
+		panel.setLayout(compLayout);
+
+		// label and comboBox for the fragments models selection
+		JPanel panelListFragments = new JPanel();
+		panelListFragments.setLayout(new BoxLayout(panelListFragments,
+				BoxLayout.Y_AXIS));
+		panelListFragments.setBackground(Color.decode(BACKGROUD_COLOR));
+		JLabel lblFragments = new JLabel("Provided Fragments");
+		lblFragments.setFont(LABEL_FONT);
+
+		fragmentsList = new JList<String>();
+		fragmentsList.setVisible(true);
+		// propertiesList.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
+		fragmentsList.setPreferredSize(new Dimension(250, 180));
+		fragmentsList.setMaximumSize(new Dimension(250, 180));
+		fragmentsList.setMinimumSize(new Dimension(250, 180));
+		// propertiesList
+		// .addListSelectionListener(new SelectModelListener(this.window));
+		// //define its own listener
+		fragmentsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		JPanel fragmentsModels = createBorderLayoutWithJList(lblFragments,
+				fragmentsList, 300, 180);
+		fragmentsModels.setMinimumSize(new Dimension(300, 400));
+		fragmentsModels.setMaximumSize(new Dimension(300, 400));
+		panelListFragments.add(fragmentsModels);
+		panelListFragments.setAlignmentY(Component.TOP_ALIGNMENT);
+
+		// scrollPane for the textPane showing the xml model of a property
+		JScrollPane scrollPane = defineXMLtextPane(new JTextPane(), 900, 600);
+		scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
+
+		panel.add(panelListFragments);
+		panel.add(Box.createRigidArea(new Dimension(0, 5)));
+		panel.add(scrollPane);
+
+		return panel;
 	}
 
 	private Component modelDomainKnowledgePanel() {
@@ -216,7 +260,7 @@ public class DomainObjectsModelsPanel extends JPanel {
 		JLabel lblDomainProperties = new JLabel("Domain Properties");
 		lblDomainProperties.setFont(LABEL_FONT);
 
-		JList<String> propertiesList = new JList<String>();
+		propertiesList = new JList<String>();
 		propertiesList.setVisible(true);
 		// propertiesList.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
 		propertiesList.setPreferredSize(new Dimension(250, 180));
@@ -282,8 +326,8 @@ public class DomainObjectsModelsPanel extends JPanel {
 		// e1.printStackTrace();
 		// }
 
-		DefaultCaret caret = (DefaultCaret) textPane.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		DefaultCaret caret = (DefaultCaret) definitionTextPane.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		JScrollPane scrollPane = new JScrollPane(textPane,
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -299,6 +343,22 @@ public class DomainObjectsModelsPanel extends JPanel {
 		Collections.sort(input);
 		input.add(0, "");
 		modelList.setListData(input.toArray(array));
+	}
+
+	public void updateDomainPropertiesList(List<String> input) {
+		String[] array = new String[input.size()];
+		propertiesList.removeAll();
+		Collections.sort(input);
+		input.add(0, "");
+		propertiesList.setListData(input.toArray(array));
+	}
+
+	public void updateFragmentsList(List<String> input) {
+		String[] array = new String[input.size()];
+		fragmentsList.removeAll();
+		Collections.sort(input);
+		input.add(0, "");
+		fragmentsList.setListData(input.toArray(array));
 	}
 
 	public void updateCoreProcessPanel(String filePath, ProcessDiagram process) {

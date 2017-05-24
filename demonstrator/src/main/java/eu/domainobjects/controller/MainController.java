@@ -62,6 +62,7 @@ import eu.fbk.das.process.engine.api.domain.DomainObjectDefinition;
 import eu.fbk.das.process.engine.api.domain.ObjectDiagram;
 import eu.fbk.das.process.engine.api.domain.ProcessActivity;
 import eu.fbk.das.process.engine.api.domain.ProcessDiagram;
+import eu.fbk.das.process.engine.api.jaxb.DomainObject;
 import eu.fbk.das.process.engine.api.jaxb.VariableType;
 import eu.fbk.das.process.engine.impl.ProcessEngineImpl;
 
@@ -184,9 +185,14 @@ public class MainController {
 		TelegramBotsApi api = new TelegramBotsApi();
 		TravelAssistantBot bot = null;
 		try {
-			bot = new TravelAssistantBot("MoveAssistantBot",
-					"323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
-					false, false, false, aListner, event);
+			 bot = new TravelAssistantBot("MoveAssistantBot",
+			 "323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
+			 false, false, false, aListner, event);
+
+			/***************** BOT MARTINA *********************************/
+//			bot = new TravelAssistantBot("TestTravelAssistantBot",
+//					"348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
+//					false, false, false, aListner, event);
 
 			BotSession session = api.registerBot(bot);
 		} catch (TelegramApiException e) {
@@ -421,6 +427,8 @@ public class MainController {
 
 	private static final String PROCESSES_DIR = "/storyboard1/processes/";
 	private static final String DOMAIN_OBJECTS_DIR = "/storyboard1/domainObjects/";
+	private static final String DOMAIN_KNOWLEDGE_DIR = "/storyboard1/domainProperties/";
+	private static final String FRAGMENTS_DIR = "/storyboard1/fragments/";
 
 	/**
 	 * Update domain objects models tab and refresh it
@@ -433,7 +441,8 @@ public class MainController {
 			// updateSelectedEntityCorrelations(db);
 			// updateSelectedEntityProvidedFragments(db);
 			// updateCellInstances(db);
-			// updateSelectedEntityKnowledge(db);
+			updateFragmentsModels(modelName);
+			updateDomainPropertisModel(modelName);
 			updateCoreProcessModel(modelName);
 			updateDefinitionModel(modelName);
 			window.refreshWindow();
@@ -457,6 +466,73 @@ public class MainController {
 
 		((DomainObjectsModelsPanel) window.getModelPanel())
 				.updateDefinitionPanel(filePath);
+	}
+
+	private void updateDomainPropertisModel(String modelName) {
+		List<String> properties = new ArrayList<String>();
+
+		DomainObject current = null;
+		List<DomainObjectDefinition> dod = processEngineFacade
+				.getDomainObjectDefinitions();
+		for (DomainObjectDefinition definition : dod) {
+			if (definition.getDomainObject().getName().equals(modelName)) {
+				current = definition.getDomainObject();
+				break;
+			}
+		}
+
+		if (current.getDomainKnowledge() != null) {
+			if (current.getDomainKnowledge().getInternalDomainProperty() != null
+					&& !current.getDomainKnowledge()
+							.getInternalDomainProperty().isEmpty()) {
+				String internalProperty = "internal/"
+						+ current.getDomainKnowledge()
+								.getInternalDomainProperty().get(0).getName()
+								.split("/")[1];
+				properties.add(internalProperty);
+			}
+
+			if (current.getDomainKnowledge().getExternalDomainProperty() != null
+					&& !current.getDomainKnowledge()
+							.getExternalDomainProperty().isEmpty()) {
+				for (int j = 0; j < current.getDomainKnowledge()
+						.getExternalDomainProperty().size(); j++) {
+					String externalProperty = "external/"
+							+ current.getDomainKnowledge()
+									.getExternalDomainProperty().get(j)
+									.getName().split("/")[1];
+					properties.add(externalProperty);
+				}
+			}
+		}
+
+		((DomainObjectsModelsPanel) window.getModelPanel())
+				.updateDomainPropertiesList(properties);
+	}
+
+	private void updateFragmentsModels(String modelName) {
+		List<String> fragmentsList = new ArrayList<String>();
+
+		DomainObject current = null;
+		List<DomainObjectDefinition> dod = processEngineFacade
+				.getDomainObjectDefinitions();
+		for (DomainObjectDefinition definition : dod) {
+			if (definition.getDomainObject().getName().equals(modelName)) {
+				current = definition.getDomainObject();
+				break;
+			}
+		}
+
+		if (current.getFragment() != null) {
+			for (int j = 0; j < current.getFragment().size(); j++) {
+				String fragmentName = current.getFragment().get(j).getName()
+						.split("/")[1];
+				fragmentsList.add(fragmentName);
+			}
+		}
+
+		((DomainObjectsModelsPanel) window.getModelPanel())
+				.updateFragmentsList(fragmentsList);
 	}
 
 	// private void updateComboboxEntities() {

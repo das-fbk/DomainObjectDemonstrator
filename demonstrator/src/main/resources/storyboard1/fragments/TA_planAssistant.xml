@@ -105,6 +105,9 @@
 		<tns:actionVariable name="HOAAPlanGoal" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
+		<tns:actionVariable name="SegmentsNumber" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:actionVariable>
 	</tns:action>
 
 <!-- 	<tns:action name="TA_ProvideInstructions" actionType="output"> -->

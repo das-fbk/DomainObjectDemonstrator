@@ -31,10 +31,10 @@
 		<tns:stateVariable name="PlannerOutput" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
-<!-- 		<tns:stateVariable name="PlanList" type="string"> -->
-<!-- 			<tns2:content type="anyType"></tns2:content> -->
-<!-- 		</tns:stateVariable> -->
 		<tns:stateVariable name="ChosenPlan" type="string">
+			<tns2:content type="anyType"></tns2:content>
+		</tns:stateVariable>
+		<tns:stateVariable name="SegmentsNumber" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
 		<tns:stateVariable name="HOAAPlanGoal" type="string">

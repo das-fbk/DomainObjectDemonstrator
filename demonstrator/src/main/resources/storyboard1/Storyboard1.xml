@@ -4,6 +4,10 @@
 	<tns:domainObject file="domainObjects/User">
 		<tns:domainObjectInstance id="User_1" lat="46.146448"
 			long="11.097186999999963" />
+<!-- 			<tns:domainObjectInstance id="User_2" lat="46.146448" -->
+<!-- 			long="11.097186999999963" onTurn="4"/> -->
+<!-- 			<tns:domainObjectInstance id="User_3" lat="46.146448" -->
+<!-- 			long="11.097186999999963" onTurn="6"/> -->
 	</tns:domainObject>
 	<tns:domainObject file="domainObjects/TelegramTravelAssistant" />
 	<tns:domainObject file="domainObjects/Rome2Rio" />
@@ -11,4 +15,5 @@
 	<tns:domainObject file="domainObjects/DataViewerManager" />
 	<tns:domainObject file="domainObjects/GoogleTransit" />
 	<tns:domainObject file="domainObjects/BlaBlaCar" />
+	<tns:domainObject file="domainObjects/SpecificTransportMean" />
 </tns:scenario>
