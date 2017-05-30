@@ -52,6 +52,7 @@ import eu.fbk.das.domainobject.executable.TAcheckLegSetExecutable;
 import eu.fbk.das.domainobject.executable.TAdefineJourneyLegsExecutable;
 import eu.fbk.das.domainobject.executable.TAidentifyLegExecutable;
 import eu.fbk.das.domainobject.executable.UserInsertSourceLocationExecutable;
+import eu.fbk.das.domainobject.executable.VTServiceCallExecutable;
 import eu.fbk.das.domainobject.executable.utils.BotTelegram.TravelAssistantBot;
 import eu.fbk.das.domainobject.executable.utils.BotTelegram.updateshandlers.messagging.Keyboards;
 import eu.fbk.das.domainobject.executable.utils.Rome2Rio.TripAlternativeRome2Rio;
@@ -185,14 +186,14 @@ public class MainController {
 		TelegramBotsApi api = new TelegramBotsApi();
 		TravelAssistantBot bot = null;
 		try {
-			 bot = new TravelAssistantBot("MoveAssistantBot",
-			 "323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
-			 false, false, false, aListner, event);
+			bot = new TravelAssistantBot("MoveAssistantBot",
+					"323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
+					false, false, false, aListner, event);
 
 			/***************** BOT MARTINA *********************************/
-//			bot = new TravelAssistantBot("TestTravelAssistantBot",
-//					"348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
-//					false, false, false, aListner, event);
+			// bot = new TravelAssistantBot("TestTravelAssistantBot",
+			// "348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
+			// false, false, false, aListner, event);
 
 			BotSession session = api.registerBot(bot);
 		} catch (TelegramApiException e) {
@@ -301,6 +302,10 @@ public class MainController {
 		processEngineFacade.addExecutableHandler(
 				"TA_ProvideSelectedDestination",
 				new TAProvideSelectedDestinationExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		processEngineFacade.addExecutableHandler(
+				"VT_ServiceCall",
+				new VTServiceCallExecutable(processEngineFacade
 						.getProcessEngine(), bot));
 
 		// handler for hoaa for pre-phase
