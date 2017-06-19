@@ -2,6 +2,9 @@ package eu.domainobjects.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,6 +102,7 @@ public class MainController {
 
 	private static Parser parser = new Parser();
 	private String currentSelectedDomainObjectName = new String();
+	private static final String WORKING_DIR = "workingDir";
 
 	/**
 	 * Construct controller for Demonstrator. Initialize {@link EventBus} with
@@ -196,14 +200,19 @@ public class MainController {
 		TelegramBotsApi api = new TelegramBotsApi();
 		TravelAssistantBot bot = null;
 		try {
-			// bot = new TravelAssistantBot("MoveAssistantBot",
-			// "323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
-			// false, false, false, aListner, event);
 
-			/***************** BOT MARTINA *********************************/
-			bot = new TravelAssistantBot("Atlas_ChatBot",
-					"382932525:AAHGD1nJSYzfM_l_McLUDXCh6ivgRc0ZdpU", false,
-					false, false, false, aListner, event);
+			String botData = this.getBotParameters();
+			String[] fields = botData.split(";");
+			String name = fields[0];
+			String token = fields[1];
+			String[] nameValues = name.split("=");
+			String[] tokenValues = token.split("=");
+
+			String botName = nameValues[1];
+			String botToken = tokenValues[1];
+
+			bot = new TravelAssistantBot(botName, botToken, false, false,
+					false, false, aListner, event);
 
 			BotSession session = api.registerBot(bot);
 		} catch (TelegramApiException e) {
@@ -1072,6 +1081,21 @@ public class MainController {
 
 	public void enableStep(boolean b) {
 		window.enableStep(b);
+	}
+
+	public static String getBotParameters() {
+		BufferedReader reader;
+		String result = "";
+
+		try {
+			reader = new BufferedReader(new FileReader("botProperties.txt"));
+			result = reader.readLine();
+
+		} catch (IOException e) {
+			System.err.println("Error :" + e);
+		}
+		// System.out.println(result);
+		return result;
 	}
 
 }
