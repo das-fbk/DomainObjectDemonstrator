@@ -32,6 +32,9 @@ import eu.domainobjects.utils.ExternalEvent;
 import eu.domainobjects.utils.PlayRunner;
 import eu.domainobjects.utils.ResourceLoader;
 import eu.domainobjects.utils.UserData;
+import eu.fbk.das.composer.api.exceptions.InvalidServiceInitialStateException;
+import eu.fbk.das.composer.api.exceptions.InvalidServiceTransitionException;
+import eu.fbk.das.composer.api.exceptions.ServiceDuplicateActionException;
 import eu.fbk.das.domainobject.executable.AskToUseCurrentLocationExecutable;
 import eu.fbk.das.domainobject.executable.BBCServiceCallExecutable;
 import eu.fbk.das.domainobject.executable.ChooseAlternativeExecutable;
@@ -63,9 +66,11 @@ import eu.fbk.das.process.engine.api.domain.DomainObjectDefinition;
 import eu.fbk.das.process.engine.api.domain.ObjectDiagram;
 import eu.fbk.das.process.engine.api.domain.ProcessActivity;
 import eu.fbk.das.process.engine.api.domain.ProcessDiagram;
+import eu.fbk.das.process.engine.api.domain.ServiceDiagram;
 import eu.fbk.das.process.engine.api.jaxb.DomainObject;
 import eu.fbk.das.process.engine.api.jaxb.VariableType;
 import eu.fbk.das.process.engine.impl.ProcessEngineImpl;
+import eu.fbk.das.process.engine.impl.util.Parser;
 
 /**
  * Domain Objects Demonstrator's Main controller, use it to post/subscribe
@@ -84,11 +89,16 @@ public class MainController {
 
 	private Map<String, UserData> userData = new HashMap<String, UserData>();
 
+	private Map<String, List<ServiceDiagram>> doServiceDiagrams = new HashMap<String, List<ServiceDiagram>>();
+
 	private DoiBean current;
 
 	private List<ExternalEvent> externalEvents = new ArrayList<ExternalEvent>();
 
 	private Map<String, Integer> monitorSelectedMap = new HashMap<String, Integer>();
+
+	private static Parser parser = new Parser();
+	private String currentSelectedDomainObjectName = new String();
 
 	/**
 	 * Construct controller for Demonstrator. Initialize {@link EventBus} with
@@ -186,14 +196,14 @@ public class MainController {
 		TelegramBotsApi api = new TelegramBotsApi();
 		TravelAssistantBot bot = null;
 		try {
-			bot = new TravelAssistantBot("MoveAssistantBot",
-					"323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
-					false, false, false, aListner, event);
+			// bot = new TravelAssistantBot("MoveAssistantBot",
+			// "323926730:AAEudfVK_JJWHQ89vFrhVoLh-mHGwm5NZuA", false,
+			// false, false, false, aListner, event);
 
 			/***************** BOT MARTINA *********************************/
-			// bot = new TravelAssistantBot("TestTravelAssistantBot",
-			// "348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
-			// false, false, false, aListner, event);
+			bot = new TravelAssistantBot("Atlas_ChatBot",
+					"382932525:AAHGD1nJSYzfM_l_McLUDXCh6ivgRc0ZdpU", false,
+					false, false, false, aListner, event);
 
 			BotSession session = api.registerBot(bot);
 		} catch (TelegramApiException e) {
@@ -439,21 +449,22 @@ public class MainController {
 	 * Update domain objects models tab and refresh it
 	 */
 	public void updateInterfaceModelsTab(String modelName) {
+		currentSelectedDomainObjectName = modelName;
 		try {
-			// displayProcessExecution(db);
-			// displayProcessModel(db);
-			// updateSelectedEntityState(db);
-			// updateSelectedEntityCorrelations(db);
-			// updateSelectedEntityProvidedFragments(db);
-			// updateCellInstances(db);
+			clearPanels();
+			window.refreshWindow();
 			updateFragmentsModels(modelName);
 			updateDomainPropertisModel(modelName);
 			updateCoreProcessModel(modelName);
 			updateDefinitionModel(modelName);
-			window.refreshWindow();
+
 		} catch (Exception e) {
 			logger.error("Error in interface update", e);
 		}
+	}
+
+	public void clearPanels() {
+		((DomainObjectsModelsPanel) window.getModelPanel()).clearModelsPanel();
 	}
 
 	private void updateCoreProcessModel(String modelName) {
@@ -461,7 +472,6 @@ public class MainController {
 				.concat(".xml");
 		// process model diagram
 		ProcessDiagram process = processEngineFacade.getModelByType(modelName);
-
 		((DomainObjectsModelsPanel) window.getModelPanel())
 				.updateCoreProcessPanel(filePath, process);
 	}
@@ -515,15 +525,19 @@ public class MainController {
 				.updateDomainPropertiesList(properties);
 	}
 
-	private void updateFragmentsModels(String modelName) {
+	private void updateFragmentsModels(String modelName)
+			throws InvalidServiceInitialStateException,
+			InvalidServiceTransitionException, ServiceDuplicateActionException {
 		List<String> fragmentsList = new ArrayList<String>();
 
 		DomainObject current = null;
+		DomainObjectDefinition currentDod = null;
 		List<DomainObjectDefinition> dod = processEngineFacade
 				.getDomainObjectDefinitions();
 		for (DomainObjectDefinition definition : dod) {
 			if (definition.getDomainObject().getName().equals(modelName)) {
 				current = definition.getDomainObject();
+				currentDod = definition;
 				break;
 			}
 		}
@@ -536,8 +550,43 @@ public class MainController {
 			}
 		}
 
+		if (!doServiceDiagrams.containsKey(modelName)) {
+			doServiceDiagrams.put(modelName,
+					parser.convertToServiceDiagram(currentDod.getFragments()));
+		}
+
 		((DomainObjectsModelsPanel) window.getModelPanel())
 				.updateFragmentsList(fragmentsList);
+	}
+
+	public void updateFragmentsModelsTab(String fragmentName) {
+		List<ServiceDiagram> services = new ArrayList<ServiceDiagram>();
+		String filePath = FRAGMENTS_DIR.concat(fragmentName).concat(".xml");
+		((DomainObjectsModelsPanel) window.getModelPanel())
+				.updateFragmentPanel(filePath);
+
+		if (doServiceDiagrams.containsKey(currentSelectedDomainObjectName)) {
+			services = doServiceDiagrams.get(currentSelectedDomainObjectName);
+		}
+
+		ServiceDiagram currentService;
+		for (ServiceDiagram sd : services) {
+			if (sd.getSid().equalsIgnoreCase(fragmentName)) {
+				currentService = sd;
+				break;
+			}
+		}
+
+		// TODO: chiamata a metodo che mostra il frammento come processo. Vedi
+		// come fa per process diagram
+	}
+
+	public void updatePropertyModelTab(String propertyName) {
+		propertyName = propertyName.split("/")[1];
+		String filePath = DOMAIN_KNOWLEDGE_DIR.concat(propertyName).concat(
+				".xml");
+		((DomainObjectsModelsPanel) window.getModelPanel())
+				.updatePropertyPanel(filePath);
 	}
 
 	// private void updateComboboxEntities() {

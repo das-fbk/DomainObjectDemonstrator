@@ -6,11 +6,11 @@ import javax.swing.event.ListSelectionListener;
 
 import eu.domainobjects.presentation.main.MainWindow;
 
-public class SelectFragmentListener implements ListSelectionListener {
+public class SelectPropertyListener implements ListSelectionListener {
 
 	private MainWindow window;
 
-	public SelectFragmentListener(MainWindow mainWindow) {
+	public SelectPropertyListener(MainWindow mainWindow) {
 		this.window = mainWindow;
 	}
 
@@ -23,17 +23,17 @@ public class SelectFragmentListener implements ListSelectionListener {
 			JList<?> fsm = (JList<?>) e.getSource();
 			for (int i = e.getFirstIndex(); i <= e.getLastIndex(); i++) {
 				if (fsm.isSelectedIndex(i)) {
-					setFragmentWithName(fsm.getSelectedValue());
+					setPropertyWithName(fsm.getSelectedValue());
 					break;
 				}
 			}
 		}
 	}
 
-	public void setFragmentWithName(Object selectedValue) {
+	public void setPropertyWithName(Object selectedValue) {
 		if (selectedValue instanceof String) {
-			String fragmentName = (String) selectedValue;
-			window.getController().updateFragmentsModelsTab(fragmentName);
+			String propertyName = (String) selectedValue;
+			window.getController().updatePropertyModelTab(propertyName);
 		}
 	}
 }

@@ -37,7 +37,9 @@ import xmleditorkit.XMLEditorKit;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
+import eu.domainobjects.presentation.main.action.listener.SelectFragmentListener;
 import eu.domainobjects.presentation.main.action.listener.SelectModelListener;
+import eu.domainobjects.presentation.main.action.listener.SelectPropertyListener;
 import eu.domainobjects.presentation.main.process.ProcessModelPanel;
 import eu.fbk.das.process.engine.api.domain.ProcessDiagram;
 
@@ -195,6 +197,8 @@ public class DomainObjectsModelsPanel extends JPanel {
 		return definitionPanel;
 	}
 
+	private JTextPane fragmentTextPane = new JTextPane();
+
 	private Component modelFragmentsPanel() {
 		// main panel
 		JPanel panel = new JPanel();
@@ -219,8 +223,8 @@ public class DomainObjectsModelsPanel extends JPanel {
 		fragmentsList.setPreferredSize(new Dimension(250, 180));
 		fragmentsList.setMaximumSize(new Dimension(250, 180));
 		fragmentsList.setMinimumSize(new Dimension(250, 180));
-		// propertiesList
-		// .addListSelectionListener(new SelectModelListener(this.window));
+		fragmentsList.addListSelectionListener(new SelectFragmentListener(
+				this.window));
 		// //define its own listener
 		fragmentsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -232,7 +236,7 @@ public class DomainObjectsModelsPanel extends JPanel {
 		panelListFragments.setAlignmentY(Component.TOP_ALIGNMENT);
 
 		// scrollPane for the textPane showing the xml model of a property
-		JScrollPane scrollPane = defineXMLtextPane(new JTextPane(), 900, 600);
+		JScrollPane scrollPane = defineXMLtextPane(fragmentTextPane, 900, 600);
 		scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
 
 		panel.add(panelListFragments);
@@ -241,6 +245,8 @@ public class DomainObjectsModelsPanel extends JPanel {
 
 		return panel;
 	}
+
+	private JTextPane propertyTextPane = new JTextPane();
 
 	private Component modelDomainKnowledgePanel() {
 		// main panel
@@ -266,8 +272,8 @@ public class DomainObjectsModelsPanel extends JPanel {
 		propertiesList.setPreferredSize(new Dimension(250, 180));
 		propertiesList.setMaximumSize(new Dimension(250, 180));
 		propertiesList.setMinimumSize(new Dimension(250, 180));
-		// propertiesList
-		// .addListSelectionListener(new SelectModelListener(this.window));
+		propertiesList.addListSelectionListener(new SelectPropertyListener(
+				this.window));
 		// //define its own listener
 		propertiesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -279,7 +285,7 @@ public class DomainObjectsModelsPanel extends JPanel {
 		panelListProperties.setAlignmentY(Component.TOP_ALIGNMENT);
 
 		// scrollPane for the textPane showing the xml model of a property
-		JScrollPane scrollPane = defineXMLtextPane(new JTextPane(), 900, 600);
+		JScrollPane scrollPane = defineXMLtextPane(propertyTextPane, 900, 600);
 		scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
 
 		panel.add(panelListProperties);
@@ -316,17 +322,10 @@ public class DomainObjectsModelsPanel extends JPanel {
 		StyleConstants.setBold(XMLDocument.TAGNAME_ATTRIBUTES, false);
 
 		textPane.setEditorKit(xmlEditorKit);
+
 		textPane.setContentType("text/xml");
 
-		// File file = new File(
-		// "C:\\Users\\Martina\\git\\localRepo\\demonstrator\\src\\main\\resources\\storyboard1\\domainObjects\\BlaBlaCar.xml");
-		// try {
-		// textPane.read(new FileReader(file), file);
-		// } catch (IOException e1) {
-		// e1.printStackTrace();
-		// }
-
-		DefaultCaret caret = (DefaultCaret) definitionTextPane.getCaret();
+		DefaultCaret caret = (DefaultCaret) textPane.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		JScrollPane scrollPane = new JScrollPane(textPane,
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -392,6 +391,16 @@ public class DomainObjectsModelsPanel extends JPanel {
 		definitionTextPane.setText(text);
 	}
 
+	public void updateFragmentPanel(String filePath) {
+		String text = parseXMLFile(filePath);
+		fragmentTextPane.setText(text);
+	}
+
+	public void updatePropertyPanel(String filePath) {
+		String text = parseXMLFile(filePath);
+		propertyTextPane.setText(text);
+	}
+
 	private String parseXMLFile(String urlString) {
 		String xmlString = "";
 		if (urlString != null && !urlString.isEmpty()) {
@@ -403,6 +412,17 @@ public class DomainObjectsModelsPanel extends JPanel {
 			}
 		}
 		return xmlString;
+	}
+
+	public void clearModelsPanel() {
+		propertyTextPane.setText("");
+		fragmentTextPane.setText("");
+		coreProcessTextPane.setText("");
+		definitionTextPane.setText("");
+
+		DefaultCaret caret = (DefaultCaret) definitionTextPane.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+
 	}
 
 }

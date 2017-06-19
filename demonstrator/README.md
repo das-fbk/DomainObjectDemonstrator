@@ -23,9 +23,9 @@ Please open src/main/resources/demonstrator.properties and change value of prope
 
 ### Mac configuration
 
-In order to run composer component inside Allow Ensembles demonstrator, on system must be configured wine (1.6.2), because runs 
+In order to run composer component inside Domain Objects demonstrator, on system must be configured wine (1.6.2), because runs 
 a small executable included inside demonstrator, wsynth.
-Please see composer-impl.jar dependency and modifiy configuration.properties inside with following properties (example values)
+Please see composer-impl.jar dependency and modify configuration.properties inside with following properties (example values)
 
 macWinePath=/opt/local/bin/wine
 macwsynthPath=/opt/local/bin/wsynth.exe
@@ -36,7 +36,7 @@ macwsynthPath=/opt/local/bin/wsynth.exe
 
 Main entry point for demonstrator is here:
 
-/demonstrator/src/main/java/eu/allowensembles/Demonstrator.java
+/demonstrator/src/main/java/eu/domainobjects/Demonstrator.java
 
 when Demonstrator is started, select File-> Open from menu and select scenario file inside repository:
 

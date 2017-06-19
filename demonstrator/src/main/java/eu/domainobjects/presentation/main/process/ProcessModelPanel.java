@@ -333,7 +333,6 @@ public class ProcessModelPanel extends JPanel {
 		try {
 			mxCell target = (mxCell) ((mxGraphModel) graph.getModel())
 					.getCell(pa.getName());
-
 			target.getGeometry()
 					.setHeight(target.getGeometry().getHeight() * 3);
 

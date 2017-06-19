@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -153,7 +154,7 @@ public class MainWindow {
 	private void initialize() throws IOException {
 		lblFont = new Font("Verdana", Font.PLAIN, 17);
 		Font tabFont = new Font("Verdana", Font.PLAIN, 18);
-		frame = new JFrame("Domain Objects Demonstrator");
+		frame = new JFrame("ATLAS");
 
 		// Panel for the main TabbedPane
 		JPanel framePanel = new JPanel();
@@ -209,7 +210,7 @@ public class MainWindow {
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null); // *** this will center your app
 		frame.setIconImage(ImageIO.read(getClass().getResource(
-				"/images/1435065408_gear.png")));
+				"/images/logo_32x32.png")));
 
 		/****************** Runtime Execution Tab - TOP PANEL **************************************/
 		// Constraints for the top panel on the first row of the mainPanel
@@ -488,17 +489,18 @@ public class MainWindow {
 		toolbar.setFloatable(false);
 		toolbar.setRollover(false);
 		toolbar.setEnabled(false);
-		toolbar.setLayout(new FlowLayout(FlowLayout.LEADING));
-		toolbar.setPreferredSize(new Dimension(100, 40));
+		BoxLayout toolbarLayout = new BoxLayout(toolbar, BoxLayout.LINE_AXIS);
+		toolbar.setLayout(toolbarLayout);
+		toolbar.setPreferredSize(new Dimension(100, 60));
 		toolbar.addSeparator();
 
 		// load play/pause icon
 		playIcon = new ImageIcon(
-				MainWindow.class.getResource("/images/play_verde.png"));
+				MainWindow.class.getResource("/images/ic_play.png"));
 		pauseIcon = new ImageIcon(
-				MainWindow.class.getResource("/images/pause_verde.png"));
+				MainWindow.class.getResource("/images/ic_pause.png"));
 		addIcon = new ImageIcon(
-				MainWindow.class.getResource("/images/plus_green.png"));
+				MainWindow.class.getResource("/images/ic_add.png"));
 
 		// init column names for general table
 		columnNames = new Vector<String>();
@@ -510,7 +512,7 @@ public class MainWindow {
 		btnStep.setActionCommand(DemonstratorConstant.STEP);
 		btnStep.addActionListener(new StepButtonActionListener());
 		btnStep.setIcon(new ImageIcon(MainWindow.class
-				.getResource("/images/step_verde.png")));
+				.getResource("/images/ic_walk.png")));
 
 		btnPlaypause = new JButton("Play");
 		btnPlaypause.setIcon(playIcon);
@@ -526,9 +528,16 @@ public class MainWindow {
 		btnAdd = new JButton("Add Domain Object");
 		btnAdd.setIcon(addIcon);
 
+		JButton btnLogo = new JButton("");
+		// btnLogo.setSize(30, 65);
+		btnLogo.setIcon(new ImageIcon(MainWindow.class
+				.getResource("/images/logo_demo_50.png")));
+
 		toolbar.add(btnPlaypause);
 		toolbar.add(btnStep);
 		toolbar.add(btnAdd);
+		toolbar.add(Box.createHorizontalGlue());
+		toolbar.add(btnLogo);
 
 		// create move next/previous entities
 		btnPreviousEntity = new JButton("Previous");

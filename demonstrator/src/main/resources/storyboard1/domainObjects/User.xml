@@ -4,6 +4,10 @@
 	xsi:schemaLocation="http://das.fbk.eu/DomainObject ../schema/DomainObject.xsd ">
 	<tns:domainKnowledge>
 		<tns:externalDomainProperty name="domainProperties/TravelAssistant" />
+		<tns:externalDomainProperty name="domainProperties/TestJourney" />
+		<tns:externalDomainProperty name="domainProperties/BusJourney" />
+		<tns:externalDomainProperty name="domainProperties/TrainJourney" />
+		<tns:externalDomainProperty name="domainProperties/BikeJourney" />
 	</tns:domainKnowledge>
 	<tns:process name="processes/PROC_User" />
 </tns:domainObject>
