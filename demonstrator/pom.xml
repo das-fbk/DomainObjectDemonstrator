@@ -2,16 +2,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<!-- general info -->
-	<groupId>eu.allowensembles</groupId>
+	<groupId>eu.das.atlas</groupId>
 	<artifactId>demonstrator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Allow Ensembles Demonstrator</name>
-	<description>Demonstrator for allow ensembles project (http://www.allow-ensembles.eu/)</description>
+	<name>ATLAS-Personalized Travel Assistant</name>
+	<description>Demonstrator for the ATLAS project</description>
 
 	<!-- project properties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<demonstrator.mainClass>eu.allowensembles.Demonstrator</demonstrator.mainClass>
+		<demonstrator.mainClass>eu.domainobjects.Demonstrator</demonstrator.mainClass>
 	</properties>
 
 	<!-- build properties -->
@@ -67,16 +67,16 @@
 	<!-- dependencies -->
 	<dependencies>
 		<!-- Allow ensembles dependencies -->
-		<dependency>
-			<groupId>eu.fbk.das</groupId>
-			<artifactId>process-engine-impl</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>eu.allowensembles</groupId>
-			<artifactId>handlers</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>eu.fbk.das</groupId> -->
+<!-- 			<artifactId>process-engine-impl</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>eu.allowensembles</groupId> -->
+<!-- 			<artifactId>handlers</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
 		<!-- General dependencies-->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -141,6 +141,12 @@
 			<artifactId>collective-adaptation</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>-->
+		
+		<dependency>
+          <groupId>org.telegram</groupId>
+          <artifactId>telegrambots</artifactId>
+          <version>2.4.4.5</version>
+      </dependency>
 
 	</dependencies>
 

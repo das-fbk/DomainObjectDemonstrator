@@ -26,15 +26,10 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DefaultCaret;
-import javax.swing.text.StyleConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import xmleditorkit.XMLDocument;
-import xmleditorkit.XMLEditorKit;
-
-import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 import eu.domainobjects.presentation.main.action.listener.SelectFragmentListener;
@@ -42,6 +37,9 @@ import eu.domainobjects.presentation.main.action.listener.SelectModelListener;
 import eu.domainobjects.presentation.main.action.listener.SelectPropertyListener;
 import eu.domainobjects.presentation.main.process.ProcessModelPanel;
 import eu.fbk.das.process.engine.api.domain.ProcessDiagram;
+//import xmleditorkit.XMLDocument;
+//import xmleditorkit.XMLEditorKit;
+import com.google.common.base.Charsets;
 
 /**
  * @author Martina
@@ -301,27 +299,27 @@ public class DomainObjectsModelsPanel extends JPanel {
 
 	private JScrollPane defineXMLtextPane(JTextPane textPane, int width,
 			int height) {
-		XMLEditorKit xmlEditorKit = new XMLEditorKit();
-		StyleConstants.setFontSize(XMLDocument.PLAIN_ATTRIBUTES,
-				XML_TEXT_FONT_SIZE);
-		StyleConstants.setFontSize(XMLDocument.ATTRIBUTENAME_ATTRIBUTES,
-				XML_TEXT_FONT_SIZE);
-		StyleConstants.setFontSize(XMLDocument.ATTRIBUTEVALUE_ATTRIBUTES,
-				XML_TEXT_FONT_SIZE);
-		StyleConstants.setFontSize(XMLDocument.BRACKET_ATTRIBUTES,
-				XML_TEXT_FONT_SIZE);
-		StyleConstants.setFontSize(XMLDocument.COMMENT_ATTRIBUTES,
-				XML_TEXT_FONT_SIZE);
-		StyleConstants.setFontSize(XMLDocument.TAGNAME_ATTRIBUTES,
-				XML_TEXT_FONT_SIZE);
-		StyleConstants.setForeground(XMLDocument.ATTRIBUTENAME_ATTRIBUTES,
-				Color.decode(ATTRIBUTENAME_TAG_COLOR));
-		StyleConstants.setForeground(XMLDocument.TAGNAME_ATTRIBUTES,
-				Color.decode(TAGNAME_COLOR));
-		StyleConstants.setBold(XMLDocument.ATTRIBUTENAME_ATTRIBUTES, false);
-		StyleConstants.setBold(XMLDocument.TAGNAME_ATTRIBUTES, false);
-
-		textPane.setEditorKit(xmlEditorKit);
+		// XMLEditorKit xmlEditorKit = new XMLEditorKit();
+		// StyleConstants.setFontSize(XMLDocument.PLAIN_ATTRIBUTES,
+		// XML_TEXT_FONT_SIZE);
+		// StyleConstants.setFontSize(XMLDocument.ATTRIBUTENAME_ATTRIBUTES,
+		// XML_TEXT_FONT_SIZE);
+		// StyleConstants.setFontSize(XMLDocument.ATTRIBUTEVALUE_ATTRIBUTES,
+		// XML_TEXT_FONT_SIZE);
+		// StyleConstants.setFontSize(XMLDocument.BRACKET_ATTRIBUTES,
+		// XML_TEXT_FONT_SIZE);
+		// StyleConstants.setFontSize(XMLDocument.COMMENT_ATTRIBUTES,
+		// XML_TEXT_FONT_SIZE);
+		// StyleConstants.setFontSize(XMLDocument.TAGNAME_ATTRIBUTES,
+		// XML_TEXT_FONT_SIZE);
+		// StyleConstants.setForeground(XMLDocument.ATTRIBUTENAME_ATTRIBUTES,
+		// Color.decode(ATTRIBUTENAME_TAG_COLOR));
+		// StyleConstants.setForeground(XMLDocument.TAGNAME_ATTRIBUTES,
+		// Color.decode(TAGNAME_COLOR));
+		// StyleConstants.setBold(XMLDocument.ATTRIBUTENAME_ATTRIBUTES, false);
+		// StyleConstants.setBold(XMLDocument.TAGNAME_ATTRIBUTES, false);
+		//
+		// textPane.setEditorKit(xmlEditorKit);
 
 		textPane.setContentType("text/xml");
 

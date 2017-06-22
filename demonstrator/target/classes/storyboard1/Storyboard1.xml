@@ -11,4 +11,11 @@
 	<tns:domainObject file="domainObjects/DataViewerManager" />
 	<tns:domainObject file="domainObjects/GoogleTransit" />
 	<tns:domainObject file="domainObjects/BlaBlaCar" />
+	<tns:domainObject file="domainObjects/SpecificTransportMean" />
+	
+<!-- 	In the following, the domain objects used for tests -->
+<!-- 	<tns:domainObject file="domainObjects/TestTransportMean" /> -->
+<!-- 	<tns:domainObject file="domainObjects/BusMean" /> -->
+<!-- 	<tns:domainObject file="domainObjects/TrainMean" /> -->
+<!-- 	<tns:domainObject file="domainObjects/BikeMean" /> -->
 </tns:scenario>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:domainObject name="TrainMean" xmlns:tns="http://das.fbk.eu/DomainObject"
+	xmlns:tns2="http://das.fbk.eu/DataType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://das.fbk.eu/DomainObject ../schema/DomainObject.xsd ">
+
+	<tns:domainKnowledge>
+		<tns:internalDomainProperty name="domainProperties/TrainJourney" />
+	</tns:domainKnowledge>
+
+	<tns:process name="processes/PROC_TrainMean" />
+
+	<tns:fragment name="fragments/TM_plan" />
+	<tns:fragment name="fragments/TM_book" />
+
+</tns:domainObject>

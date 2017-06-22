@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:domainProperty id="TrainJourney" xmlns:tns="http://das.fbk.eu/Process" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
+  
+  <tns:state isInitial="true">INITIAL</tns:state>
+  <tns:state>TRAIN0</tns:state>
+  <tns:state>TRAIN1</tns:state>
+  <tns:state>TRAIN2</tns:state>
+  <tns:state>TRAIN3</tns:state>
+  <tns:state>TRAIN4</tns:state>
+  <tns:state>TRAIN5</tns:state>
+  <tns:state>TRAIN6</tns:state>
+  <tns:state>TRAIN7</tns:state>
+  
+  <tns:event>train0</tns:event>
+  <tns:event>train1</tns:event>
+  <tns:event>train2</tns:event>
+  <tns:event>train3</tns:event>
+  <tns:event>train4</tns:event>
+  <tns:event>train5</tns:event>
+  <tns:event>train6</tns:event>
+  <tns:event>train7</tns:event>
+  
+ 
+  <tns:transition isControllable="true">
+    <tns:from>INITIAL</tns:from>
+    <tns:to>TRAIN0</tns:to>
+    <tns:event>train0</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>TRAIN0</tns:from>
+    <tns:to>TRAIN1</tns:to>
+    <tns:event>train1</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>TRAIN1</tns:from>
+    <tns:to>TRAIN2</tns:to>
+    <tns:event>train2</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>TRAIN2</tns:from>
+    <tns:to>TRAIN3</tns:to>
+    <tns:event>train3</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>TRAIN3</tns:from>
+    <tns:to>TRAIN4</tns:to>
+    <tns:event>train4</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>TRAIN4</tns:from>
+    <tns:to>TRAIN5</tns:to>
+    <tns:event>train5</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>TRAIN5</tns:from>
+    <tns:to>TRAIN6</tns:to>
+    <tns:event>train6</tns:event>
+  </tns:transition>
+  
+  <tns:transition isControllable="true">
+    <tns:from>TRAIN6</tns:from>
+    <tns:to>TRAIN7</tns:to>
+    <tns:event>train7</tns:event>
+  </tns:transition>
+  
+</tns:domainProperty>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<robustnessAnnotation>
-	<fragment name="WP_executeVoicePlan.xml">
-		<activity name="WP_executePlanRequest" compensable="true" deterministic="false" write="true" robustness="96"/>
-	</fragment>
-	<fragment name="WP_executeVoicePlan.xml">
-		<activity name="WP_executePlanResponse" compensable="true" deterministic="false" write="true" robustness="90"/>
-	</fragment>
-</robustnessAnnotation>
