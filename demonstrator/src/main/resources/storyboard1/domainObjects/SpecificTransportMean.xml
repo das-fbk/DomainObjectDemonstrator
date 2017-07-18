@@ -8,10 +8,10 @@
 	</tns:domainKnowledge>
 
 	<tns:state>
-		<tns:stateVariable name="Source" type="string">
+		<tns:stateVariable name="SelectedAlternative" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
-		<tns:stateVariable name="Destination" type="string">
+		<tns:stateVariable name="CurrentSegment" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:stateVariable>
 		<tns:stateVariable name="ResultList" type="string">
@@ -20,7 +20,6 @@
 	</tns:state>
 
 	<tns:process name="processes/PROC_SpecificTransportMean" />
-	
 
 	<tns:fragment name="fragments/STM_findRoutes" />
 

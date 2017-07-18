@@ -12,10 +12,10 @@
 				</tns1:domainProperty>
 			</tns1:point>
 		</tns:precondition>
-		<tns:actionVariable name="Source" type="string">
+		<tns:actionVariable name="SelectedAlternative" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
-		<tns:actionVariable name="Destination" type="string">
+		<tns:actionVariable name="CurrentSegment" type="string">
 			<tns2:content type="anyType"></tns2:content>
 		</tns:actionVariable>
 	</tns:receive>

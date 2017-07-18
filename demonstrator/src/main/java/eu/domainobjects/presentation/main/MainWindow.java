@@ -56,7 +56,9 @@ import eu.domainobjects.presentation.main.action.listener.MenuExitListener;
 import eu.domainobjects.presentation.main.action.listener.OpenScenarioListener;
 import eu.domainobjects.presentation.main.action.listener.SelectInstanceListener;
 import eu.domainobjects.presentation.main.action.listener.StepButtonActionListener;
+import eu.domainobjects.presentation.main.process.ObjectDiagramPanel;
 import eu.domainobjects.presentation.main.process.ProcessModelPanel;
+import eu.domainobjects.presentation.main.process.ServiceModelPanel;
 import eu.domainobjects.utils.DoiBean;
 import eu.domainobjects.utils.UserData;
 import eu.fbk.das.process.engine.api.domain.ProcessDiagram;
@@ -436,9 +438,11 @@ public class MainWindow {
 		JMenu mnScenario = new JMenu("File");
 		menuBar.add(mnScenario);
 
-		JMenuItem mntmOpen = new JMenuItem("Open");
-		mntmOpen.addActionListener(new OpenScenarioListener());
-		mnScenario.add(mntmOpen);
+		// The open menu file is commented for now; so, the user cannot choice
+		// among scenarios
+		// JMenuItem mntmOpen = new JMenuItem("Open");
+		// mntmOpen.addActionListener(new OpenScenarioListener());
+		// mnScenario.add(mntmOpen);
 
 		JMenuItem mnExit = new JMenuItem("Exit");
 		mnExit.addActionListener(new MenuExitListener());
@@ -535,7 +539,7 @@ public class MainWindow {
 
 		toolbar.add(btnPlaypause);
 		toolbar.add(btnStep);
-		toolbar.add(btnAdd);
+		// toolbar.add(btnAdd);
 		toolbar.add(Box.createHorizontalGlue());
 		toolbar.add(btnLogo);
 
@@ -694,6 +698,30 @@ public class MainWindow {
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		// scrollPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
+		scrollPane.setPreferredSize(new Dimension(width, height));
+		return scrollPane;
+	}
+
+	public JScrollPane createServicePanelScrollPane(
+			ServiceModelPanel serviceModelPanel, int width, int height) {
+		JScrollPane scrollPane = new JScrollPane(serviceModelPanel);
+		scrollPane
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
+		scrollPane.setPreferredSize(new Dimension(width, height));
+		return scrollPane;
+	}
+
+	public JScrollPane createPropertyPanelScrollPane(
+			ObjectDiagramPanel propertyModelPanel, int width, int height) {
+		JScrollPane scrollPane = new JScrollPane(propertyModelPanel);
+		scrollPane
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBorder(new LineBorder(Color.decode(BORDER_COLOR)));
 		scrollPane.setPreferredSize(new Dimension(width, height));
 		return scrollPane;

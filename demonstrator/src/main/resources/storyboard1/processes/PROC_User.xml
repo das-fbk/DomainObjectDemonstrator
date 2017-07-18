@@ -4,6 +4,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://das.fbk.eu/Process ../../../schema/allow-ensembles/Process.xsd ">
 
+	<tns:concrete name="USER_startInteraction"/>
+
 	<tns:abstract name="USER_planJourney">
 		<tns:goal>
 			<tns1:point>
@@ -15,6 +17,8 @@
 			</tns1:point>
 		</tns:goal>
 	</tns:abstract>
+	
+	<tns:concrete name="USER_endInteraction"/>
 	
 <!-- 	<tns:abstract name="USER_bookJourney" actionType="abstract" type="HOAA"  -->
 <!-- 		receiveVar=""> -->
