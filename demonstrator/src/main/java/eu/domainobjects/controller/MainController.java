@@ -343,6 +343,10 @@ public class MainController {
 				"STM_ServiceCall",
 				new STMServiceCallExecutable(processEngineFacade
 						.getProcessEngine(), bot));
+		processEngineFacade.addExecutableHandler(
+				"STM_ServiceCall",
+				new STMServiceCallExecutable(processEngineFacade
+						.getProcessEngine(), bot));
 
 		// handler for hoaa for pre-phase
 		// processEngineFacade.addExecutableHandler(
