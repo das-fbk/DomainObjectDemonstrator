@@ -27,6 +27,7 @@ import eu.domainobjects.controller.events.DomainObjectInstanceSelection;
 import eu.domainobjects.controller.events.StepEvent;
 import eu.domainobjects.presentation.main.DomainObjectsModelsPanel;
 import eu.domainobjects.presentation.main.MainWindow;
+import eu.domainobjects.presentation.main.SystemViewPanel;
 import eu.domainobjects.presentation.main.action.listener.DomainObjectDefinitionSelectionByName;
 import eu.domainobjects.presentation.main.action.listener.StepButtonActionListener;
 import eu.domainobjects.presentation.main.events.DomainObjectInstanceSelectionByName;
@@ -46,6 +47,7 @@ import eu.fbk.das.domainobject.executable.DVMDefineDataPatternExecutable;
 import eu.fbk.das.domainobject.executable.InsertDestinationExecutable;
 import eu.fbk.das.domainobject.executable.InsertOptionalDataExecutable;
 import eu.fbk.das.domainobject.executable.Rome2RioCallExecutable;
+import eu.fbk.das.domainobject.executable.STMServiceCallExecutable;
 import eu.fbk.das.domainobject.executable.SelectPlanningModeExecutable;
 import eu.fbk.das.domainobject.executable.ShowResultsExecutable;
 import eu.fbk.das.domainobject.executable.StartChatbotExecutable;
@@ -218,12 +220,12 @@ public class MainController {
 			String botName = nameValues[1];
 			String botToken = tokenValues[1];
 
-			bot = new TravelAssistantBot("TestTravelAssistantBot",
-					"348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
-					false, false, false, aListner, event);
+			// bot = new TravelAssistantBot("TestTravelAssistantBot",
+			// "348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
+			// false, false, false, aListner, event);
 
-			// bot = new TravelAssistantBot(botName, botToken, false, false,
-			// false, false, aListner, event);
+			bot = new TravelAssistantBot(botName, botToken, false, false,
+					false, false, aListner, event);
 
 			BotSession session = api.registerBot(bot);
 		} catch (TelegramApiException e) {
@@ -336,6 +338,10 @@ public class MainController {
 		processEngineFacade.addExecutableHandler(
 				"VT_ServiceCall",
 				new VTServiceCallExecutable(processEngineFacade
+						.getProcessEngine(), bot));
+		processEngineFacade.addExecutableHandler(
+				"STM_ServiceCall",
+				new STMServiceCallExecutable(processEngineFacade
 						.getProcessEngine(), bot));
 
 		// handler for hoaa for pre-phase
@@ -1144,7 +1150,10 @@ public class MainController {
 
 	public void updateHierarchyTab(
 			ArrayListMultimap<String, Map<String, List<String>>> softDependencies) {
-		// TODO Auto-generated method stub
+
+		((SystemViewPanel) window.getSystemViewPanel())
+				.updateViewPanel(softDependencies);
+
 		System.out.println("Habemus Hierarchy!");
 
 	}
