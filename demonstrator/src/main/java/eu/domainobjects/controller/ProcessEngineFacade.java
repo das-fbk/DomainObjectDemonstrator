@@ -184,17 +184,17 @@ public class ProcessEngineFacade {
 		}
 		controller.updateHierarchyTab(softDependencies);
 
-		for (String s : softDependencies.keys()) {
-			List map = softDependencies.get(s);
-			Map m = (Map) map.get(0);
-			Iterator<Map.Entry<String, List<String>>> it = m.entrySet()
-					.iterator();
-			while (it.hasNext()) {
-				Map.Entry<String, List<String>> pair = it.next();
-				String key = pair.getKey();
-				pair.getValue();
-			}
-		}
+		// for (String s : softDependencies.keys()) {
+		// List map = softDependencies.get(s);
+		// Map m = (Map) map.get(0);
+		// Iterator<Map.Entry<String, List<String>>> it = m.entrySet()
+		// .iterator();
+		// while (it.hasNext()) {
+		// Map.Entry<String, List<String>> pair = it.next();
+		// String key = pair.getKey();
+		// pair.getValue();
+		// }
+		// }
 
 		// ArrayListMultimap<String, Map<String, List<String>>>
 		// softDependenciesMap = ArrayListMultimap

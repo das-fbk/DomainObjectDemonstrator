@@ -136,6 +136,7 @@ public class MainWindow {
 	private JScrollPane processExecutionScrollPane;
 	private Font lblFont;
 	private JPanel modelPanel;
+	private JPanel systemViewPanel;
 
 	/**
 	 * Create the application.
@@ -187,9 +188,16 @@ public class MainWindow {
 		// Panel for the Domain Objects Models Tab
 		modelPanel = new DomainObjectsModelsPanel(this);
 
+		// panel for the system view
+		systemViewPanel = new SystemViewPanel(this);
+		// systemPanel.setVisible(true);
+		// systemPanel.setLayout(new GridBagLayout());
+		// systemPanel.setBackground(Color.decode(BACKGROUD_COLOR));
+
 		frameTabbedPane.setFont(tabFont);
 		frameTabbedPane.addTab("Domain Objects Models", null, modelPanel, null);
 		frameTabbedPane.addTab("Runtime Execution", null, mainPanel, null);
+		// frameTabbedPane.addTab("System View", null, systemViewPanel, null);
 		frameTabbedPane.setBackground(Color.decode(BACKGROUD_COLOR));
 		// frameTabbedPane.setBorder(new
 		// LineBorder(Color.decode(BORDER_COLOR)));
@@ -1024,6 +1032,10 @@ public class MainWindow {
 
 	public JPanel getModelPanel() {
 		return modelPanel;
+	}
+
+	public JPanel getSystemViewPanel() {
+		return systemViewPanel;
 	}
 
 }

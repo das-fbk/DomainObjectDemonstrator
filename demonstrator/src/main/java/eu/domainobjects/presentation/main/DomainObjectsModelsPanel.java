@@ -345,7 +345,7 @@ public class DomainObjectsModelsPanel extends JPanel {
 		return panel;
 	}
 
-	private static final int XML_TEXT_FONT_SIZE = 22;
+	private static final int XML_TEXT_FONT_SIZE = 18;
 	private static final String ATTRIBUTENAME_TAG_COLOR = "#C2185B";
 	private static final String TAGNAME_COLOR = "#1B5E20";
 

@@ -220,12 +220,12 @@ public class MainController {
 			String botName = nameValues[1];
 			String botToken = tokenValues[1];
 
-			// bot = new TravelAssistantBot("TestTravelAssistantBot",
-			// "348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
-			// false, false, false, aListner, event);
+			bot = new TravelAssistantBot("TestTravelAssistantBot",
+					"348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
+					false, false, false, aListner, event);
 
-			bot = new TravelAssistantBot(botName, botToken, false, false,
-					false, false, aListner, event);
+			// bot = new TravelAssistantBot(botName, botToken, false, false,
+			// false, false, aListner, event);
 
 			BotSession session = api.registerBot(bot);
 		} catch (TelegramApiException e) {
@@ -672,6 +672,14 @@ public class MainController {
 				response.add(dod.getDomainObject().getName());
 			}
 		}
+
+		response.add("TrentinoTrasporti");
+		response.add("Flixbus");
+		response.add("CityBikes");
+		response.add("TravelForLondon");
+		response.add("EMTMalaga");
+		response.add("e.motionBikeSharing");
+
 		((DomainObjectsModelsPanel) window.getModelPanel())
 				.updateListDomainObjectsEntities(response);
 
@@ -1157,8 +1165,6 @@ public class MainController {
 
 		((SystemViewPanel) window.getSystemViewPanel())
 				.updateViewPanel(softDependencies);
-
-		System.out.println("Habemus Hierarchy!");
 
 	}
 
