@@ -220,12 +220,12 @@ public class MainController {
 			String botName = nameValues[1];
 			String botToken = tokenValues[1];
 
-			bot = new TravelAssistantBot("TestTravelAssistantBot",
-					"348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
-					false, false, false, aListner, event);
+			// bot = new TravelAssistantBot("TestTravelAssistantBot",
+			// "348692232:AAGyApErXx36PFRisENTClY1jEsYgZcvbTI", false,
+			// false, false, false, aListner, event);
 
-			// bot = new TravelAssistantBot(botName, botToken, false, false,
-			// false, false, aListner, event);
+			bot = new TravelAssistantBot(botName, botToken, false, false,
+					false, false, aListner, event);
 
 			BotSession session = api.registerBot(bot);
 		} catch (TelegramApiException e) {
