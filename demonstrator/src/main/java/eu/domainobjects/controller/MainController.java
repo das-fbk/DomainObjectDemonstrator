@@ -673,12 +673,12 @@ public class MainController {
 			}
 		}
 
-		response.add("TrentinoTrasporti");
-		response.add("Flixbus");
-		response.add("CityBikes");
-		response.add("TravelForLondon");
-		response.add("EMTMalaga");
-		response.add("e.motionBikeSharing");
+		// response.add("TrentinoTrasporti");
+		// response.add("Flixbus");
+		// response.add("CityBikes");
+		// response.add("TravelForLondon");
+		// response.add("EMTMalaga");
+		// response.add("e.motionBikeSharing");
 
 		((DomainObjectsModelsPanel) window.getModelPanel())
 				.updateListDomainObjectsEntities(response);
