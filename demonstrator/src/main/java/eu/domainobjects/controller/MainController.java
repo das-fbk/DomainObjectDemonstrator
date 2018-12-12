@@ -1160,11 +1160,11 @@ public class MainController {
 		return result;
 	}
 
-	public void updateHierarchyTab(
+	public void updateDesignTimeHierarchyTab(
 			ArrayListMultimap<String, Map<String, List<String>>> softDependencies) {
 
 		((SystemViewPanel) window.getSystemViewPanel())
-				.updateViewPanel(softDependencies);
+				.updateDesignTimeViewPanel(softDependencies);
 
 	}
 

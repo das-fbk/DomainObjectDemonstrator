@@ -24,13 +24,13 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/process-engine-api"/>
+	<classpathentry kind="lib" path="lib/xmleditorkit.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/handlers"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/process-engine-impl"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/adaptation-manager"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/composer-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/composer-impl"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/domain-object-model-schema"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/handlers"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/process-engine-impl"/>
-	<classpathentry kind="lib" path="lib/xmleditorkit.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/process-engine-api"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
