@@ -6,7 +6,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**/*.java" including="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
 	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -25,12 +24,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/xmleditorkit.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/handlers"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/process-engine-impl"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/adaptation-manager"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/composer-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/composer-impl"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/domain-object-model-schema"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/process-engine-api"/>
+	<classpathentry kind="lib" path="lib/adaptation-manager-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/composer-api-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/composer-impl-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/handlers-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/process-engine-api-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/process-engine-impl-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
