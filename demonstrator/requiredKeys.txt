@@ -1,1 +1,1 @@
-GoogleAPIKey=AIzaSyBnLrMivSthmUmUipPfk5sidv7f0QvvDjg;rome2rioKey=zTtfEtED
+GoogleAPIKey=<put_your_key_here>;rome2rioKey=zTtfEtED
